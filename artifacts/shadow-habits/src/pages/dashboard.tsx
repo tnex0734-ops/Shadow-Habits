@@ -363,130 +363,165 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* RIGHT: Big Partner Character */}
-        <div className="flex flex-col min-h-0 items-center justify-between pt-2 pb-2 relative overflow-hidden">
+        {/* RIGHT: Unified Companion Card */}
+        <div className="flex flex-col min-h-0 rounded-3xl overflow-hidden relative"
+          style={{
+            background: "rgba(6,10,20,0.82)",
+            backdropFilter: "blur(32px)",
+            border: `1px solid rgba(255,255,255,0.07)`,
+            boxShadow: `0 20px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06), 0 0 0 1px ${charColor}0a`,
+          }}
+        >
 
-          {/* Background radial aura behind whole panel */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{ background: `radial-gradient(ellipse at 50% 80%, ${charColor}10 0%, transparent 68%)` }}
-          />
+          {/* ══ TOP: Character Panel ══ */}
+          <div className="relative overflow-hidden" style={{ flex: "0 0 58%" }}>
 
-          {/* ── Speech bubble ── */}
-          <div className="w-full px-2 flex-shrink-0 relative z-10">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={companion?.message ?? "default"}
-                initial={{ opacity: 0, y: 10, scale: 0.94 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -6, scale: 0.96 }}
-                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                className="relative"
-              >
-                {/* Bubble body */}
-                <div
-                  className="rounded-2xl px-4 py-3.5 relative"
-                  style={{
-                    background: "rgba(255,255,255,0.055)",
-                    backdropFilter: "blur(24px)",
-                    border: `1.5px solid ${charColor}28`,
-                    boxShadow: `0 8px 32px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.09), 0 0 0 1px ${charColor}06`,
-                  }}
+            {/* Diagonal colour sweep across the whole panel */}
+            <div className="absolute inset-0 pointer-events-none" style={{
+              background: `linear-gradient(135deg, ${charColor}14 0%, transparent 55%)`,
+            }} />
+            {/* Bottom-right bloom */}
+            <div className="absolute inset-0 pointer-events-none" style={{
+              background: `radial-gradient(ellipse at 85% 95%, ${charColor}22 0%, transparent 55%)`,
+            }} />
+            {/* Subtle top-edge highlight */}
+            <div className="absolute top-0 left-0 right-0 h-px pointer-events-none"
+              style={{ background: `linear-gradient(90deg, transparent 0%, ${charColor}30 40%, transparent 100%)` }} />
+
+            {/* ── Speech bubble — top-left ── */}
+            <div className="absolute top-4 left-4 z-20" style={{ maxWidth: "calc(100% - 90px)" }}>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={companion?.message ?? "default"}
+                  initial={{ opacity: 0, scale: 0.88, y: 6 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.92, y: -4 }}
+                  transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+                  className="relative"
                 >
-                  {/* Top-left manga corner accent */}
-                  <div
-                    className="absolute top-0 left-0 w-6 h-6 rounded-tl-2xl pointer-events-none"
-                    style={{ background: `linear-gradient(135deg, ${charColor}20, transparent 60%)` }}
-                  />
-                  <p
-                    className="text-[13px] leading-relaxed font-medium relative z-10"
-                    style={{ color: "rgba(255,255,255,0.88)" }}
-                  >
-                    {companion?.message || "Ready when you are."}
-                  </p>
-                </div>
+                  {/* Bubble body */}
+                  <div className="rounded-2xl rounded-bl-sm px-3.5 py-2.5 relative" style={{
+                    background: "rgba(8,14,28,0.88)",
+                    backdropFilter: "blur(20px)",
+                    border: `1px solid ${charColor}35`,
+                    boxShadow: `0 8px 24px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.07), 0 0 0 1px ${charColor}08`,
+                  }}>
+                    {/* Colour tint strip along left edge */}
+                    <div className="absolute left-0 top-2 bottom-2 w-0.5 rounded-full pointer-events-none"
+                      style={{ background: `linear-gradient(180deg, ${charColor}, ${charColor}40)` }} />
+                    <p className="text-[12px] leading-relaxed pl-2.5 pr-0.5" style={{ color: "rgba(255,255,255,0.86)" }}>
+                      {companion?.message || "Ready when you are."}
+                    </p>
+                  </div>
+                  {/* Tail — bottom-left corner pointing down toward character */}
+                  <div className="absolute -bottom-2 left-4" style={{
+                    width: 0, height: 0,
+                    borderLeft: "7px solid transparent",
+                    borderRight: "7px solid transparent",
+                    borderTop: `8px solid ${charColor}35`,
+                  }} />
+                  <div className="absolute -bottom-1.5 left-4" style={{
+                    width: 0, height: 0,
+                    borderLeft: "6px solid transparent",
+                    borderRight: "6px solid transparent",
+                    borderTop: "7px solid rgba(8,14,28,0.88)",
+                  }} />
+                </motion.div>
+              </AnimatePresence>
+            </div>
 
-                {/* Bubble tail — points DOWN toward character */}
-                <div className="flex justify-center mt-0">
-                  <svg width="22" height="14" viewBox="0 0 22 14" fill="none">
-                    <path d="M0 0 L11 14 L22 0 Z" fill={`${charColor}28`} />
-                    <path d="M1.5 0 L11 12.5 L20.5 0 Z" fill="rgba(255,255,255,0.055)" />
-                  </svg>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* ── Character illustration ── */}
-          <div className="flex-1 flex flex-col items-center justify-end relative min-h-0">
-
-            {/* Floating idle animation */}
-            <motion.div
-              animate={{ y: [0, -12, 0] }}
-              transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut" }}
-              className="relative flex items-end justify-center"
-            >
-              {/* Character glow halo */}
-              <motion.div
-                animate={{ opacity: [0.55, 0.9, 0.55], scale: [1, 1.08, 1] }}
-                transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute inset-0 pointer-events-none rounded-full"
-                style={{
-                  background: `radial-gradient(ellipse at 50% 55%, ${charColor}22, transparent 65%)`,
-                  transform: "scale(1.5)",
-                }}
-              />
-
-              {/* Character SVG — big doodle */}
-              <img
+            {/* ── Character — bottom-right, large, floating ── */}
+            <div className="absolute bottom-0 right-0 flex items-end justify-end pointer-events-none">
+              {/* Ambient glow behind character */}
+              <div className="absolute bottom-0 right-0" style={{
+                width: 200, height: 200,
+                background: `radial-gradient(ellipse at 65% 80%, ${charColor}28, transparent 62%)`,
+                filter: "blur(12px)",
+              }} />
+              <motion.img
                 src={companionImg}
                 alt={companionName}
+                animate={{ y: [0, -9, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                 style={{
-                  width: 210,
-                  height: 210,
-                  filter: `drop-shadow(0 0 28px ${charGlow}) drop-shadow(0 2px 6px rgba(0,0,0,0.7))`,
-                  imageRendering: "crisp-edges",
+                  width: 178,
+                  height: 178,
+                  filter: `drop-shadow(0 0 22px ${charGlow}) drop-shadow(0 4px 10px rgba(0,0,0,0.8))`,
+                  marginRight: -8,
+                  marginBottom: -4,
                 }}
               />
-            </motion.div>
+            </div>
 
-            {/* Ground shadow ellipse */}
-            <motion.div
-              animate={{ scaleX: [1, 1.1, 1], opacity: [0.4, 0.22, 0.4] }}
-              transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut" }}
-              className="rounded-full pointer-events-none -mt-3"
-              style={{
-                width: 140,
-                height: 18,
-                background: `radial-gradient(ellipse, ${charColor}35, transparent 70%)`,
-                filter: "blur(6px)",
-              }}
-            />
+            {/* ── Name + role badge — bottom-left ── */}
+            <div className="absolute bottom-3 left-4 z-10">
+              <div className="flex items-center gap-1.5">
+                <motion.span
+                  animate={{ opacity: [1, 0.5, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                  style={{ background: charColor, boxShadow: `0 0 6px ${charGlow}` }}
+                />
+                <span className="text-[11px] font-black uppercase tracking-[0.15em]" style={{ color: charColor }}>
+                  {companionName}
+                </span>
+              </div>
+              <p className="text-[9px] uppercase tracking-widest mt-0.5 pl-3" style={{ color: "rgba(255,255,255,0.28)" }}>
+                Your companion
+              </p>
+            </div>
+          </div>
 
-            {/* Character name badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="mt-2 px-4 py-1.5 rounded-full flex items-center gap-2"
-              style={{
-                background: `rgba(0,0,0,0.45)`,
-                backdropFilter: "blur(12px)",
-                border: `1px solid ${charColor}30`,
-                boxShadow: `0 0 16px ${charColor}18`,
-              }}
-            >
-              <span
-                className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                style={{ background: charColor, boxShadow: `0 0 6px ${charGlow}` }}
-              />
-              <span
-                className="text-[11px] font-bold uppercase tracking-widest"
-                style={{ color: charColor }}
-              >
-                {companionName}
-              </span>
-            </motion.div>
+          {/* ── Divider ── */}
+          <div className="flex-shrink-0 h-px mx-0" style={{
+            background: `linear-gradient(90deg, ${charColor}00, ${charColor}28 30%, ${charColor}28 70%, ${charColor}00)`,
+          }} />
+
+          {/* ══ BOTTOM: 7-day chart ══ */}
+          <div className="flex flex-col min-h-0 px-4 pt-3 pb-3" style={{ flex: "0 0 42%" }}>
+            <p className="text-[9px] font-semibold uppercase tracking-[0.18em] flex-shrink-0 mb-2"
+              style={{ color: "rgba(255,255,255,0.25)" }}>
+              Last 7 Days
+            </p>
+            <div className="flex-1 min-h-0">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={chart7} margin={{ top: 12, right: 4, bottom: 0, left: -24 }}>
+                  <defs>
+                    <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor={charColor} stopOpacity={0.45} />
+                      <stop offset="80%" stopColor={charColor} stopOpacity={0.04} />
+                      <stop offset="100%" stopColor={charColor} stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <XAxis dataKey="day" tick={{ fontSize: 9, fill: "rgba(255,255,255,0.28)" }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fontSize: 9, fill: "rgba(255,255,255,0.18)" }} axisLine={false} tickLine={false} allowDecimals={false} width={20} />
+                  <Tooltip content={<ChartTip />} cursor={{ stroke: `${charColor}20`, strokeWidth: 1 }} />
+                  <Area
+                    type="monotoneX" dataKey="count"
+                    stroke={charColor} strokeWidth={2}
+                    fill={`url(#${gradId})`}
+                    isAnimationActive animationDuration={1000} animationEasing="ease-out"
+                    dot={(props: { cx: number; cy: number; payload: { isToday: boolean } }) => {
+                      const { cx, cy, payload } = props;
+                      if (payload.isToday) {
+                        return (
+                          <g key={`td-${cx}`}>
+                            <circle cx={cx} cy={cy} r={6} fill={charColor} fillOpacity={0.18}>
+                              <animate attributeName="r" values="4;9;4" dur="2.2s" repeatCount="indefinite" />
+                              <animate attributeName="fill-opacity" values="0.22;0.04;0.22" dur="2.2s" repeatCount="indefinite" />
+                            </circle>
+                            <circle cx={cx} cy={cy} r={4} fill="#060a14" stroke={charColor} strokeWidth={1.5}
+                              style={{ filter: `drop-shadow(0 0 5px ${charGlow})` }} />
+                          </g>
+                        );
+                      }
+                      return <circle key={`d-${cx}`} cx={cx} cy={cy} r={2.5} fill={charColor} fillOpacity={0.5} />;
+                    }}
+                    activeDot={{ r: 4, fill: charColor, stroke: "#060a14", strokeWidth: 2 }}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
           </div>
 
         </div>
