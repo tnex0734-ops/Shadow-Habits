@@ -1,0 +1,20 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "4yi_dAFMgieNgb8uLDdc6"
+uri = "file://artifacts/shadow-habits/src/assets/character-infinity.png"
+type = "image"
+title = "Infinity Mentor portrait"
+
+[[generated]]
+id = "3tLIabrIBmMmkrBBlVvKo"
+uri = "file://artifacts/shadow-habits/src/assets/character-dark.png"
+type = "image"
+title = "Dark King portrait"
+
+[[generated]]
+id = "sGrvf1lrx2ulwB5-wMdxh"
+uri = "file://artifacts/shadow-habits/src/assets/character-energy.png"
+type = "image"
+title = "Energy Hero portrait"

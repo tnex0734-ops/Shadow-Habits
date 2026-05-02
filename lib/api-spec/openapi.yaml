@@ -1,22 +1,27 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: ShadowHabits API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: auth
+    description: Authentication
+  - name: habits
+    description: Habit management
+  - name: dashboard
+    description: Dashboard summaries
+
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +29,277 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /auth/signup:
+    post:
+      operationId: signup
+      tags: [auth]
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignupBody"
+      responses:
+        "201":
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /auth/login:
+    post:
+      operationId: login
+      tags: [auth]
+      summary: Login user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginBody"
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /auth/me:
+    get:
+      operationId: getMe
+      tags: [auth]
+      summary: Get current user
+      responses:
+        "200":
+          description: Current user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /auth/character:
+    put:
+      operationId: updateCharacter
+      tags: [auth]
+      summary: Update selected character
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateCharacterBody"
+      responses:
+        "200":
+          description: Character updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+  /habits:
+    get:
+      operationId: getHabits
+      tags: [habits]
+      summary: Get all habits for current user
+      responses:
+        "200":
+          description: List of habits
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Habit"
+    post:
+      operationId: createHabit
+      tags: [habits]
+      summary: Create a new habit
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateHabitBody"
+      responses:
+        "201":
+          description: Habit created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Habit"
+        "400":
+          description: Max habits exceeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /habits/{id}:
+    put:
+      operationId: updateHabit
+      tags: [habits]
+      summary: Update a habit
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateHabitBody"
+      responses:
+        "200":
+          description: Habit updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Habit"
+    delete:
+      operationId: deleteHabit
+      tags: [habits]
+      summary: Delete a habit
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Habit deleted
+
+  /habits/{id}/complete:
+    post:
+      operationId: completeHabit
+      tags: [habits]
+      summary: Mark habit as complete for a date
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompleteHabitBody"
+      responses:
+        "200":
+          description: Habit completion updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Habit"
+
+  /habits/{id}/uncomplete:
+    post:
+      operationId: uncompleteHabit
+      tags: [habits]
+      summary: Mark habit as incomplete for a date
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompleteHabitBody"
+      responses:
+        "200":
+          description: Habit uncompleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Habit"
+
+  /dashboard/summary:
+    get:
+      operationId: getDashboardSummary
+      tags: [dashboard]
+      summary: Get dashboard summary stats
+      responses:
+        "200":
+          description: Dashboard summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardSummary"
+
+  /dashboard/insights:
+    get:
+      operationId: getInsights
+      tags: [dashboard]
+      summary: Get AI-powered habit insights
+      responses:
+        "200":
+          description: Habit insights
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Insight"
+
+  /dashboard/streaks:
+    get:
+      operationId: getStreaks
+      tags: [dashboard]
+      summary: Get streak data for all habits
+      responses:
+        "200":
+          description: Streak data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/HabitStreak"
+
+  /dashboard/companion-message:
+    get:
+      operationId: getCompanionMessage
+      tags: [dashboard]
+      summary: Get character companion message
+      responses:
+        "200":
+          description: Companion message
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompanionMessage"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +310,240 @@ components:
       required:
         - status
 
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+        - error
+
+    SignupBody:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 6
+        selectedCharacter:
+          type: string
+          enum: [infinity-mentor, dark-king, energy-hero]
+      required:
+        - name
+        - email
+        - password
+
+    LoginBody:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+      required:
+        - email
+        - password
+
+    AuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        user:
+          $ref: "#/components/schemas/User"
+      required:
+        - token
+        - user
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        selectedCharacter:
+          type: string
+          enum: [infinity-mentor, dark-king, energy-hero]
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - name
+        - email
+        - selectedCharacter
+        - createdAt
+
+    UpdateCharacterBody:
+      type: object
+      properties:
+        selectedCharacter:
+          type: string
+          enum: [infinity-mentor, dark-king, energy-hero]
+      required:
+        - selectedCharacter
+
+    Habit:
+      type: object
+      properties:
+        id:
+          type: integer
+        userId:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        completedDates:
+          type: array
+          items:
+            type: string
+            format: date
+        currentStreak:
+          type: integer
+        longestStreak:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - userId
+        - title
+        - completedDates
+        - currentStreak
+        - longestStreak
+        - createdAt
+
+    CreateHabitBody:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+      required:
+        - title
+
+    UpdateHabitBody:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+
+    CompleteHabitBody:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+      required:
+        - date
+
+    DashboardSummary:
+      type: object
+      properties:
+        totalHabits:
+          type: integer
+        completedToday:
+          type: integer
+        completionRate:
+          type: number
+        longestStreak:
+          type: integer
+        totalCompletions:
+          type: integer
+        weeklyData:
+          type: array
+          items:
+            $ref: "#/components/schemas/WeeklyDataPoint"
+      required:
+        - totalHabits
+        - completedToday
+        - completionRate
+        - longestStreak
+        - totalCompletions
+        - weeklyData
+
+    WeeklyDataPoint:
+      type: object
+      properties:
+        date:
+          type: string
+        completed:
+          type: integer
+        total:
+          type: integer
+      required:
+        - date
+        - completed
+        - total
+
+    Insight:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum: [timing, consistency, streak, warning, encouragement]
+        message:
+          type: string
+        habitId:
+          type: integer
+        habitTitle:
+          type: string
+      required:
+        - id
+        - type
+        - message
+
+    HabitStreak:
+      type: object
+      properties:
+        habitId:
+          type: integer
+        habitTitle:
+          type: string
+        currentStreak:
+          type: integer
+        longestStreak:
+          type: integer
+        lastCompletedDate:
+          type: string
+      required:
+        - habitId
+        - habitTitle
+        - currentStreak
+        - longestStreak
+
+    CompanionMessage:
+      type: object
+      properties:
+        character:
+          type: string
+          enum: [infinity-mentor, dark-king, energy-hero]
+        message:
+          type: string
+        mood:
+          type: string
+          enum: [encouraging, challenging, disappointed, celebrating, neutral]
+        completionRate:
+          type: number
+      required:
+        - character
+        - message
+        - mood
+        - completionRate

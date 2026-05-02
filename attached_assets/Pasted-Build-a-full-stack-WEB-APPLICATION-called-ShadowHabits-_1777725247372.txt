@@ -1,0 +1,328 @@
+Build a **full-stack WEB APPLICATION** called **"ShadowHabits"** — an anime-themed, AI-assisted habit tracker designed for Gen Z users.
+
+The app must run in the browser and be fully responsive (desktop + mobile).
+
+---
+
+# 🎯 OBJECTIVE
+
+Create a visually immersive habit tracking web app where:
+- Users track daily habits
+- A character acts as a motivational AI companion
+- The entire UI dynamically changes based on selected character
+- Character images are fetched dynamically from the web (no static placeholders)
+- The experience is smooth, animated, and low cognitive load
+
+---
+
+# 🌐 APPLICATION TYPE
+
+- Web Application (NOT mobile-only)
+- Responsive design (mobile-first but works on desktop)
+
+---
+
+# 👥 TARGET USERS
+
+- Gen Z users
+- Users with low attention span
+- Users who need visual motivation and engagement
+
+---
+
+# 🧱 TECH STACK (STRICT)
+
+Frontend:
+- React (Vite)
+- Tailwind CSS
+- Framer Motion
+
+Backend:
+- Node.js + Express
+
+Database:
+- MongoDB (Mongoose)
+
+Authentication:
+- JWT-based login/signup
+
+Charts:
+- Recharts
+
+State:
+- React Context API
+
+Image Fetching:
+- Use public image APIs (IMPORTANT):
+  - Unsplash API OR
+  - Google Gemini API (if available) OR
+  - Fallback: curated anime image URLs
+
+---
+
+# 🎭 CHARACTER SYSTEM (VERY IMPORTANT)
+
+## Characters (inspired by anime, but do NOT use copyrighted names directly)
+
+Create 3 characters:
+1. "Infinity Mentor" (inspired by Gojo)
+2. "Dark King" (inspired by Sukuna)
+3. "Energy Hero" (inspired by Itadori)
+
+---
+
+## Character Image System
+
+- Fetch character images dynamically from API
+- Each character should have:
+  - Main portrait image
+  - Small avatar icon
+
+Search keywords example:
+- "anime white hair blue aura"
+- "dark anime villain red aura"
+- "anime energetic boy orange theme"
+
+Store selected character in user profile
+
+---
+
+## Character-Based Theme Engine
+
+Each character changes:
+- Background gradient
+- UI colors
+- Glow effects
+- Card styles
+
+Example:
+
+Infinity Mentor:
+- Blue + white + glow
+- Glassmorphism UI
+
+Dark King:
+- Black + red
+- Sharp shadows, intense UI
+
+Energy Hero:
+- Orange + yellow
+- Warm, soft UI
+
+---
+
+# ⚙️ CORE FEATURES
+
+## 1. Authentication
+- Signup/Login
+- Save user + selected character
+
+---
+
+## 2. Habit Management (CRUD)
+- Create habit
+- Update habit
+- Delete habit
+- Mark as complete
+
+Habit fields:
+- title
+- createdAt
+- completedDates[]
+
+---
+
+## 3. Habit Limitation
+- Max 7 active habits
+- Show warning if exceeded
+
+---
+
+## 4. Progress Tracking
+
+- Line graph using Recharts
+- Show completion history
+- Add animated indicator:
+  - Use character avatar as moving point
+
+---
+
+## 5. Calendar Strip
+
+- Horizontal scrollable dates
+- Each date shows:
+  - Completion state
+  - Character face indicator
+
+---
+
+# 🤖 AI FEATURES (RULE-BASED)
+
+## AI Character Companion
+
+Display character on dashboard:
+- Talks to user
+- Reacts based on actions
+
+Logic:
+
+IF habit completed:
+→ show encouraging message
+
+IF missed:
+→ show gentle nudge
+
+---
+
+## Smart Habit Setup
+
+When creating habit:
+- Suggest shorter version
+- Show time estimate
+
+---
+
+## Smart Insights
+
+Occasionally show:
+- “You’re more consistent at night”
+- “You miss this habit on weekends”
+
+---
+
+## Habit Pattern Detection
+
+- Track completion time
+- Suggest better timing
+
+---
+
+## Incomplete Highlighting
+
+- Highlight unfinished habits
+- Show message:
+  “You left something unfinished”
+
+---
+
+# 🎨 UI/UX SYSTEM
+
+---
+
+## Layout (Home Page)
+
+Top:
+- Greeting + profile
+
+Below:
+- Horizontal calendar
+
+Center:
+- Large character image (fetched dynamically)
+- Status text:
+  “Thriving (75%)”
+
+Bottom:
+- Habit cards (grid)
+
+Footer:
+- Navigation:
+  - Today
+  - Statistics
+  - Goals
+
+---
+
+## UI Style (STRICT)
+
+Based on references:
+- Glassmorphism (blur + transparency)
+- Soft shadows + glow
+- Rounded cards
+- Gradient backgrounds
+
+---
+
+## Animations
+
+Use Framer Motion:
+- Page transitions
+- Card hover
+- Graph animation
+- Character reactions
+
+---
+
+## Micro-interactions
+
+- Completion → animation burst
+- Streak → stronger feedback
+- Miss → subtle feedback
+
+---
+
+# 🧠 LOGIC RULES
+
+- Max habits: 7
+- Streak increases daily
+- Missing resets streak
+- AI messages depend on behavior
+
+---
+
+# 📊 DATA MODELS
+
+User:
+- name
+- email
+- password
+- selectedCharacter
+
+Habit:
+- userId
+- title
+- completedDates[]
+- createdAt
+
+---
+
+# 🔌 BACKEND API ROUTES
+
+Auth:
+- POST /signup
+- POST /login
+
+Habits:
+- GET /habits
+- POST /habits
+- PUT /habits/:id
+- DELETE /habits/:id
+
+---
+
+# 🚀 OUTPUT REQUIREMENTS
+
+Generate:
+- Full working web app
+- Clean structure (client + server)
+- Responsive UI
+- Dynamic character images
+- Styled components (no placeholders)
+
+---
+
+# ⚠️ IMPORTANT RULES
+
+- Do NOT use copyrighted names directly
+- Do NOT hardcode images (must fetch dynamically)
+- Keep UI smooth and minimal
+- Avoid clutter
+
+---
+
+# ✅ FINAL EXPERIENCE
+
+The app should feel like:
+“A visually alive anime-themed habit system where a character guides the user calmly and consistently.”
+
+---
