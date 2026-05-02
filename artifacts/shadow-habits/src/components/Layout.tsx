@@ -2,103 +2,112 @@ import { useLocation, Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "@/contexts/AuthContext";
-import { Home, Flame, BarChart2, User } from "lucide-react";
+import {
+  LayoutDashboard, Flame, BarChart2, User, LogOut,
+  Shield, Settings, HelpCircle, ChevronDown,
+} from "lucide-react";
 
-const navItems = [
-  { href: "/dashboard", label: "Home",      icon: Home      },
-  { href: "/habits",    label: "Habits",    icon: Flame     },
+const mainNav = [
+  { href: "/dashboard", label: "Home", icon: LayoutDashboard },
+  { href: "/habits",    label: "Habits",    icon: Flame },
   { href: "/stats",     label: "Stats",     icon: BarChart2 },
-  { href: "/settings",  label: "Character", icon: User      },
+  { href: "/settings",  label: "Character", icon: User },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
   const { charColor, charGlow, charGlowSoft, charImage, charName } = useTheme();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+
+  const firstName = user?.name?.split(" ")[0] ?? "Sorcerer";
 
   return (
-    <div className="h-screen flex flex-col bg-background hex-bg overflow-hidden relative">
+    <div className="h-screen flex overflow-hidden" style={{ background: "hsl(var(--background))" }}>
 
-      {/* ── FULL CONTENT AREA ── */}
-      <main className="flex-1 min-h-0 overflow-hidden">
-        <motion.div
-          key={location}
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -12 }}
-          transition={{ duration: 0.2, ease: "easeOut" }}
-          className="h-full"
-        >
-          {children}
-        </motion.div>
-      </main>
+      {/* ══════════════════════════════
+          LEFT SIDEBAR
+      ══════════════════════════════ */}
+      <aside
+        className="w-56 flex-shrink-0 flex flex-col h-full border-r"
+        style={{
+          background: "rgba(3, 9, 18, 0.97)",
+          borderColor: `${charColor}12`,
+          backdropFilter: "blur(24px)",
+        }}
+      >
+        {/* Logo */}
+        <div className="px-5 pt-6 pb-5 flex items-center gap-3">
+          <div
+            className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
+            style={{
+              background: `linear-gradient(135deg, ${charColor}30, ${charColor}10)`,
+              border: `1px solid ${charColor}40`,
+              boxShadow: `0 0 16px ${charGlowSoft}`,
+            }}
+          >
+            <Shield className="w-4 h-4" style={{ color: charColor }} />
+          </div>
+          <div>
+            <p className="font-display text-base tracking-widest uppercase leading-none" style={{ color: charColor }}>
+              Shadow
+            </p>
+            <p className="font-display text-base tracking-widest uppercase leading-none text-white/60">
+              Habits
+            </p>
+          </div>
+        </div>
 
-      {/* ══════════════════════════════════════
-          FLOATING BOTTOM DOCK — The surprise!
-          Glass pill with neon active states
-          ══════════════════════════════════════ */}
-      <div className="flex-shrink-0 flex justify-center pb-5 pt-3 z-50 relative">
+        {/* ── MAIN MENU ── */}
+        <div className="px-4 flex-1 flex flex-col gap-1 overflow-hidden">
+          <p className="text-xs font-semibold tracking-widest uppercase mb-2 px-2" style={{ color: "rgba(255,255,255,0.25)" }}>
+            Main Menu
+          </p>
 
-        {/* Subtle ambient glow behind dock */}
-        <div
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-80 h-20 pointer-events-none"
-          style={{ background: `radial-gradient(ellipse at 50% 100%, ${charGlowSoft}, transparent 70%)` }}
-        />
-
-        <nav
-          className="relative flex items-center gap-1 px-3 py-2.5 rounded-3xl border"
-          style={{
-            background: "rgba(4, 12, 22, 0.88)",
-            backdropFilter: "blur(40px)",
-            WebkitBackdropFilter: "blur(40px)",
-            borderColor: `${charColor}22`,
-            boxShadow: `0 8px 48px rgba(0,0,0,0.7), 0 0 0 1px ${charColor}10, inset 0 1px 0 rgba(255,255,255,0.05)`,
-          }}
-        >
-          {navItems.map(({ href, label, icon: Icon }) => {
+          {mainNav.map(({ href, label, icon: Icon }) => {
             const isActive = location === href || (href === "/dashboard" && location === "/");
             return (
               <Link key={href} href={href}>
                 <motion.div
-                  whileHover={{ scale: 1.06, y: -2 }}
-                  whileTap={{ scale: 0.93 }}
-                  className="relative flex flex-col items-center justify-center gap-1 px-7 py-2 rounded-2xl cursor-pointer transition-colors select-none"
+                  whileHover={{ x: 2 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="relative flex items-center gap-3 px-3 py-2.5 rounded-xl cursor-pointer transition-all select-none"
                   style={isActive
                     ? {
-                        backgroundColor: `${charColor}14`,
-                        boxShadow: `inset 0 1px 0 ${charColor}20`,
+                        background: `linear-gradient(90deg, ${charColor}16, ${charColor}08)`,
+                        border: `1px solid ${charColor}20`,
                       }
-                    : {}
+                    : {
+                        border: "1px solid transparent",
+                      }
                   }
                   data-testid={`nav-${label.toLowerCase()}`}
                 >
-                  {/* Active glow dot above */}
-                  <AnimatePresence>
-                    {isActive && (
-                      <motion.div
-                        layoutId="dock-dot"
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0 }}
-                        className="absolute -top-1.5 w-4 h-1 rounded-full"
-                        style={{ backgroundColor: charColor, boxShadow: `0 0 10px ${charGlow}, 0 0 20px ${charGlow}` }}
-                      />
-                    )}
-                  </AnimatePresence>
+                  {/* Active left bar */}
+                  {isActive && (
+                    <motion.div
+                      layoutId="sidebar-active-bar"
+                      className="absolute left-0 top-2 bottom-2 w-0.5 rounded-full"
+                      style={{ backgroundColor: charColor, boxShadow: `0 0 8px ${charGlow}` }}
+                    />
+                  )}
 
-                  <Icon
-                    className="w-5 h-5 transition-all duration-200"
+                  {/* Icon box */}
+                  <div
+                    className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
                     style={isActive
-                      ? { color: charColor, filter: `drop-shadow(0 0 8px ${charGlow})` }
-                      : { color: "rgba(255,255,255,0.35)" }
+                      ? { backgroundColor: `${charColor}20`, boxShadow: `0 0 10px ${charGlowSoft}` }
+                      : { backgroundColor: "rgba(255,255,255,0.05)" }
                     }
-                  />
+                  >
+                    <Icon
+                      className="w-3.5 h-3.5"
+                      style={{ color: isActive ? charColor : "rgba(255,255,255,0.4)" }}
+                    />
+                  </div>
+
                   <span
-                    className="text-xs font-semibold tracking-wide transition-all duration-200"
-                    style={isActive
-                      ? { color: charColor }
-                      : { color: "rgba(255,255,255,0.3)" }
-                    }
+                    className="text-sm font-medium"
+                    style={{ color: isActive ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.45)" }}
                   >
                     {label}
                   </span>
@@ -107,31 +116,105 @@ export function Layout({ children }: { children: React.ReactNode }) {
             );
           })}
 
-          {/* Divider */}
-          <div className="w-px h-10 mx-1 rounded-full" style={{ background: `${charColor}18` }} />
+          {/* ── PREFERENCE ── */}
+          <div className="mt-4">
+            <p className="text-xs font-semibold tracking-widest uppercase mb-2 px-2" style={{ color: "rgba(255,255,255,0.25)" }}>
+              Preference
+            </p>
+            <button
+              onClick={logout}
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all border border-transparent group"
+              style={{ color: "rgba(255,255,255,0.4)" }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLElement).style.backgroundColor = "rgba(255,50,50,0.07)";
+                (e.currentTarget as HTMLElement).style.color = "#ff6b6b";
+                (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,50,50,0.12)";
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLElement).style.backgroundColor = "";
+                (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.4)";
+                (e.currentTarget as HTMLElement).style.borderColor = "transparent";
+              }}
+              data-testid="button-logout"
+            >
+              <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: "rgba(255,255,255,0.05)" }}>
+                <LogOut className="w-3.5 h-3.5" />
+              </div>
+              <span className="text-sm font-medium">Sign Out</span>
+            </button>
+          </div>
+        </div>
 
-          {/* User avatar in dock */}
+        {/* User card at bottom */}
+        <div className="p-4 border-t flex-shrink-0" style={{ borderColor: `${charColor}10` }}>
           <Link href="/settings">
-            <motion.div
-              whileHover={{ scale: 1.08, y: -2 }}
-              whileTap={{ scale: 0.93 }}
-              className="flex flex-col items-center gap-1 px-4 py-2 cursor-pointer"
+            <div
+              className="flex items-center gap-3 p-2.5 rounded-xl cursor-pointer transition-all border border-transparent"
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = `${charColor}20`; (e.currentTarget as HTMLElement).style.backgroundColor = `${charColor}08`; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "transparent"; (e.currentTarget as HTMLElement).style.backgroundColor = ""; }}
             >
               <div
-                className="w-8 h-8 rounded-xl overflow-hidden border-2 transition-all"
-                style={{
-                  borderColor: location === "/settings" ? charColor : `${charColor}35`,
-                  boxShadow: location === "/settings" ? `0 0 14px ${charGlow}` : "none",
-                }}
+                className="w-8 h-8 rounded-xl overflow-hidden border-2 flex-shrink-0"
+                style={{ borderColor: `${charColor}60`, boxShadow: `0 0 10px ${charGlowSoft}` }}
               >
                 <img src={charImage} alt={charName} className="w-full h-full object-cover" />
               </div>
-              <span className="text-xs font-semibold" style={{ color: "rgba(255,255,255,0.3)", fontSize: 10 }}>
-                {user?.name?.split(" ")[0] || "You"}
-              </span>
-            </motion.div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-white/90 truncate leading-tight">{firstName}</p>
+                <p className="text-xs truncate leading-tight" style={{ color: `${charColor}80` }}>{charName}</p>
+              </div>
+              <ChevronDown className="w-3.5 h-3.5 flex-shrink-0" style={{ color: "rgba(255,255,255,0.25)" }} />
+            </div>
           </Link>
-        </nav>
+        </div>
+      </aside>
+
+      {/* ══════════════════════════════
+          MAIN CONTENT AREA
+      ══════════════════════════════ */}
+      <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
+
+        {/* Top mini-header */}
+        <div
+          className="flex-shrink-0 flex items-center justify-between px-6 h-14 border-b"
+          style={{
+            background: "rgba(3, 9, 18, 0.6)",
+            backdropFilter: "blur(20px)",
+            borderColor: `${charColor}10`,
+          }}
+        >
+          {/* Page title — dynamic from location */}
+          <h2 className="text-sm font-semibold text-white/70">
+            {mainNav.find(n => n.href === location || (n.href === "/dashboard" && location === "/"))?.label ?? "ShadowHabits"}
+          </h2>
+
+          {/* Right: character tag */}
+          <div className="flex items-center gap-2.5">
+            <div
+              className="flex items-center gap-2 px-3 py-1.5 rounded-xl border"
+              style={{ backgroundColor: `${charColor}10`, borderColor: `${charColor}25` }}
+            >
+              <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: charColor, boxShadow: `0 0 6px ${charColor}` }} />
+              <span className="text-xs font-semibold" style={{ color: charColor }}>{charName}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Scrollable page content */}
+        <main className="flex-1 min-h-0 overflow-hidden">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={location}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.18, ease: "easeOut" }}
+              className="h-full"
+            >
+              {children}
+            </motion.div>
+          </AnimatePresence>
+        </main>
       </div>
     </div>
   );
