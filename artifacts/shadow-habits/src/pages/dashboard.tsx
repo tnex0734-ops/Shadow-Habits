@@ -15,6 +15,8 @@ import { Flame, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Link } from "wouter";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import { CharacterHeroPanel } from "@/components/CharacterHeroPanel";
+import { useAuth } from "@/contexts/AuthContext";
 
 /* ─── Habit Row ─── */
 function HabitRow({ habit }: {
@@ -134,6 +136,7 @@ function ChartTip({ active, payload, label }: { active?: boolean; payload?: Arra
 /* ═══ DASHBOARD ═══ */
 export default function DashboardPage() {
   const { charColor, charGlow, charGlowSoft } = useTheme();
+  const { user } = useAuth();
   const { data: habits = [] } = useGetHabits();
   const { data: summary } = useGetDashboardSummary();
   const { data: companion } = useGetCompanionMessage();
@@ -373,104 +376,15 @@ export default function DashboardPage() {
           }}
         >
 
-          {/* ══ TOP: Character Panel ══ */}
-          <div className="relative overflow-hidden" style={{ flex: "0 0 58%" }}>
-
-            {/* Diagonal colour sweep across the whole panel */}
-            <div className="absolute inset-0 pointer-events-none" style={{
-              background: `linear-gradient(135deg, ${charColor}14 0%, transparent 55%)`,
-            }} />
-            {/* Bottom-right bloom */}
-            <div className="absolute inset-0 pointer-events-none" style={{
-              background: `radial-gradient(ellipse at 85% 95%, ${charColor}22 0%, transparent 55%)`,
-            }} />
-            {/* Subtle top-edge highlight */}
-            <div className="absolute top-0 left-0 right-0 h-px pointer-events-none"
-              style={{ background: `linear-gradient(90deg, transparent 0%, ${charColor}30 40%, transparent 100%)` }} />
-
-            {/* ── Speech bubble — top-left ── */}
-            <div className="absolute top-4 left-4 z-20" style={{ maxWidth: "calc(100% - 90px)" }}>
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={companion?.message ?? "default"}
-                  initial={{ opacity: 0, scale: 0.88, y: 6 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.92, y: -4 }}
-                  transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
-                  className="relative"
-                >
-                  {/* Bubble body */}
-                  <div className="rounded-2xl rounded-bl-sm px-3.5 py-2.5 relative" style={{
-                    background: "rgba(8,14,28,0.88)",
-                    backdropFilter: "blur(20px)",
-                    border: `1px solid ${charColor}35`,
-                    boxShadow: `0 8px 24px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.07), 0 0 0 1px ${charColor}08`,
-                  }}>
-                    {/* Colour tint strip along left edge */}
-                    <div className="absolute left-0 top-2 bottom-2 w-0.5 rounded-full pointer-events-none"
-                      style={{ background: `linear-gradient(180deg, ${charColor}, ${charColor}40)` }} />
-                    <p className="text-[12px] leading-relaxed pl-2.5 pr-0.5" style={{ color: "rgba(255,255,255,0.86)" }}>
-                      {companion?.message || "Ready when you are."}
-                    </p>
-                  </div>
-                  {/* Tail — bottom-left corner pointing down toward character */}
-                  <div className="absolute -bottom-2 left-4" style={{
-                    width: 0, height: 0,
-                    borderLeft: "7px solid transparent",
-                    borderRight: "7px solid transparent",
-                    borderTop: `8px solid ${charColor}35`,
-                  }} />
-                  <div className="absolute -bottom-1.5 left-4" style={{
-                    width: 0, height: 0,
-                    borderLeft: "6px solid transparent",
-                    borderRight: "6px solid transparent",
-                    borderTop: "7px solid rgba(8,14,28,0.88)",
-                  }} />
-                </motion.div>
-              </AnimatePresence>
-            </div>
-
-            {/* ── Character — bottom-right, large, floating ── */}
-            <div className="absolute bottom-0 right-0 flex items-end justify-end pointer-events-none">
-              {/* Ambient glow behind character */}
-              <div className="absolute bottom-0 right-0" style={{
-                width: 200, height: 200,
-                background: `radial-gradient(ellipse at 65% 80%, ${charColor}28, transparent 62%)`,
-                filter: "blur(12px)",
-              }} />
-              <motion.img
-                src={companionImg}
-                alt={companionName}
-                animate={{ y: [0, -9, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                style={{
-                  width: 178,
-                  height: 178,
-                  filter: `drop-shadow(0 0 22px ${charGlow}) drop-shadow(0 4px 10px rgba(0,0,0,0.8))`,
-                  marginRight: -8,
-                  marginBottom: -4,
-                }}
-              />
-            </div>
-
-            {/* ── Name + role badge — bottom-left ── */}
-            <div className="absolute bottom-3 left-4 z-10">
-              <div className="flex items-center gap-1.5">
-                <motion.span
-                  animate={{ opacity: [1, 0.5, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                  style={{ background: charColor, boxShadow: `0 0 6px ${charGlow}` }}
-                />
-                <span className="text-[11px] font-black uppercase tracking-[0.15em]" style={{ color: charColor }}>
-                  {companionName}
-                </span>
-              </div>
-              <p className="text-[9px] uppercase tracking-widest mt-0.5 pl-3" style={{ color: "rgba(255,255,255,0.28)" }}>
-                Your companion
-              </p>
-            </div>
-          </div>
+          <CharacterHeroPanel
+            character={user?.selectedCharacter ?? "infinity-mentor"}
+            charColor={charColor}
+            charGlow={charGlow}
+            charGlowSoft={charGlowSoft}
+            companionImg={companionImg}
+            companionName={companionName}
+            companionMessage={companion?.message}
+          />
 
           {/* ── Divider ── */}
           <div className="flex-shrink-0 h-px mx-0" style={{
