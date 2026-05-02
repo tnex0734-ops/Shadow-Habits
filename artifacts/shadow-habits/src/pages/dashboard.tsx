@@ -181,8 +181,8 @@ export default function DashboardPage() {
               />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-xl font-bold" style={{ color: charColor }}>{pct}%</span>
-              <span className="text-xs" style={{ color: "rgba(255,255,255,0.35)", fontSize: 9 }}>done</span>
+              <span className="text-lg font-bold leading-none" style={{ color: charColor }}>{done.length}/{total}</span>
+              <span className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.35)", fontSize: 9 }}>habits</span>
             </div>
           </div>
         ) : (
