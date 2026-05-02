@@ -164,7 +164,7 @@ export default function SignupPage() {
         </motion.div>
 
         {/* Character grid */}
-        <div className="grid grid-cols-2 gap-2.5 mb-5">
+        <div className="grid grid-cols-3 gap-2.5 mb-5">
           {characters.map((char) => {
             const isSelected = selectedCharacter === char.id;
             return (
