@@ -339,17 +339,17 @@ export function CharacterHeroPanel({
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
         <motion.span
           key={character}
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
+          transition={{ duration: 1.0, ease: "easeOut" }}
           style={{
-            fontSize: 180,
+            fontSize: 72,
             fontWeight: 900,
             fontFamily: "serif",
             color: charColor,
-            opacity: 0.04,
+            opacity: 0.07,
             lineHeight: 1,
-            letterSpacing: "-0.05em",
+            letterSpacing: "0.1em",
             userSelect: "none",
           }}
         >
