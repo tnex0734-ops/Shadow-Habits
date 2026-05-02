@@ -15,32 +15,32 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType>({
   character: "infinity-mentor",
   charName: "Infinity Mentor",
-  charColor: "#AAFF00",
-  charGlow: "rgba(170,255,0,0.38)",
-  charGlowSoft: "rgba(170,255,0,0.15)",
+  charColor: "#00C8FF",
+  charGlow: "rgba(0,200,255,0.38)",
+  charGlowSoft: "rgba(0,200,255,0.14)",
   charImage: "/src/assets/character-infinity.png",
 });
 
 const charData: Record<Character, Omit<ThemeContextType, "character">> = {
   "infinity-mentor": {
     charName: "Infinity Mentor",
-    charColor: "#AAFF00",
-    charGlow: "rgba(170,255,0,0.38)",
-    charGlowSoft: "rgba(170,255,0,0.15)",
+    charColor: "#00C8FF",
+    charGlow: "rgba(0,200,255,0.38)",
+    charGlowSoft: "rgba(0,200,255,0.14)",
     charImage: "/src/assets/character-infinity.png",
   },
   "dark-king": {
     charName: "Dark King",
-    charColor: "#FF1E1E",
-    charGlow: "rgba(255,30,30,0.42)",
-    charGlowSoft: "rgba(255,30,30,0.15)",
+    charColor: "#FF2020",
+    charGlow: "rgba(255,32,32,0.42)",
+    charGlowSoft: "rgba(255,32,32,0.14)",
     charImage: "/src/assets/character-dark.png",
   },
   "energy-hero": {
     charName: "Energy Hero",
-    charColor: "#FFA500",
-    charGlow: "rgba(255,165,0,0.4)",
-    charGlowSoft: "rgba(255,165,0,0.15)",
+    charColor: "#FFA000",
+    charGlow: "rgba(255,160,0,0.4)",
+    charGlowSoft: "rgba(255,160,0,0.14)",
     charImage: "/src/assets/character-energy.png",
   },
 };
@@ -51,16 +51,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     document.body.setAttribute("data-character", character);
-    return () => {
-      document.body.removeAttribute("data-character");
-    };
+    return () => { document.body.removeAttribute("data-character"); };
   }, [character]);
 
-  const value: ThemeContextType = {
-    character,
-    ...charData[character],
-  };
-
+  const value: ThemeContextType = { character, ...charData[character] };
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 }
 

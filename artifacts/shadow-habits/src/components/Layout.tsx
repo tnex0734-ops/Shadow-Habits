@@ -2,14 +2,13 @@ import { useLocation, Link } from "wouter";
 import { motion } from "framer-motion";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "@/contexts/AuthContext";
-import { LayoutDashboard, Flame, BarChart2, ScrollText, LogOut, Shield } from "lucide-react";
+import { Home, Flame, BarChart2, User, LogOut, Shield } from "lucide-react";
 
-/* JJK symbolic nav labels */
 const navItems = [
-  { href: "/dashboard", label: "Battlefield", icon: LayoutDashboard, jjk: "Today's Domain" },
-  { href: "/habits", label: "Techniques", icon: Flame, jjk: "Cursed Methods" },
-  { href: "/stats", label: "Records", icon: BarChart2, jjk: "Sorcerer Grade" },
-  { href: "/settings", label: "Binding Vow", icon: ScrollText, jjk: "Soul Contract" },
+  { href: "/dashboard", label: "Home", icon: Home },
+  { href: "/habits", label: "Habits", icon: Flame },
+  { href: "/stats", label: "Stats", icon: BarChart2 },
+  { href: "/settings", label: "Character", icon: User },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -18,40 +17,39 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const { user, logout } = useAuth();
 
   return (
-    <div className="min-h-screen flex flex-col bg-background hex-bg relative">
+    <div className="h-screen flex flex-col bg-background hex-bg overflow-hidden relative">
 
-      {/* ── TOP NAVIGATION (sticky) ── */}
+      {/* TOP NAV */}
       <header
-        className="sticky top-0 z-50 border-b"
+        className="flex-shrink-0 border-b z-50"
         style={{
-          background: "rgba(3, 10, 3, 0.92)",
+          background: "rgba(3, 8, 14, 0.95)",
           backdropFilter: "blur(28px)",
-          borderBottomColor: `${charColor}18`,
+          borderBottomColor: `${charColor}20`,
         }}
       >
-        <div className="max-w-6xl mx-auto px-6 flex items-center h-14 gap-6">
+        <div className="max-w-7xl mx-auto px-5 flex items-center h-12 gap-5">
 
           {/* Brand */}
-          <Link href="/dashboard" className="flex items-center gap-2.5 flex-shrink-0">
+          <Link href="/dashboard" className="flex items-center gap-2 flex-shrink-0">
             <div
-              className="w-7 h-7 rounded-lg flex items-center justify-center"
-              style={{ backgroundColor: `${charColor}18`, border: `1px solid ${charColor}30`, boxShadow: `0 0 12px ${charGlowSoft}` }}
+              className="w-6 h-6 rounded-md flex items-center justify-center"
+              style={{ backgroundColor: `${charColor}18`, border: `1px solid ${charColor}35` }}
             >
-              <Shield className="w-3.5 h-3.5" style={{ color: charColor }} />
+              <Shield className="w-3 h-3" style={{ color: charColor }} />
             </div>
             <span
-              className="font-display text-lg tracking-widest uppercase hidden sm:block"
-              style={{ color: charColor, textShadow: `0 0 16px ${charGlow}` }}
+              className="font-display text-base tracking-widest uppercase hidden sm:block"
+              style={{ color: charColor, textShadow: `0 0 12px ${charGlow}` }}
             >
               ShadowHabits
             </span>
           </Link>
 
-          {/* Divider */}
-          <div className="h-6 w-px opacity-20" style={{ background: charColor }} />
+          <div className="h-5 w-px" style={{ background: `${charColor}25` }} />
 
-          {/* Nav links */}
-          <nav className="flex items-center gap-1 flex-1">
+          {/* Nav */}
+          <nav className="flex items-center gap-0.5 flex-1">
             {navItems.map(({ href, label, icon: Icon }) => {
               const isActive = location === href || (href === "/dashboard" && location === "/");
               return (
@@ -59,23 +57,18 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   <motion.div
                     whileHover={{ y: -1 }}
                     whileTap={{ scale: 0.95 }}
-                    className="relative flex items-center gap-1.5 px-3 py-1.5 rounded-lg cursor-pointer transition-all group"
+                    className="relative flex items-center gap-1.5 px-3 py-1.5 rounded-lg cursor-pointer transition-all"
                     style={isActive
-                      ? { backgroundColor: `${charColor}14`, color: charColor }
-                      : { color: "rgba(255,255,255,0.38)" }
+                      ? { backgroundColor: `${charColor}16`, color: charColor }
+                      : { color: "rgba(255,255,255,0.4)" }
                     }
                     data-testid={`nav-${label.toLowerCase()}`}
                   >
-                    <Icon
-                      className="w-3.5 h-3.5 transition-all"
-                      style={isActive ? { filter: `drop-shadow(0 0 5px ${charGlow})` } : {}}
-                    />
-                    <span className="text-xs font-semibold uppercase tracking-wider whitespace-nowrap">
-                      {label}
-                    </span>
+                    <Icon className="w-3.5 h-3.5" style={isActive ? { filter: `drop-shadow(0 0 5px ${charGlow})` } : {}} />
+                    <span className="text-xs font-semibold uppercase tracking-wide whitespace-nowrap">{label}</span>
                     {isActive && (
                       <motion.div
-                        layoutId="top-nav-indicator"
+                        layoutId="nav-ind"
                         className="absolute bottom-0 left-2 right-2 h-0.5 rounded-full"
                         style={{ backgroundColor: charColor, boxShadow: `0 0 6px ${charGlow}` }}
                       />
@@ -86,22 +79,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
             })}
           </nav>
 
-          {/* Right: User + Logout */}
-          <div className="flex items-center gap-3 flex-shrink-0">
-            {/* Character mini avatar */}
-            <div className="flex items-center gap-2">
-              <div
-                className="w-7 h-7 rounded-lg overflow-hidden border"
-                style={{ borderColor: `${charColor}40`, boxShadow: `0 0 8px ${charGlowSoft}` }}
-              >
-                <img src={charImage} alt={charName} className="w-full h-full object-cover" />
-              </div>
-              {user?.name && (
-                <span className="text-xs font-semibold hidden md:block" style={{ color: `${charColor}90` }}>
-                  {user.name.split(" ")[0]}
-                </span>
-              )}
+          {/* User area */}
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <div
+              className="w-6 h-6 rounded-md overflow-hidden border"
+              style={{ borderColor: `${charColor}40` }}
+            >
+              <img src={charImage} alt={charName} className="w-full h-full object-cover" />
             </div>
+            {user?.name && (
+              <span className="text-xs hidden md:block" style={{ color: `${charColor}80` }}>
+                {user.name.split(" ")[0]}
+              </span>
+            )}
             <button
               onClick={logout}
               className="p-1.5 rounded-lg transition-all"
@@ -115,44 +105,26 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
 
-        {/* Ambient glow line under nav */}
+        {/* Glow line */}
         <div
-          className="absolute bottom-0 left-0 right-0 h-px opacity-60"
-          style={{ background: `linear-gradient(90deg, transparent 0%, ${charGlowSoft} 30%, ${charGlow} 50%, ${charGlowSoft} 70%, transparent 100%)` }}
+          className="absolute bottom-0 left-0 right-0 h-px"
+          style={{ background: `linear-gradient(90deg, transparent, ${charGlow}, transparent)`, opacity: 0.5 }}
         />
       </header>
 
-      {/* ── MAIN CONTENT ── */}
-      <main className="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-6">
+      {/* CONTENT — fills remaining height, no scroll on layout itself */}
+      <main className="flex-1 min-h-0 overflow-hidden">
         <motion.div
           key={location}
-          initial={{ opacity: 0, y: 14 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -14 }}
-          transition={{ duration: 0.22, ease: "easeOut" }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.18, ease: "easeOut" }}
+          className="h-full"
         >
           {children}
         </motion.div>
       </main>
-
-      {/* ── FOOTER STATUS BAR ── */}
-      <footer
-        className="border-t px-6 py-2"
-        style={{
-          background: "rgba(3, 10, 3, 0.85)",
-          backdropFilter: "blur(20px)",
-          borderTopColor: `${charColor}10`,
-        }}
-      >
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <p className="text-xs" style={{ color: `${charColor}50` }}>
-            JUJUTSU SORCERER SYSTEM v1.0
-          </p>
-          <p className="text-xs" style={{ color: "rgba(255,255,255,0.2)" }}>
-            Channel your cursed energy wisely
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }
