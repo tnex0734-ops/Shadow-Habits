@@ -199,6 +199,26 @@ export default function DashboardPage() {
             </div>
           )}
 
+          {/* Quick stats — below progress bar */}
+          {summary && (
+            <div className="grid grid-cols-3 gap-2.5 flex-shrink-0">
+              {[
+                { label: "Best Streak", value: `${summary.longestStreak ?? 0}d` },
+                { label: "Habits",      value: summary.totalHabits ?? 0 },
+                { label: "All-Time",    value: summary.totalCompletions ?? 0 },
+              ].map(({ label, value }) => (
+                <div
+                  key={label}
+                  className="rounded-2xl p-3 border text-center"
+                  style={{ background: "rgba(4,12,22,0.7)", borderColor: `${charColor}15` }}
+                >
+                  <p className="text-base font-bold leading-tight" style={{ color: charColor }}>{value}</p>
+                  <p className="mt-0.5" style={{ color: "rgba(255,255,255,0.28)", fontSize: 9 }}>{label.toUpperCase()}</p>
+                </div>
+              ))}
+            </div>
+          )}
+
           {/* Habit list - scrollable internally if needed */}
           <div className="flex-1 min-h-0 overflow-y-auto no-scrollbar space-y-2 pr-0.5">
             {remaining.length > 0 && (
@@ -299,25 +319,6 @@ export default function DashboardPage() {
             </ResponsiveContainer>
           </div>
 
-          {/* Quick stats */}
-          {summary && (
-            <div className="grid grid-cols-3 gap-2.5 flex-shrink-0">
-              {[
-                { label: "Best Streak", value: `${summary.longestStreak ?? 0}d` },
-                { label: "Habits",      value: summary.totalHabits ?? 0 },
-                { label: "All-Time",    value: summary.totalCompletions ?? 0 },
-              ].map(({ label, value }) => (
-                <div
-                  key={label}
-                  className="rounded-2xl p-3 border text-center"
-                  style={{ background: "rgba(4,12,22,0.7)", borderColor: `${charColor}12` }}
-                >
-                  <p className="text-lg font-bold leading-tight" style={{ color: charColor }}>{value}</p>
-                  <p className="mt-0.5" style={{ color: "rgba(255,255,255,0.28)", fontSize: 9 }}>{label.toUpperCase()}</p>
-                </div>
-              ))}
-            </div>
-          )}
         </div>
       </div>
     </div>
