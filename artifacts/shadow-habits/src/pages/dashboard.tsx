@@ -9,7 +9,6 @@ import {
   useGetStreaks, getGetStreaksQueryKey,
 } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
-import { useAuth } from "@/contexts/AuthContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { getTodayStr, formatDate } from "@/lib/utils";
 import { CheckCircle2, Circle, Flame, Plus } from "lucide-react";
@@ -110,16 +109,12 @@ function ChartTip({ active, payload, label }: { active?: boolean; payload?: Arra
 
 /* ═══ DASHBOARD ═══ */
 export default function DashboardPage() {
-  const { user } = useAuth();
   const { charColor, charGlow, charGlowSoft } = useTheme();
   const { data: habits = [] } = useGetHabits();
   const { data: summary } = useGetDashboardSummary();
   const { data: companion } = useGetCompanionMessage();
 
   const today = getTodayStr();
-  const hour = new Date().getHours();
-  const greeting = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
-  const todayDisplay = new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
 
   const done = habits.filter(h => (h.completedDates as string[]).includes(today));
   const remaining = habits.filter(h => !(h.completedDates as string[]).includes(today));
@@ -145,58 +140,7 @@ export default function DashboardPage() {
     : "/src/assets/character-infinity.png";
 
   return (
-    <div className="h-full flex flex-col px-6 pt-6 pb-3 gap-5 overflow-hidden max-w-5xl mx-auto w-full">
-
-      {/* ── ROW 1: Greeting + Circular Progress ── */}
-      <div className="flex items-center justify-between flex-shrink-0 gap-4">
-        <div>
-          <p className="text-sm font-medium mb-0.5" style={{ color: `${charColor}80` }}>{todayDisplay}</p>
-          <h1 className="text-3xl font-bold text-white leading-tight">
-            {greeting},{" "}
-            <span style={{ color: charColor, textShadow: `0 0 24px ${charGlow}` }}>
-              {user?.name?.split(" ")[0]}
-            </span>
-          </h1>
-          {companion?.message && (
-            <p className="text-sm mt-1.5 max-w-sm" style={{ color: "rgba(255,255,255,0.45)" }}>
-              {companion.message}
-            </p>
-          )}
-        </div>
-
-        {/* Circular progress ring */}
-        {total > 0 ? (
-          <div className="relative w-20 h-20 flex-shrink-0">
-            <svg className="w-20 h-20 -rotate-90" viewBox="0 0 80 80">
-              <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="5" />
-              <motion.circle
-                cx="40" cy="40" r="32" fill="none"
-                stroke={charColor} strokeWidth="5"
-                strokeLinecap="round"
-                strokeDasharray={`${2 * Math.PI * 32}`}
-                initial={{ strokeDashoffset: 2 * Math.PI * 32 }}
-                animate={{ strokeDashoffset: 2 * Math.PI * 32 * (1 - pct / 100) }}
-                transition={{ duration: 1, ease: "easeOut" }}
-                style={{ filter: `drop-shadow(0 0 6px ${charGlow})` }}
-              />
-            </svg>
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-lg font-bold leading-none" style={{ color: charColor }}>{done.length}/{total}</span>
-              <span className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.35)", fontSize: 9 }}>habits</span>
-            </div>
-          </div>
-        ) : (
-          <Link href="/habits">
-            <motion.button
-              whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
-              className="flex items-center gap-2 px-5 py-3 rounded-2xl font-semibold text-sm flex-shrink-0"
-              style={{ backgroundColor: charColor, color: "#000", boxShadow: `0 0 20px ${charGlow}` }}
-            >
-              <Plus className="w-4 h-4" /> Add Habit
-            </motion.button>
-          </Link>
-        )}
-      </div>
+    <div className="h-full flex flex-col px-6 pt-5 pb-3 gap-4 overflow-hidden max-w-5xl mx-auto w-full">
 
       {/* ── STREAK WARNING ── */}
       <AnimatePresence>
@@ -331,14 +275,14 @@ export default function DashboardPage() {
 
           {/* 7-day chart */}
           <div
-            className="flex-shrink-0 rounded-2xl p-4 border"
+            className="flex-1 min-h-0 rounded-2xl p-4 border"
             style={{ background: "rgba(4,12,22,0.75)", borderColor: `${charColor}15`, backdropFilter: "blur(24px)" }}
           >
             <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "rgba(255,255,255,0.3)" }}>
               Last 7 Days
             </p>
-            <ResponsiveContainer width="100%" height={88}>
-              <BarChart data={chart7} barSize={20} margin={{ top: 4, right: 0, bottom: 0, left: -24 }}>
+            <ResponsiveContainer width="100%" height={180}>
+              <BarChart data={chart7} barSize={28} margin={{ top: 8, right: 4, bottom: 0, left: -20 }}>
                 <XAxis dataKey="day" tick={{ fontSize: 9, fill: "rgba(255,255,255,0.3)" }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fontSize: 9, fill: "rgba(255,255,255,0.2)" }} axisLine={false} tickLine={false} allowDecimals={false} />
                 <Tooltip content={<ChartTip />} cursor={{ fill: "rgba(255,255,255,0.03)", radius: 6 }} />
