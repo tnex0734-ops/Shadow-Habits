@@ -134,7 +134,7 @@ export default function SettingsPage() {
   const currentChar = characters.find(c => c.id === user?.selectedCharacter) || characters[0];
 
   return (
-    <div className="space-y-5 max-w-2xl mx-auto">
+    <div className="space-y-5 max-w-2xl mx-auto h-full overflow-y-auto px-1 pb-6 no-scrollbar">
 
       {/* Header */}
       <div>
