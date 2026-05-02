@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#1A2030"/>
+      <stop offset="100%" stop-color="#070810"/>
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="64" height="64" fill="url(#bg)"/>
+  <!-- Body - athletic build -->
+  <rect x="19" y="36" width="26" height="22" rx="4" fill="#101520"/>
+  <!-- Torso uniform detail -->
+  <rect x="19" y="36" width="26" height="5" rx="2" fill="#1A2535"/>
+  <!-- Head - sharp features -->
+  <ellipse cx="32" cy="26" rx="10" ry="11" fill="#2A2F3A"/>
+  <!-- Tied back hair -->
+  <path d="M22 22 Q22 12 32 11 Q42 12 42 22" fill="#0D1018"/>
+  <!-- Hair bun/tied back -->
+  <ellipse cx="40" cy="14" rx="5" ry="3" fill="#0D1018"/>
+  <!-- Glasses frames -->
+  <rect x="22" y="24" width="7" height="5" rx="1.5" fill="none" stroke="#C0C8D8" stroke-width="1.2" opacity="0.9"/>
+  <rect x="35" y="24" width="7" height="5" rx="1.5" fill="none" stroke="#C0C8D8" stroke-width="1.2" opacity="0.9"/>
+  <line x1="29" y1="26.5" x2="35" y2="26.5" stroke="#C0C8D8" stroke-width="1" opacity="0.9"/>
+  <!-- Eyes behind glasses -->
+  <ellipse cx="25.5" cy="26.5" rx="1.8" ry="1.5" fill="#E2E8F0" opacity="0.7" filter="url(#glow)"/>
+  <ellipse cx="38.5" cy="26.5" rx="1.8" ry="1.5" fill="#E2E8F0" opacity="0.7" filter="url(#glow)"/>
+  <!-- Mouth - determined -->
+  <path d="M29 32 Q32 34 35 32" stroke="#1A2030" stroke-width="1" fill="none"/>
+  <!-- Panda staff hint -->
+  <line x1="52" y1="10" x2="52" y2="55" stroke="#E2E8F0" stroke-width="2" opacity="0.2"/>
+  <circle cx="52" cy="12" r="3" fill="none" stroke="#E2E8F0" stroke-width="1" opacity="0.2"/>
+  <!-- Zen badge -->
+  <text x="32" y="13" text-anchor="middle" font-size="6" fill="#E2E8F0" opacity="0.5" font-family="serif">卍</text>
+</svg>

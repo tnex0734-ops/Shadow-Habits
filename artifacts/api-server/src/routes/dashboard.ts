@@ -246,6 +246,75 @@ const characterMessages: Record<string, Record<string, string[]>> = {
     ],
     neutral: ["Work is work. Do it consistently and results follow. That's the ratio.", "7 parts effort, 3 parts rest. Balance your output — then repeat."],
   },
+  "iron-body": {
+    celebrating: [
+      "No cursed energy. No shortcuts. Just pure discipline — and you executed it perfectly today.",
+      "This is what Heavenly Restriction looks like in practice. You stripped away excuses and delivered.",
+      "Even the Zenin clan couldn't ignore results like yours. You earned every bit of it.",
+    ],
+    encouraging: [
+      "I had nothing to start with either. I built everything through work. So can you.",
+      "The gap between where you are and where you want to be closes one habit at a time.",
+      "No technique, no shortcut — just show up. That's all I ever did.",
+    ],
+    challenging: [
+      "You have everything you need. Stop hesitating and finish what you started.",
+      "Heavenly Restriction gave me nothing but my body. I made it enough. What's your excuse?",
+      "Discipline isn't a feeling — it's a habit. Build it today or lose it.",
+    ],
+    disappointed: [
+      "I didn't come this far by taking days off. Neither should you. Get back to it.",
+      "The only thing stronger than any curse is consistent effort. Don't throw it away.",
+      "Rest is earned, not taken. Come back tomorrow stronger.",
+    ],
+    neutral: ["Pure effort, no shortcuts. Show up every day and results are inevitable.", "Your body is your weapon. Train it daily — habit by habit."],
+  },
+  "cursed-voice": {
+    celebrating: [
+      "...salmon. (Today was perfect. Don't say anything — just feel it.)",
+      "Tuna mayo. (Every habit done. That says more than words ever could.)",
+      "Okaka. (Flawless execution. I'm proud of you.)",
+    ],
+    encouraging: [
+      "Salmon. (Keep going. The work adds up, even when it doesn't feel like it.)",
+      "Mustard leaf. (You're closer than you think. One more step.)",
+      "Tuna. (Small steps still move forward. Don't stop.)",
+    ],
+    challenging: [
+      "Spicy cod roe. (You can do more than this. I believe that.)",
+      "Okaka. (Stop holding back. Give today everything.)",
+      "Salmon. (The gap is closing. Push through.)",
+    ],
+    disappointed: [
+      "...caviar. (It's okay. Tomorrow, we try again.)",
+      "Tuna mayo. (Missing a day isn't failing. Giving up is. Come back.)",
+      "Mustard leaf. (I'm still here. Pick it back up.)",
+    ],
+    neutral: ["Salmon. (Each habit is a word spoken with purpose. Make them count.)", "Okaka. (Consistency is the most powerful cursed technique of all.)"],
+  },
+  "best-friend": {
+    celebrating: [
+      "AHAHAHA! What a woman! I mean — what a sorcerer! You're incredible today, best friend!",
+      "Boogie Woogie! You did it — everything! I knew you had this level in you!",
+      "Tell me — what kind of woman do you like?! Actually, doesn't matter. You're amazing today!",
+    ],
+    encouraging: [
+      "A true best friend shows up even when it's hard. You're almost there — keep going!",
+      "I've fought beside Itadori because he pushes me. Now you're pushing yourself. Don't stop!",
+      "The best part of any rivalry is the grind behind it. Keep grinding, best friend!",
+    ],
+    challenging: [
+      "You're slacking! A best friend doesn't hold back — and neither should you!",
+      "Boogie Woogie doesn't work if you're standing still. MOVE. Finish your habits!",
+      "Coasting is for strangers. Best friends go all out. What are you waiting for?",
+    ],
+    disappointed: [
+      "Hey. Even I have bad days. What matters is we come back swinging tomorrow.",
+      "I never gave up on Itadori. I'm not giving up on you either. Reset and go.",
+      "Missing today doesn't make you weak. It makes tomorrow more important. Let's go.",
+    ],
+    neutral: ["Every day is a chance to prove to your best friend — yourself — what you're made of.", "Boogie Woogie! Swap your excuses for action. Let's do this together."],
+  },
 };
 
 router.get("/dashboard/companion-message", async (req: AuthRequest, res) => {

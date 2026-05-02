@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#062018"/>
+      <stop offset="100%" stop-color="#020C08"/>
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="64" height="64" fill="url(#bg)"/>
+  <!-- Body -->
+  <rect x="21" y="37" width="22" height="20" rx="4" fill="#081A10"/>
+  <!-- Turtleneck collar covering mouth -->
+  <rect x="20" y="33" width="24" height="10" rx="4" fill="#0D2A18"/>
+  <!-- Snake/seal markings on collar area -->
+  <path d="M22 36 Q27 34 32 36 Q37 34 42 36" stroke="#10B981" stroke-width="1" fill="none" opacity="0.6"/>
+  <!-- Head -->
+  <ellipse cx="32" cy="26" rx="10" ry="11" fill="#1A2E20"/>
+  <!-- Short hair -->
+  <path d="M22 22 Q22 12 32 11 Q42 12 42 22" fill="#061008"/>
+  <path d="M22 20 Q20 14 24 11" stroke="#061008" stroke-width="2" fill="none"/>
+  <!-- Eyes - calm, slightly sad looking -->
+  <ellipse cx="28" cy="26" rx="2.2" ry="2" fill="#10B981" filter="url(#glow)"/>
+  <ellipse cx="36" cy="26" rx="2.2" ry="2" fill="#10B981" filter="url(#glow)"/>
+  <!-- Snake seal cursed marks around eyes/cheeks -->
+  <path d="M24 24 Q26 22 28 24" stroke="#10B981" stroke-width="0.8" fill="none" opacity="0.5"/>
+  <path d="M36 24 Q38 22 40 24" stroke="#10B981" stroke-width="0.8" fill="none" opacity="0.5"/>
+  <!-- Seal marks on face -->
+  <circle cx="26" cy="30" r="1" fill="#10B981" opacity="0.4"/>
+  <circle cx="38" cy="30" r="1" fill="#10B981" opacity="0.4"/>
+  <!-- Cursed speech symbols floating -->
+  <text x="10" y="22" text-anchor="middle" font-size="7" fill="#10B981" opacity="0.35" font-family="serif" filter="url(#glow)">呪</text>
+  <text x="54" y="28" text-anchor="middle" font-size="6" fill="#10B981" opacity="0.3" font-family="serif">言</text>
+  <!-- Rice ball symbol (Inumaki's speech) -->
+  <text x="32" y="13" text-anchor="middle" font-size="7" fill="#10B981" opacity="0.4" filter="url(#glow)">🍙</text>
+</svg>

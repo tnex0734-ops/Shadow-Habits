@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect } from "react";
 import { useAuth } from "./AuthContext";
 
-type Character = "infinity-mentor" | "dark-king" | "energy-hero" | "shadow-bearer" | "straw-doll" | "ratio-master";
+type Character = "infinity-mentor" | "dark-king" | "energy-hero" | "shadow-bearer" | "straw-doll" | "ratio-master" | "iron-body" | "cursed-voice" | "best-friend";
 
 interface ThemeContextType {
   character: Character;
@@ -63,6 +63,27 @@ const charData: Record<Character, Omit<ThemeContextType, "character">> = {
     charGlow: "rgba(217,119,6,0.42)",
     charGlowSoft: "rgba(217,119,6,0.14)",
     charImage: "/src/assets/character-nanami.svg",
+  },
+  "iron-body": {
+    charName: "Iron Body",
+    charColor: "#CBD5E1",
+    charGlow: "rgba(203,213,225,0.38)",
+    charGlowSoft: "rgba(203,213,225,0.12)",
+    charImage: "/src/assets/character-maki.svg",
+  },
+  "cursed-voice": {
+    charName: "Cursed Voice",
+    charColor: "#10B981",
+    charGlow: "rgba(16,185,129,0.42)",
+    charGlowSoft: "rgba(16,185,129,0.14)",
+    charImage: "/src/assets/character-inumaki.svg",
+  },
+  "best-friend": {
+    charName: "Best Friend",
+    charColor: "#818CF8",
+    charGlow: "rgba(129,140,248,0.42)",
+    charGlowSoft: "rgba(129,140,248,0.14)",
+    charImage: "/src/assets/character-todo.svg",
   },
 };
 

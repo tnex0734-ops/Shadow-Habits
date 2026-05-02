@@ -68,6 +68,36 @@ const characters = [
     glowSoft: "rgba(217,119,6,0.14)",
     image: "/src/assets/character-nanami.svg",
   },
+  {
+    id: "iron-body" as const,
+    name: "Iron Body",
+    tagline: "Heavenly Restriction",
+    description: "Pure physical perfection. No shortcuts, no excuses — just relentless discipline.",
+    color: "#CBD5E1",
+    glow: "rgba(203,213,225,0.38)",
+    glowSoft: "rgba(203,213,225,0.12)",
+    image: "/src/assets/character-maki.svg",
+  },
+  {
+    id: "cursed-voice" as const,
+    name: "Cursed Voice",
+    tagline: "Cursed Speech",
+    description: "Says little, means everything. Quality over quantity — every word lands.",
+    color: "#10B981",
+    glow: "rgba(16,185,129,0.42)",
+    glowSoft: "rgba(16,185,129,0.14)",
+    image: "/src/assets/character-inumaki.svg",
+  },
+  {
+    id: "best-friend" as const,
+    name: "Best Friend",
+    tagline: "Boogie Woogie",
+    description: "Loud, passionate, unstoppable. Treats every challenge like a best friend worth fighting for.",
+    color: "#818CF8",
+    glow: "rgba(129,140,248,0.42)",
+    glowSoft: "rgba(129,140,248,0.14)",
+    image: "/src/assets/character-todo.svg",
+  },
 ];
 
 export default function SignupPage() {

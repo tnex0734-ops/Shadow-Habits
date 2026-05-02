@@ -164,6 +164,9 @@ export default function DashboardPage() {
     "shadow-bearer":   "/src/assets/character-megumi.svg",
     "straw-doll":      "/src/assets/character-nobara.svg",
     "ratio-master":    "/src/assets/character-nanami.svg",
+    "iron-body":       "/src/assets/character-maki.svg",
+    "cursed-voice":    "/src/assets/character-inumaki.svg",
+    "best-friend":     "/src/assets/character-todo.svg",
   };
   const charNameMap: Record<string, string> = {
     "infinity-mentor": "Infinity Mentor",
@@ -172,6 +175,9 @@ export default function DashboardPage() {
     "shadow-bearer":   "Shadow Bearer",
     "straw-doll":      "Straw Doll",
     "ratio-master":    "Ratio Master",
+    "iron-body":       "Iron Body",
+    "cursed-voice":    "Cursed Voice",
+    "best-friend":     "Best Friend",
   };
   const companionImg = charImgMap[companion?.character ?? ""] ?? "/src/assets/character-infinity.png";
   const companionName = charNameMap[companion?.character ?? ""] ?? "Infinity Mentor";
