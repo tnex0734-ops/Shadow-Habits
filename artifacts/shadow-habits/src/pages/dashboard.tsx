@@ -133,11 +133,25 @@ export default function DashboardPage() {
   });
 
   /* Character image path helper */
-  const companionImg = companion?.character === "dark-king"
-    ? "/src/assets/character-dark.png"
-    : companion?.character === "energy-hero"
-    ? "/src/assets/character-energy.png"
-    : "/src/assets/character-infinity.png";
+  const charImgMap: Record<string, string> = {
+    "infinity-mentor": "/src/assets/character-infinity.png",
+    "dark-king":       "/src/assets/character-dark.png",
+    "energy-hero":     "/src/assets/character-energy.png",
+    "shadow-bearer":   "/src/assets/character-megumi.svg",
+    "straw-doll":      "/src/assets/character-nobara.svg",
+    "ratio-master":    "/src/assets/character-nanami.svg",
+  };
+  const charNameMap: Record<string, string> = {
+    "infinity-mentor": "Infinity Mentor",
+    "dark-king":       "Dark King",
+    "energy-hero":     "Energy Hero",
+    "shadow-bearer":   "Shadow Bearer",
+    "straw-doll":      "Straw Doll",
+    "ratio-master":    "Ratio Master",
+  };
+  const companionImg = charImgMap[companion?.character ?? ""] ?? "/src/assets/character-infinity.png";
+  const companionName = charNameMap[companion?.character ?? ""] ?? "Infinity Mentor";
+  const gradId = `cg-${charColor.replace("#", "")}`;
 
   return (
     <div className="h-full flex flex-col px-6 pt-5 pb-3 gap-4 overflow-hidden max-w-5xl mx-auto w-full">
@@ -284,7 +298,7 @@ export default function DashboardPage() {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-bold uppercase tracking-wider mb-1" style={{ color: charColor }}>
-                  {companion?.character === "dark-king" ? "Dark King" : companion?.character === "energy-hero" ? "Energy Hero" : "Infinity Mentor"}
+                  {companionName}
                 </p>
                 <p className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.65)" }}>
                   {companion?.message || "Keep going."}
@@ -295,41 +309,83 @@ export default function DashboardPage() {
 
           {/* 7-day chart */}
           <div
-            className="flex-1 min-h-0 rounded-2xl p-4 border"
+            className="flex-1 min-h-0 rounded-2xl p-4 border flex flex-col"
             style={{ background: "rgba(4,12,22,0.75)", borderColor: `${charColor}15`, backdropFilter: "blur(24px)" }}
           >
-            <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "rgba(255,255,255,0.3)" }}>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-2 flex-shrink-0" style={{ color: "rgba(255,255,255,0.3)" }}>
               Last 7 Days
             </p>
-            <ResponsiveContainer width="100%" height={180}>
-              <AreaChart data={chart7} margin={{ top: 8, right: 4, bottom: 0, left: -20 }}>
-                <defs>
-                  <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor={charColor} stopOpacity={0.45} />
-                    <stop offset="100%" stopColor={charColor} stopOpacity={0.02} />
-                  </linearGradient>
-                </defs>
-                <XAxis dataKey="day" tick={{ fontSize: 9, fill: "rgba(255,255,255,0.3)" }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fontSize: 9, fill: "rgba(255,255,255,0.2)" }} axisLine={false} tickLine={false} allowDecimals={false} />
-                <Tooltip content={<ChartTip />} cursor={{ stroke: `${charColor}30`, strokeWidth: 1 }} />
-                <Area
-                  type="monotone"
-                  dataKey="count"
-                  stroke={charColor}
-                  strokeWidth={2}
-                  fill="url(#chartGrad)"
-                  dot={(props) => {
-                    const { cx, cy, payload } = props;
-                    return payload.isToday ? (
-                      <circle key={`dot-${cx}`} cx={cx} cy={cy} r={5} fill={charColor} style={{ filter: `drop-shadow(0 0 6px ${charGlow})` }} />
-                    ) : (
-                      <circle key={`dot-${cx}`} cx={cx} cy={cy} r={3} fill={charColor} fillOpacity={0.5} />
-                    );
-                  }}
-                  activeDot={{ r: 6, fill: charColor, stroke: "rgba(0,0,0,0.4)", strokeWidth: 2 }}
-                />
-              </AreaChart>
-            </ResponsiveContainer>
+            <div className="flex-1 min-h-0">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={chart7} margin={{ top: 24, right: 8, bottom: 0, left: -20 }}>
+                  <defs>
+                    <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor={charColor} stopOpacity={0.5} />
+                      <stop offset="75%" stopColor={charColor} stopOpacity={0.08} />
+                      <stop offset="100%" stopColor={charColor} stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <XAxis
+                    dataKey="day"
+                    tick={{ fontSize: 9, fill: "rgba(255,255,255,0.3)" }}
+                    axisLine={false}
+                    tickLine={false}
+                  />
+                  <YAxis
+                    tick={{ fontSize: 9, fill: "rgba(255,255,255,0.2)" }}
+                    axisLine={false}
+                    tickLine={false}
+                    allowDecimals={false}
+                    width={20}
+                  />
+                  <Tooltip content={<ChartTip />} cursor={{ stroke: `${charColor}25`, strokeWidth: 1 }} />
+                  <Area
+                    type="monotoneX"
+                    dataKey="count"
+                    stroke={charColor}
+                    strokeWidth={2.5}
+                    fill={`url(#${gradId})`}
+                    isAnimationActive={true}
+                    animationDuration={1200}
+                    animationEasing="ease-out"
+                    dot={(props: { cx: number; cy: number; payload: { isToday: boolean } }) => {
+                      const { cx, cy, payload } = props;
+                      if (payload.isToday) {
+                        const r = 13;
+                        return (
+                          <g key={`today-${cx}`}>
+                            {/* Outer pulse ring */}
+                            <circle cx={cx} cy={cy} r={r + 4} fill={charColor} fillOpacity={0.12}>
+                              <animate attributeName="r" values={`${r + 2};${r + 7};${r + 2}`} dur="2.4s" repeatCount="indefinite" />
+                              <animate attributeName="fill-opacity" values="0.15;0.04;0.15" dur="2.4s" repeatCount="indefinite" />
+                            </circle>
+                            {/* Inner border ring */}
+                            <circle cx={cx} cy={cy} r={r} fill="#040c16" stroke={charColor} strokeWidth={2}
+                              style={{ filter: `drop-shadow(0 0 8px ${charGlow})` }} />
+                            {/* Clip circle for avatar */}
+                            <clipPath id={`ac-${cx}`}>
+                              <circle cx={cx} cy={cy} r={r - 2} />
+                            </clipPath>
+                            {/* Character avatar */}
+                            <image
+                              href={companionImg}
+                              x={cx - (r - 2)} y={cy - (r - 2)}
+                              width={(r - 2) * 2} height={(r - 2) * 2}
+                              clipPath={`url(#ac-${cx})`}
+                              preserveAspectRatio="xMidYMid slice"
+                            />
+                          </g>
+                        );
+                      }
+                      return (
+                        <circle key={`dot-${cx}`} cx={cx} cy={cy} r={3} fill={charColor} fillOpacity={0.55} />
+                      );
+                    }}
+                    activeDot={{ r: 5, fill: charColor, stroke: "rgba(0,0,0,0.5)", strokeWidth: 2 }}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
           </div>
 
         </div>
