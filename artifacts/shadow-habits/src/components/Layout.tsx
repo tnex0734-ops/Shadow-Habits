@@ -2,9 +2,10 @@ import { useLocation, Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "@/contexts/AuthContext";
+import { LogoMark } from "@/components/LogoMark";
 import {
   LayoutDashboard, Flame, BarChart2, User, LogOut,
-  Shield, Settings, HelpCircle, ChevronDown,
+  Settings, ChevronDown,
 } from "lucide-react";
 
 const mainNav = [
@@ -36,25 +37,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
         }}
       >
         {/* Logo */}
-        <div className="px-5 pt-6 pb-5 flex items-center gap-3">
-          <div
-            className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
-            style={{
-              background: `linear-gradient(135deg, ${charColor}30, ${charColor}10)`,
-              border: `1px solid ${charColor}40`,
-              boxShadow: `0 0 16px ${charGlowSoft}`,
-            }}
-          >
-            <Shield className="w-4 h-4" style={{ color: charColor }} />
-          </div>
-          <div>
-            <p className="font-display text-base tracking-widest uppercase leading-none" style={{ color: charColor }}>
-              Shadow
-            </p>
-            <p className="font-display text-base tracking-widest uppercase leading-none text-white/60">
-              Habits
-            </p>
-          </div>
+        <div className="px-5 pt-6 pb-5">
+          <LogoMark charColor={charColor} variant="sidebar" />
         </div>
 
         {/* ── MAIN MENU ── */}

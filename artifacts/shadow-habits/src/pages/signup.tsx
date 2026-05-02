@@ -6,6 +6,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { ParticleBackground } from "@/components/ParticleBackground";
 import { Check, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
+import { LogoMark } from "@/components/LogoMark";
 
 const characters = [
   {
@@ -137,11 +138,9 @@ export default function SignupPage() {
       <div className="relative z-10 w-full max-w-lg">
 
         {/* Logo */}
-        <div className="text-center mb-8">
-          <h1 className="font-display text-3xl uppercase tracking-widest" style={{ color: selectedChar.color }}>
-            Shadow<br />Habits
-          </h1>
-          <p className="text-sm mt-2 text-white/40">Choose your companion to begin</p>
+        <div className="flex flex-col items-center mb-8">
+          <LogoMark charColor={selectedChar.color} variant="full" />
+          <p className="text-sm mt-3 text-white/40">Choose your companion to begin</p>
         </div>
 
         <motion.div

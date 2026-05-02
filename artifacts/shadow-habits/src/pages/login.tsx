@@ -7,6 +7,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { ParticleBackground } from "@/components/ParticleBackground";
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
+import { LogoMark } from "@/components/LogoMark";
 
 export default function LoginPage() {
   const [, setLocation] = useLocation();
@@ -54,17 +55,9 @@ export default function LoginPage() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-8"
+          className="flex justify-center mb-8"
         >
-          <p
-            className="font-display text-5xl tracking-widest uppercase mb-1"
-            style={{ color: charColor, textShadow: `0 0 30px ${charGlow}, 0 0 80px ${charGlowSoft}` }}
-          >
-            Shadow
-          </p>
-          <p className="font-display text-5xl tracking-widest uppercase" style={{ color: "rgba(255,255,255,0.9)" }}>
-            Habits
-          </p>
+          <LogoMark charColor={charColor} variant="full" />
         </motion.div>
 
         {/* Character portrait */}
