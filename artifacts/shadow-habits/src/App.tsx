@@ -53,34 +53,28 @@ function PublicRoute({ component: Component }: { component: React.ComponentType 
   return <Component />;
 }
 
+function RootRedirect() {
+  const { user, isLoading } = useAuth();
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="w-8 h-8 border-2 rounded-full border-primary/40 border-t-primary animate-spin" />
+      </div>
+    );
+  }
+  return user ? <Redirect to="/dashboard" /> : <Redirect to="/login" />;
+}
+
 function Router() {
   return (
     <Switch>
-      <Route path="/">
-        {() => {
-          const { user, isLoading } = useAuth();
-          if (isLoading) return <div className="min-h-screen flex items-center justify-center bg-background"><div className="w-8 h-8 border-2 rounded-full border-primary/40 border-t-primary animate-spin" /></div>;
-          return user ? <Redirect to="/dashboard" /> : <Redirect to="/login" />;
-        }}
-      </Route>
-      <Route path="/login">
-        {() => <PublicRoute component={LoginPage} />}
-      </Route>
-      <Route path="/signup">
-        {() => <PublicRoute component={SignupPage} />}
-      </Route>
-      <Route path="/dashboard">
-        {() => <ProtectedRoute component={DashboardPage} />}
-      </Route>
-      <Route path="/habits">
-        {() => <ProtectedRoute component={HabitsPage} />}
-      </Route>
-      <Route path="/stats">
-        {() => <ProtectedRoute component={StatsPage} />}
-      </Route>
-      <Route path="/settings">
-        {() => <ProtectedRoute component={SettingsPage} />}
-      </Route>
+      <Route path="/" component={RootRedirect} />
+      <Route path="/login" component={() => <PublicRoute component={LoginPage} />} />
+      <Route path="/signup" component={() => <PublicRoute component={SignupPage} />} />
+      <Route path="/dashboard" component={() => <ProtectedRoute component={DashboardPage} />} />
+      <Route path="/habits" component={() => <ProtectedRoute component={HabitsPage} />} />
+      <Route path="/stats" component={() => <ProtectedRoute component={StatsPage} />} />
+      <Route path="/settings" component={() => <ProtectedRoute component={SettingsPage} />} />
       <Route component={NotFound} />
     </Switch>
   );

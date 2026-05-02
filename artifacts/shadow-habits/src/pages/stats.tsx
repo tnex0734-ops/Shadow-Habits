@@ -30,9 +30,9 @@ function CustomDot(props: { cx?: number; cy?: number; charImage?: string; charCo
 
 export default function StatsPage() {
   const { charColor, charGlow, charImage } = useTheme();
-  const summary = useGetDashboardSummary();
-  const streaks = useGetStreaks();
-  const insights = useGetInsights();
+  const { data: summary } = useGetDashboardSummary();
+  const { data: streaks } = useGetStreaks();
+  const { data: insights } = useGetInsights();
 
   const chartData = summary?.weeklyData || [];
 

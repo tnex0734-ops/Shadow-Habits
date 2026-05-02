@@ -117,7 +117,7 @@ function HabitForm({ onClose, existing }: { onClose: () => void; existing?: Habi
 export default function HabitsPage() {
   const queryClient = useQueryClient();
   const { charColor, charGlow } = useTheme();
-  const habits = useGetHabits();
+  const { data: habits } = useGetHabits();
   const [showForm, setShowForm] = useState(false);
   const [editingHabit, setEditingHabit] = useState<Habit | null>(null);
   const today = getTodayStr();

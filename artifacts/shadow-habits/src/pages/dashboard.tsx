@@ -23,7 +23,7 @@ import { cn } from "@/lib/utils";
 
 function CalendarStrip() {
   const { charColor, charGlow } = useTheme();
-  const habits = useGetHabits();
+  const { data: habits } = useGetHabits();
   const today = getTodayStr();
   const days = Array.from({ length: 14 }, (_, i) => {
     const d = new Date();
@@ -71,7 +71,7 @@ function CalendarStrip() {
 
 function CompanionWidget() {
   const { charColor, charGlow, charImage, charName } = useTheme();
-  const companion = useGetCompanionMessage();
+  const { data: companion } = useGetCompanionMessage();
 
   const moodColors = {
     celebrating: charColor,
@@ -205,9 +205,9 @@ function HabitCard({ habit }: { habit: { id: number; title: string; completedDat
 export default function DashboardPage() {
   const { user } = useAuth();
   const { charColor, charGlow } = useTheme();
-  const habits = useGetHabits();
-  const summary = useGetDashboardSummary();
-  const insights = useGetInsights();
+  const { data: habits } = useGetHabits();
+  const { data: summary } = useGetDashboardSummary();
+  const { data: insights } = useGetInsights();
 
   const today = new Date();
   const todayDisplay = today.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
