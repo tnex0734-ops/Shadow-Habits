@@ -8,34 +8,39 @@ interface ThemeContextType {
   charName: string;
   charColor: string;
   charGlow: string;
+  charGlowSoft: string;
   charImage: string;
 }
 
 const ThemeContext = createContext<ThemeContextType>({
   character: "infinity-mentor",
   charName: "Infinity Mentor",
-  charColor: "#0ea5e9",
-  charGlow: "rgba(14,165,233,0.4)",
+  charColor: "#AAFF00",
+  charGlow: "rgba(170,255,0,0.38)",
+  charGlowSoft: "rgba(170,255,0,0.15)",
   charImage: "/src/assets/character-infinity.png",
 });
 
 const charData: Record<Character, Omit<ThemeContextType, "character">> = {
   "infinity-mentor": {
     charName: "Infinity Mentor",
-    charColor: "#0ea5e9",
-    charGlow: "rgba(14,165,233,0.4)",
+    charColor: "#AAFF00",
+    charGlow: "rgba(170,255,0,0.38)",
+    charGlowSoft: "rgba(170,255,0,0.15)",
     charImage: "/src/assets/character-infinity.png",
   },
   "dark-king": {
     charName: "Dark King",
-    charColor: "#dc2626",
-    charGlow: "rgba(220,38,38,0.45)",
+    charColor: "#FF1E1E",
+    charGlow: "rgba(255,30,30,0.42)",
+    charGlowSoft: "rgba(255,30,30,0.15)",
     charImage: "/src/assets/character-dark.png",
   },
   "energy-hero": {
     charName: "Energy Hero",
-    charColor: "#ea580c",
-    charGlow: "rgba(234,88,12,0.4)",
+    charColor: "#FFA500",
+    charGlow: "rgba(255,165,0,0.4)",
+    charGlowSoft: "rgba(255,165,0,0.15)",
     charImage: "/src/assets/character-energy.png",
   },
 };
