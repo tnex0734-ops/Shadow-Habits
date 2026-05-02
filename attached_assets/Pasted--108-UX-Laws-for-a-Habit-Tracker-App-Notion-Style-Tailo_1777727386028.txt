@@ -1,0 +1,505 @@
+# 🧠 108 UX Laws for a Habit Tracker App (Notion-Style)
+
+Tailored specifically for building a **habit tracker / second-brain / productivity app**.
+
+---
+
+# 🔥 CORE DECISION & INTERACTION LAWS
+
+## 1. Hick’s Law
+
+Reduce number of habits shown at once → avoid overwhelm.
+
+## 2. Fitts’s Law
+
+Make “Complete Habit” button large & thumb-friendly.
+
+## 3. Jakob’s Law
+
+Use familiar patterns (checkboxes, streak counters like GitHub/Notion).
+
+## 4. Miller’s Law
+
+Limit visible habits to ~5–9 per screen.
+
+## 5. Tesler’s Law
+
+Hide complexity (analytics, configs) behind toggles.
+
+## 6. Parkinson’s Law
+
+Use timers / streak urgency to drive completion.
+
+## 7. Goal Gradient Effect
+
+Progress bars → users push harder near completion.
+
+## 8. Zeigarnik Effect
+
+Show incomplete habits prominently.
+
+## 9. Peak-End Rule
+
+End day with a satisfying “You completed X habits 🎉”.
+
+## 10. Feedback Principle
+
+Instant check animation on completion.
+
+---
+
+# 🧩 COGNITIVE & BEHAVIORAL LAWS
+
+## 11. Cognitive Load Theory
+
+Minimal UI, no clutter.
+
+## 12. Occam’s Razor
+
+Simple habit creation > feature-heavy flows.
+
+## 13. Recognition Over Recall
+
+Predefined habit templates.
+
+## 14. Progressive Disclosure
+
+Advanced settings hidden.
+
+## 15. Chunking Principle
+
+Group habits (Health / Work / Learning).
+
+## 16. Doherty Threshold
+
+Keep UI response < 400ms.
+
+## 17. Law of Familiarity
+
+Use Notion-like layout.
+
+## 18. Law of Mental Models
+
+Match real-world habits (calendar, streaks).
+
+## 19. Law of Least Effort
+
+1-tap habit completion.
+
+## 20. Default Effect
+
+Pre-fill habit suggestions.
+
+---
+
+# 🎯 VISUAL & GESTALT LAWS
+
+## 21. Law of Proximity
+
+Group related habits.
+
+## 22. Law of Similarity
+
+Same style for all habits.
+
+## 23. Law of Common Region
+
+Use cards/containers.
+
+## 24. Law of Continuity
+
+Vertical flow = daily habits.
+
+## 25. Law of Closure
+
+Minimal UI, users infer structure.
+
+## 26. Law of Prägnanz
+
+Keep it visually simple.
+
+## 27. Figure-Ground
+
+Highlight active habits clearly.
+
+## 28. Law of Common Fate
+
+Animations for completed habits.
+
+## 29. Von Restorff Effect
+
+Highlight streak milestones.
+
+## 30. Aesthetic-Usability Effect
+
+Clean UI = perceived better performance.
+
+---
+
+# 🚀 MOTIVATION & HABIT PSYCHOLOGY
+
+## 31. Variable Reward Principle
+
+Random rewards (badges, confetti).
+
+## 32. Commitment & Consistency
+
+Daily streaks reinforce behavior.
+
+## 33. Loss Aversion
+
+“Don’t break your streak!”
+
+## 34. Endowed Progress Effect
+
+Start users with 1–2 fake progress steps.
+
+## 35. Social Proof
+
+Show how others track habits (optional).
+
+## 36. Scarcity Principle
+
+Limited-time challenges.
+
+## 37. Gamification Law
+
+XP, levels, streaks.
+
+## 38. Habit Loop (Cue → Action → Reward)
+
+Reminder → Tap → Celebration.
+
+## 39. Micro-Commitments
+
+Start with small habits.
+
+## 40. Dopamine Loop Design
+
+Immediate reward feedback.
+
+---
+
+# 📊 PRODUCTIVITY & ORGANIZATION LAWS
+
+## 41. Pareto Principle
+
+Focus on top 20% impactful habits.
+
+## 42. Eisenhower Matrix Principle
+
+Tag habits (urgent/important).
+
+## 43. Timeboxing Principle
+
+Allow scheduling habits.
+
+## 44. Atomic Habits Principle
+
+Break big habits into small steps.
+
+## 45. Two-Minute Rule
+
+Encourage small actions.
+
+## 46. Compounding Effect
+
+Show long-term growth charts.
+
+## 47. Feedback Loop Principle
+
+Daily/weekly reports.
+
+## 48. Visibility Principle
+
+Show today’s habits first.
+
+## 49. Progress Principle
+
+Visible improvement tracking.
+
+## 50. Completion Bias
+
+Users want to finish all habits.
+
+---
+
+# 🧠 MEMORY & LEARNING LAWS
+
+## 51. Spacing Effect
+
+Remind habits over time.
+
+## 52. Repetition Principle
+
+Daily repetition builds retention.
+
+## 53. Primacy Effect
+
+Top habits = most important.
+
+## 54. Recency Effect
+
+End-of-day summary.
+
+## 55. Encoding Specificity
+
+Context-based reminders.
+
+## 56. Retrieval Cue Principle
+
+Use notifications.
+
+## 57. Dual Coding Theory
+
+Use icons + text.
+
+## 58. Attention Ratio
+
+Limit distractions.
+
+## 59. Interference Theory
+
+Avoid too many similar habits.
+
+## 60. Cognitive Fluency
+
+Easy-to-read UI.
+
+---
+
+# 📱 INTERACTION & MICRO UX LAWS
+
+## 61. Law of Immediate Feedback
+
+Animations on tap.
+
+## 62. Error Prevention
+
+Avoid accidental uncheck.
+
+## 63. Forgiveness Principle
+
+Undo button.
+
+## 64. Consistency Principle
+
+Same layout everywhere.
+
+## 65. Predictability Principle
+
+No surprise interactions.
+
+## 66. Affordance Principle
+
+Checkbox looks clickable.
+
+## 67. Mapping Principle
+
+Actions map clearly to results.
+
+## 68. Visibility of System Status
+
+Show progress always.
+
+## 69. Latency Reduction
+
+Fast loading screens.
+
+## 70. Microinteraction Delight
+
+Small satisfying animations.
+
+---
+
+# 🔐 TRUST & RETENTION LAWS
+
+## 71. Transparency Principle
+
+Clear data usage.
+
+## 72. Privacy Principle
+
+User data control.
+
+## 73. Reliability Principle
+
+No data loss.
+
+## 74. Trust Signals
+
+Backup, sync indicators.
+
+## 75. Consistency Bias
+
+Users stick to routines.
+
+## 76. Habit Reinforcement
+
+Daily reminders.
+
+## 77. Emotional Design
+
+Celebrate wins.
+
+## 78. Personalization Principle
+
+Custom habit categories.
+
+## 79. Ownership Effect
+
+Users feel attached to habits.
+
+## 80. Identity-Based Habits
+
+“I am a person who…” framing.
+
+---
+
+# ⚡ PERFORMANCE & SYSTEM DESIGN LAWS
+
+## 81. Law of Performance Perception
+
+Fast feel > actual speed.
+
+## 82. Skeleton Screen Principle
+
+Show loading placeholders.
+
+## 83. Incremental Loading
+
+Load habits progressively.
+
+## 84. Offline First Principle
+
+Allow offline tracking.
+
+## 85. Sync Reliability
+
+Auto sync across devices.
+
+## 86. System Feedback
+
+Show syncing status.
+
+## 87. Error Recovery
+
+Restore lost habits.
+
+## 88. Scalability Principle
+
+Handle 100+ habits.
+
+## 89. Modularity Principle
+
+Habit blocks like Notion.
+
+## 90. Extensibility Principle
+
+Add plugins/features later.
+
+---
+
+# 🧠 ADVANCED UX & STRATEGY LAWS
+
+## 91. Law of Flow State
+
+Distraction-free mode.
+
+## 92. Minimal Viable UX
+
+Ship simple first.
+
+## 93. Engagement Loop
+
+Trigger → Action → Reward → Repeat.
+
+## 94. Sticky UX Principle
+
+Daily usage loop.
+
+## 95. Network Effect (Optional)
+
+Shared habit tracking.
+
+## 96. Time to Value
+
+Instant usable on signup.
+
+## 97. First Impression Rule
+
+Clean onboarding.
+
+## 98. Onboarding Simplicity
+
+< 30 sec setup.
+
+## 99. Guidance Principle
+
+Tooltips for new users.
+
+## 100. Self-Efficacy Principle
+
+Show users they can succeed.
+
+---
+
+# 🧬 META UX & PRODUCT THINKING LAWS
+
+## 101. System Thinking
+
+Habits + notes + goals integration.
+
+## 102. Second Brain Principle
+
+Store thoughts + habits together.
+
+## 103. Context Switching Cost
+
+Keep everything in one place.
+
+## 104. Attention Economy
+
+Compete for user focus.
+
+## 105. Habit Stacking
+
+Link habits together.
+
+## 106. Long-Term Retention
+
+Weekly/monthly insights.
+
+## 107. Emotional Memory
+
+Make app feel rewarding.
+
+## 108. Delight Principle
+
+Make users *want* to return.
+
+---
+
+# 🎯 FINAL INSIGHT
+
+A great habit tracker is NOT about tracking…
+
+It’s about:
+
+* reducing friction
+* increasing motivation
+* creating emotional reward loops
+* building identity
+
+👉 If you nail these laws, your app won’t feel like a tool
+—it will feel like a **companion system (like Notion, but alive).**
+
+---
+
+If you want next:
+
+* I can convert this into a **Notion-style system architecture**
+* or **UI wireframe with all laws applied**
+* or a **Replit-ready full app prompt**
+
+Just tell me 🚀
