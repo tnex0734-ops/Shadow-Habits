@@ -11,7 +11,7 @@ import {
 import { useQueryClient } from "@tanstack/react-query";
 import { useTheme } from "@/contexts/ThemeContext";
 import { getTodayStr, formatDate } from "@/lib/utils";
-import { CheckCircle2, Circle, Flame, Plus } from "lucide-react";
+import { Flame, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Link } from "wouter";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
@@ -46,50 +46,74 @@ function HabitRow({ habit }: {
   return (
     <motion.div
       layout
-      className={cn("flex items-center gap-4 px-4 py-3.5 rounded-2xl border transition-all", flash && "black-flash")}
+      className={cn("flex items-center gap-3.5 px-4 py-3 rounded-2xl transition-all relative overflow-hidden", flash && "black-flash")}
       style={{
-        background: isCompleted ? `${charColor}0a` : "rgba(255,255,255,0.03)",
-        borderColor: isCompleted ? `${charColor}28` : "rgba(255,255,255,0.07)",
+        background: isCompleted
+          ? `linear-gradient(135deg, ${charColor}0d 0%, rgba(255,255,255,0.02) 100%)`
+          : "rgba(255,255,255,0.03)",
+        backdropFilter: "blur(16px)",
+        border: `1px solid ${isCompleted ? charColor + "22" : "rgba(255,255,255,0.06)"}`,
+        boxShadow: isCompleted
+          ? `0 4px 20px ${charColor}0e, inset 0 1px 0 rgba(255,255,255,0.06)`
+          : "0 2px 8px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.04)",
       }}
       data-testid={`habit-card-${habit.id}`}
     >
-      {/* Check button */}
+      {/* Animated glass checkbox */}
       <motion.button
         onClick={toggle}
-        whileHover={{ scale: 1.12 }}
-        whileTap={{ scale: 0.82 }}
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.88 }}
         disabled={busy}
-        className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-all disabled:opacity-40"
+        className="w-8 h-8 rounded-xl flex-shrink-0 relative overflow-hidden disabled:opacity-40"
         style={isCompleted
-          ? { backgroundColor: `${charColor}1e`, border: `2px solid ${charColor}`, boxShadow: `0 0 14px ${charColor}50` }
-          : { backgroundColor: "transparent", border: "2px solid rgba(255,255,255,0.13)" }
+          ? { background: `${charColor}20`, boxShadow: `0 0 16px ${charColor}40, inset 0 1px 0 rgba(255,255,255,0.1)`, border: `1.5px solid ${charColor}60` }
+          : { background: "rgba(255,255,255,0.04)", border: "1.5px dashed rgba(255,255,255,0.18)" }
         }
         data-testid={`toggle-habit-${habit.id}`}
       >
-        <AnimatePresence mode="wait">
-          {isCompleted
-            ? <motion.div key="c" initial={{ scale: 0, rotate: -20 }} animate={{ scale: 1, rotate: 0 }} className="check-pop">
-                <CheckCircle2 className="w-4 h-4" style={{ color: charColor }} />
-              </motion.div>
-            : <motion.div key="e" initial={{ scale: 0.7 }} animate={{ scale: 1 }}>
-                <Circle className="w-4 h-4 text-white/22" />
-              </motion.div>
-          }
+        <AnimatePresence>
+          {isCompleted && (
+            <motion.svg
+              key="check"
+              viewBox="0 0 18 18"
+              className="w-4 h-4 absolute inset-0 m-auto"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <motion.path
+                d="M4 9 L7.5 12.5 L14 6"
+                stroke={charColor}
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                fill="none"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
+              />
+            </motion.svg>
+          )}
         </AnimatePresence>
       </motion.button>
 
       {/* Title */}
-      <span className={cn("flex-1 text-[15px] font-medium leading-snug", isCompleted ? "line-through text-white/35" : "text-white/90")}>
+      <span
+        className="flex-1 text-sm font-medium leading-snug tracking-wide"
+        style={{ color: isCompleted ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.88)", textDecoration: isCompleted ? "line-through" : "none" }}
+      >
         {habit.title}
       </span>
 
-      {/* Streak pill */}
+      {/* Streak badge — no icon, just a glowing number */}
       {habit.currentStreak > 0 && (
-        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg flex-shrink-0"
-          style={{ backgroundColor: `${charColor}12`, border: `1px solid ${charColor}28` }}>
-          <Flame className="w-3 h-3 flame-icon" style={{ color: charColor }} />
-          <span className="text-xs font-bold" style={{ color: charColor }}>{habit.currentStreak}d</span>
-        </div>
+        <span
+          className="text-xs font-bold flex-shrink-0 tabular-nums"
+          style={{ color: charColor, textShadow: `0 0 10px ${charGlow}`, letterSpacing: "0.04em" }}
+        >
+          {habit.currentStreak}d
+        </span>
       )}
     </motion.div>
   );
@@ -177,96 +201,153 @@ export default function DashboardPage() {
       {/* ── MAIN 2-COLUMN GRID ── */}
       <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-5">
 
-        {/* LEFT: Habits */}
-        <div className="flex flex-col gap-4 min-h-0 overflow-hidden">
+        {/* LEFT: Progress + Stats + Habits */}
+        <div className="flex flex-col gap-3 min-h-0 overflow-hidden">
 
-          {/* Progress bar */}
+          {/* ── Glass progress card ── */}
           {total > 0 && (
-            <div className="flex-shrink-0">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.35)" }}>
-                  Today's Progress
-                </span>
-                <span className="text-xs font-bold" style={{ color: charColor }}>{done.length} / {total}</span>
+            <motion.div
+              initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
+              className="flex-shrink-0 rounded-2xl p-4 relative overflow-hidden"
+              style={{
+                background: "rgba(255,255,255,0.04)",
+                backdropFilter: "blur(24px)",
+                border: `1px solid rgba(255,255,255,0.08)`,
+                boxShadow: `0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.07), 0 0 0 1px ${charColor}0a`,
+              }}
+            >
+              {/* Subtle color wash */}
+              <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse at 10% 50%, ${charColor}0a, transparent 60%)` }} />
+
+              <div className="relative flex items-center gap-5">
+                {/* Conic progress ring */}
+                <div className="flex-shrink-0 relative" style={{ width: 72, height: 72 }}>
+                  <div
+                    className="w-full h-full rounded-full"
+                    style={{
+                      background: `conic-gradient(${charColor} ${pct * 3.6}deg, rgba(255,255,255,0.06) 0deg)`,
+                      padding: 3,
+                    }}
+                  >
+                    <div
+                      className="w-full h-full rounded-full flex flex-col items-center justify-center"
+                      style={{ background: "#060d14" }}
+                    >
+                      <span className="text-base font-bold leading-none" style={{ color: charColor }}>{done.length}/{total}</span>
+                      <span className="text-[8px] uppercase tracking-widest mt-0.5" style={{ color: "rgba(255,255,255,0.3)" }}>done</span>
+                    </div>
+                  </div>
+                  {/* Glow under ring */}
+                  <div className="absolute inset-0 rounded-full pointer-events-none" style={{ boxShadow: `0 0 20px ${charColor}25` }} />
+                </div>
+
+                {/* Right side: label + bar */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.35)" }}>
+                      Today's Progress
+                    </span>
+                    <span className="text-xs font-bold" style={{ color: charColor }}>{pct}%</span>
+                  </div>
+                  <div className="h-1.5 rounded-full overflow-hidden" style={{ backgroundColor: "rgba(255,255,255,0.06)" }}>
+                    <motion.div
+                      className="h-full rounded-full"
+                      initial={{ width: 0 }}
+                      animate={{ width: `${pct}%` }}
+                      transition={{ duration: 1.2, ease: "easeOut" }}
+                      style={{ background: `linear-gradient(90deg, ${charColor}99, ${charColor})`, boxShadow: `0 0 10px ${charGlow}` }}
+                    />
+                  </div>
+                  <AnimatePresence>
+                    {pct === 100 && (
+                      <motion.p
+                        initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                        className="text-xs mt-2 font-semibold"
+                        style={{ color: charColor }}
+                      >
+                        All done — great work! 🎉
+                      </motion.p>
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
-              <div className="h-2 rounded-full overflow-hidden" style={{ backgroundColor: "rgba(255,255,255,0.06)" }}>
-                <motion.div
-                  className="h-2 rounded-full"
-                  initial={{ width: 0 }}
-                  animate={{ width: `${pct}%` }}
-                  transition={{ duration: 1, ease: "easeOut" }}
-                  style={{
-                    background: `linear-gradient(90deg, ${charColor}cc, ${charColor})`,
-                    boxShadow: `0 0 12px ${charGlow}`,
-                  }}
-                />
-              </div>
-              {pct === 100 && (
-                <motion.p
-                  initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}
-                  className="text-xs mt-1.5 text-center font-semibold"
-                  style={{ color: charColor }}
-                >
-                  All done — great work! 🎉
-                </motion.p>
-              )}
-            </div>
+            </motion.div>
           )}
 
-          {/* Quick stats — below progress bar */}
+          {/* ── Unified glass stat strip ── */}
           {summary && (
-            <div className="grid grid-cols-3 gap-2.5 flex-shrink-0">
+            <motion.div
+              initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.08 }}
+              className="flex-shrink-0 flex items-stretch rounded-2xl overflow-hidden"
+              style={{
+                background: "rgba(255,255,255,0.035)",
+                backdropFilter: "blur(20px)",
+                border: "1px solid rgba(255,255,255,0.07)",
+                boxShadow: "0 4px 20px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.06)",
+              }}
+            >
               {[
                 { label: "Best Streak", value: `${summary.longestStreak ?? 0}d` },
                 { label: "Habits",      value: summary.totalHabits ?? 0 },
                 { label: "All-Time",    value: summary.totalCompletions ?? 0 },
-              ].map(({ label, value }) => (
-                <div
-                  key={label}
-                  className="rounded-2xl p-3 border text-center"
-                  style={{ background: "rgba(4,12,22,0.7)", borderColor: `${charColor}15` }}
-                >
-                  <p className="text-base font-bold leading-tight" style={{ color: charColor }}>{value}</p>
-                  <p className="mt-0.5" style={{ color: "rgba(255,255,255,0.28)", fontSize: 9 }}>{label.toUpperCase()}</p>
+              ].map(({ label, value }, i) => (
+                <div key={label} className="flex-1 flex flex-col items-center justify-center py-3 relative">
+                  {i > 0 && (
+                    <div className="absolute left-0 top-2 bottom-2 w-px" style={{ background: "rgba(255,255,255,0.07)" }} />
+                  )}
+                  <span className="text-base font-bold leading-none" style={{ color: charColor }}>{value}</span>
+                  <span className="text-[9px] uppercase tracking-widest mt-1" style={{ color: "rgba(255,255,255,0.25)" }}>{label}</span>
                 </div>
               ))}
-            </div>
+            </motion.div>
           )}
 
-          {/* Habit list - scrollable internally if needed */}
-          <div className="flex-1 min-h-0 overflow-y-auto no-scrollbar space-y-2 pr-0.5">
+          {/* ── Habit list ── */}
+          <div className="flex-1 min-h-0 overflow-y-auto no-scrollbar space-y-1.5 pr-0.5">
             {remaining.length > 0 && (
-              <div className="space-y-2">
-                <p className="text-xs font-semibold uppercase tracking-widest px-1" style={{ color: "rgba(255,255,255,0.35)" }}>
-                  Remaining · {remaining.length}
+              <div className="space-y-1.5">
+                <p className="text-[10px] font-semibold uppercase tracking-widest px-1 pb-1" style={{ color: "rgba(255,255,255,0.25)" }}>
+                  Up next — {remaining.length}
                 </p>
                 {remaining.map(h => <HabitRow key={h.id} habit={h} />)}
               </div>
             )}
 
             {done.length > 0 && (
-              <div className="space-y-2 mt-3">
-                <p className="text-xs font-semibold uppercase tracking-widest px-1" style={{ color: "rgba(255,255,255,0.2)" }}>
-                  Completed · {done.length}
+              <div className="space-y-1.5 mt-3">
+                <p className="text-[10px] font-semibold uppercase tracking-widest px-1 pb-1" style={{ color: "rgba(255,255,255,0.16)" }}>
+                  Completed — {done.length}
                 </p>
                 {done.map(h => <HabitRow key={h.id} habit={h} />)}
               </div>
             )}
 
             {habits.length === 0 && (
-              <div className="flex flex-col items-center justify-center gap-4 pt-8 text-center">
-                <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ backgroundColor: `${charColor}10`, border: `1px solid ${charColor}20` }}>
-                  <Plus className="w-8 h-8" style={{ color: `${charColor}50` }} />
+              <div className="flex flex-col items-center justify-center gap-4 pt-10 text-center">
+                <div
+                  className="w-16 h-16 rounded-2xl flex items-center justify-center"
+                  style={{
+                    background: "rgba(255,255,255,0.04)",
+                    backdropFilter: "blur(12px)",
+                    border: `1px solid ${charColor}20`,
+                    boxShadow: `0 0 24px ${charColor}10`,
+                  }}
+                >
+                  <Plus className="w-7 h-7" style={{ color: `${charColor}60` }} />
                 </div>
                 <div>
-                  <p className="font-semibold text-white/60 text-lg">No habits yet</p>
-                  <p className="text-sm text-white/35 mt-1">Track your first daily habit to get started</p>
+                  <p className="font-semibold text-white/50 text-base">No habits yet</p>
+                  <p className="text-sm text-white/25 mt-1">Add your first daily habit to begin</p>
                 </div>
                 <Link href="/habits">
                   <motion.button
                     whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
                     className="px-6 py-3 rounded-2xl font-bold text-sm"
-                    style={{ backgroundColor: charColor, color: "#000", boxShadow: `0 0 20px ${charGlow}` }}
+                    style={{
+                      background: `linear-gradient(135deg, ${charColor}dd, ${charColor})`,
+                      color: "#000",
+                      boxShadow: `0 0 24px ${charGlow}, 0 4px 16px rgba(0,0,0,0.3)`,
+                    }}
                   >
                     Add your first habit
                   </motion.button>
