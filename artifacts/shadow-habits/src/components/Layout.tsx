@@ -188,7 +188,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             {mainNav.find(n => n.href === location || (n.href === "/dashboard" && location === "/"))?.label ?? "ShadowHabits"}
           </h2>
 
-          {/* Right: character tag */}
+          {/* Right: character tag + switch button */}
           <div className="flex items-center gap-2.5">
             <div
               className="flex items-center gap-2 px-3 py-1.5 rounded-xl border"
@@ -197,6 +197,22 @@ export function Layout({ children }: { children: React.ReactNode }) {
               <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: charColor, boxShadow: `0 0 6px ${charColor}` }} />
               <span className="text-xs font-semibold" style={{ color: charColor }}>{charName}</span>
             </div>
+            <Link href="/settings">
+              <motion.button
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.97 }}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider border transition-all"
+                style={{
+                  background: `linear-gradient(135deg, ${charColor}22, ${charColor}10)`,
+                  borderColor: `${charColor}35`,
+                  color: charColor,
+                  boxShadow: `0 0 12px ${charColor}18`,
+                }}
+              >
+                <Settings className="w-3 h-3" />
+                Switch Character
+              </motion.button>
+            </Link>
           </div>
         </div>
 
