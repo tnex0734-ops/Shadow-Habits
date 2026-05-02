@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#6B0A35"/>
+      <stop offset="100%" stop-color="#0F000A"/>
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="64" height="64" fill="url(#bg)"/>
+  <!-- Body -->
+  <ellipse cx="32" cy="54" rx="14" ry="7" fill="#3A001A" opacity="0.9"/>
+  <rect x="23" y="37" width="18" height="18" rx="4" fill="#2A0020"/>
+  <!-- Head -->
+  <ellipse cx="32" cy="28" rx="10" ry="11" fill="#3D1530"/>
+  <!-- Hair bun at top -->
+  <ellipse cx="32" cy="16" rx="7" ry="5" fill="#1A0810"/>
+  <path d="M22 24 Q21 14 32 12 Q43 14 42 24" fill="#1A0810"/>
+  <!-- Hair detail lines -->
+  <path d="M25 16 Q27 12 32 11 Q37 12 39 16" stroke="#0D0508" stroke-width="1" fill="none"/>
+  <!-- Eyes - determined look -->
+  <ellipse cx="27.5" cy="28" rx="2.5" ry="2.2" fill="#EC4899" filter="url(#glow)"/>
+  <ellipse cx="36.5" cy="28" rx="2.5" ry="2.2" fill="#EC4899" filter="url(#glow)"/>
+  <!-- Eyebrows strong -->
+  <path d="M25 25 Q27.5 23.5 30 25" stroke="#1A0810" stroke-width="1.2" fill="none"/>
+  <path d="M34 25 Q36.5 23.5 39 25" stroke="#1A0810" stroke-width="1.2" fill="none"/>
+  <!-- Nail symbol on cheek -->
+  <circle cx="40" cy="30" r="1.5" fill="#EC4899" opacity="0.7" filter="url(#glow)"/>
+  <!-- Straw doll flower pins -->
+  <circle cx="10" cy="20" r="2" fill="#EC4899" opacity="0.5" filter="url(#glow)"/>
+  <circle cx="54" cy="20" r="2" fill="#EC4899" opacity="0.5" filter="url(#glow)"/>
+  <circle cx="8" cy="38" r="1.5" fill="#EC4899" opacity="0.4"/>
+  <!-- Collar detail -->
+  <path d="M25 37 L29 43 L32 40 L35 43 L39 37" stroke="#500030" stroke-width="1.5" fill="none"/>
+  <!-- Uniform -->
+  <rect x="23" y="37" width="18" height="4" rx="2" fill="#3D1535"/>
+</svg>

@@ -177,6 +177,75 @@ const characterMessages: Record<string, Record<string, string[]>> = {
     ],
     neutral: ["Every day is a new chance to be the best version of yourself!", "Let's make today count — one habit at a time!"],
   },
+  "shadow-bearer": {
+    celebrating: [
+      "All ten shadows are with you today. You've commanded this domain flawlessly.",
+      "Even Mahoraga would bow to your discipline. Every technique landed perfectly.",
+      "The shikigami acknowledge your strength. You've proven yourself worthy.",
+    ],
+    encouraging: [
+      "The Ten Shadows technique requires patience. Your consistency is building power.",
+      "In darkness, the disciplined find their edge. Keep moving forward.",
+      "Even incomplete days shape a sorcerer. Don't abandon your training.",
+    ],
+    challenging: [
+      "A shadow sorcerer doesn't flinch. Finish what you started today.",
+      "Mahoraga adapts to any technique — you should too. Push through this.",
+      "Your shikigami are waiting to be summoned. Don't disappoint them.",
+    ],
+    disappointed: [
+      "The shadows recede when you stop moving. Return to your practice.",
+      "Even Megumi never gave up his techniques. Neither should you.",
+      "Weakness in training becomes weakness in the domain. Recover now.",
+    ],
+    neutral: ["Ten shadows, ten chances. Each habit is one technique mastered.", "Precision over brute force — show up consistently, every day."],
+  },
+  "straw-doll": {
+    celebrating: [
+      "Nailed it — literally! You crushed every target today without hesitation.",
+      "That's the energy! Beauty and strength in perfect balance. I'm impressed.",
+      "Resonance achieved! Your habits and your willpower are perfectly aligned today.",
+    ],
+    encouraging: [
+      "A sorcerer doesn't back down just because it's hard. Keep hammering.",
+      "I didn't come this far to quit — and neither did you. Let's go.",
+      "Every nail driven is progress. Don't stop halfway through the job.",
+    ],
+    challenging: [
+      "Are you seriously slacking? I do not do half-measures. Neither should you.",
+      "Hairpin mode: direct, fast, no excuses. Finish your habits now.",
+      "I've fought curses tougher than your excuses. Get it done.",
+    ],
+    disappointed: [
+      "I'm not mad, I'm disappointed. And you know that's worse. Fix it tomorrow.",
+      "Straw dolls don't work if you don't put in the effort. Neither do habits.",
+      "You've got more in you. I've seen it. Get back up and prove it.",
+    ],
+    neutral: ["Style and substance — that's the goal. Your habits define both.", "Hit the mark, every day. No excuses, no apologies."],
+  },
+  "ratio-master": {
+    celebrating: [
+      "7:3 ratio perfectly executed. This is what consistent work looks like — well done.",
+      "I don't celebrate often, but today's performance merits acknowledgment. Good work.",
+      "Every task completed on time, every habit hit. This is professionalism at its finest.",
+    ],
+    encouraging: [
+      "Work is not glamorous. But it gets done. Keep going.",
+      "The ratio matters. Show up today and the numbers will speak for themselves.",
+      "I've worked through worse than this. So can you. No complaint, just action.",
+    ],
+    challenging: [
+      "You're off the ratio. Recalibrate and close the gap today.",
+      "A Grade 1 sorcerer doesn't let the work pile up. Neither should you.",
+      "Overtime begins when discipline ends. Finish what you started.",
+    ],
+    disappointed: [
+      "I'm not here to coddle you. Miss your habits, miss your potential. Simple as that.",
+      "The only thing worse than not starting is starting and quitting. Don't be that person.",
+      "I've met curses with more consistency than this. Correct yourself.",
+    ],
+    neutral: ["Work is work. Do it consistently and results follow. That's the ratio.", "7 parts effort, 3 parts rest. Balance your output — then repeat."],
+  },
 };
 
 router.get("/dashboard/companion-message", async (req: AuthRequest, res) => {

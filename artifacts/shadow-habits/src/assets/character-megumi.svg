@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#3B0E6E"/>
+      <stop offset="100%" stop-color="#0A0010"/>
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="64" height="64" fill="url(#bg)"/>
+  <!-- Body silhouette -->
+  <ellipse cx="32" cy="52" rx="14" ry="8" fill="#1A0040" opacity="0.9"/>
+  <!-- Torso -->
+  <rect x="22" y="36" width="20" height="20" rx="4" fill="#1A0835"/>
+  <!-- Head -->
+  <ellipse cx="32" cy="28" rx="11" ry="12" fill="#2A1045"/>
+  <!-- Hair - dark spiky -->
+  <path d="M21 26 Q20 16 28 14 Q32 12 36 14 Q44 16 43 26" fill="#0D0820"/>
+  <path d="M21 22 Q18 14 25 11" stroke="#0D0820" stroke-width="3" fill="none"/>
+  <path d="M43 22 Q46 14 39 11" stroke="#0D0820" stroke-width="3" fill="none"/>
+  <!-- Eyes -->
+  <ellipse cx="27" cy="28" rx="2.5" ry="2" fill="#7C3AED" filter="url(#glow)"/>
+  <ellipse cx="37" cy="28" rx="2.5" ry="2" fill="#7C3AED" filter="url(#glow)"/>
+  <!-- Ten Shadows symbol -->
+  <text x="32" y="14" text-anchor="middle" font-size="8" fill="#A855F7" opacity="0.85" filter="url(#glow)" font-family="serif">十</text>
+  <!-- Shadow wisps -->
+  <path d="M10 50 Q16 44 20 48" stroke="#7C3AED" stroke-width="1" fill="none" opacity="0.5"/>
+  <path d="M54 50 Q48 44 44 48" stroke="#7C3AED" stroke-width="1" fill="none" opacity="0.5"/>
+  <!-- Collar -->
+  <path d="M24 36 L28 42 L32 39 L36 42 L40 36" stroke="#2D1060" stroke-width="1.5" fill="none"/>
+</svg>

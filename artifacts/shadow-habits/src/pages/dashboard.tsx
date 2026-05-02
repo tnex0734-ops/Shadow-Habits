@@ -14,7 +14,7 @@ import { getTodayStr, formatDate } from "@/lib/utils";
 import { CheckCircle2, Circle, Flame, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Link } from "wouter";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from "recharts";
+import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
 /* ─── Habit Row ─── */
 function HabitRow({ habit }: {
@@ -302,20 +302,33 @@ export default function DashboardPage() {
               Last 7 Days
             </p>
             <ResponsiveContainer width="100%" height={180}>
-              <BarChart data={chart7} barSize={28} margin={{ top: 8, right: 4, bottom: 0, left: -20 }}>
+              <AreaChart data={chart7} margin={{ top: 8, right: 4, bottom: 0, left: -20 }}>
+                <defs>
+                  <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor={charColor} stopOpacity={0.45} />
+                    <stop offset="100%" stopColor={charColor} stopOpacity={0.02} />
+                  </linearGradient>
+                </defs>
                 <XAxis dataKey="day" tick={{ fontSize: 9, fill: "rgba(255,255,255,0.3)" }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fontSize: 9, fill: "rgba(255,255,255,0.2)" }} axisLine={false} tickLine={false} allowDecimals={false} />
-                <Tooltip content={<ChartTip />} cursor={{ fill: "rgba(255,255,255,0.03)", radius: 6 }} />
-                <Bar dataKey="count" radius={[5, 5, 0, 0]}>
-                  {chart7.map((e, i) => (
-                    <Cell
-                      key={i}
-                      fill={e.isToday ? charColor : `${charColor}45`}
-                      style={e.isToday ? { filter: `drop-shadow(0 0 8px ${charGlow})` } : undefined}
-                    />
-                  ))}
-                </Bar>
-              </BarChart>
+                <Tooltip content={<ChartTip />} cursor={{ stroke: `${charColor}30`, strokeWidth: 1 }} />
+                <Area
+                  type="monotone"
+                  dataKey="count"
+                  stroke={charColor}
+                  strokeWidth={2}
+                  fill="url(#chartGrad)"
+                  dot={(props) => {
+                    const { cx, cy, payload } = props;
+                    return payload.isToday ? (
+                      <circle key={`dot-${cx}`} cx={cx} cy={cy} r={5} fill={charColor} style={{ filter: `drop-shadow(0 0 6px ${charGlow})` }} />
+                    ) : (
+                      <circle key={`dot-${cx}`} cx={cx} cy={cy} r={3} fill={charColor} fillOpacity={0.5} />
+                    );
+                  }}
+                  activeDot={{ r: 6, fill: charColor, stroke: "rgba(0,0,0,0.4)", strokeWidth: 2 }}
+                />
+              </AreaChart>
             </ResponsiveContainer>
           </div>
 

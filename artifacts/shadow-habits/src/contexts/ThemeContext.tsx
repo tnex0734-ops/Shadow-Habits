@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect } from "react";
 import { useAuth } from "./AuthContext";
 
-type Character = "infinity-mentor" | "dark-king" | "energy-hero";
+type Character = "infinity-mentor" | "dark-king" | "energy-hero" | "shadow-bearer" | "straw-doll" | "ratio-master";
 
 interface ThemeContextType {
   character: Character;
@@ -42,6 +42,27 @@ const charData: Record<Character, Omit<ThemeContextType, "character">> = {
     charGlow: "rgba(255,160,0,0.4)",
     charGlowSoft: "rgba(255,160,0,0.14)",
     charImage: "/src/assets/character-energy.png",
+  },
+  "shadow-bearer": {
+    charName: "Shadow Bearer",
+    charColor: "#A855F7",
+    charGlow: "rgba(168,85,247,0.42)",
+    charGlowSoft: "rgba(168,85,247,0.14)",
+    charImage: "/src/assets/character-megumi.svg",
+  },
+  "straw-doll": {
+    charName: "Straw Doll",
+    charColor: "#EC4899",
+    charGlow: "rgba(236,72,153,0.42)",
+    charGlowSoft: "rgba(236,72,153,0.14)",
+    charImage: "/src/assets/character-nobara.svg",
+  },
+  "ratio-master": {
+    charName: "Ratio Master",
+    charColor: "#D97706",
+    charGlow: "rgba(217,119,6,0.42)",
+    charGlowSoft: "rgba(217,119,6,0.14)",
+    charImage: "/src/assets/character-nanami.svg",
   },
 };
 

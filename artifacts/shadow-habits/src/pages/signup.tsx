@@ -38,6 +38,36 @@ const characters = [
     glowSoft: "rgba(255,160,0,0.14)",
     image: "/src/assets/character-energy.png",
   },
+  {
+    id: "shadow-bearer" as const,
+    name: "Shadow Bearer",
+    tagline: "Ten Shadows",
+    description: "Cold, precise, unstoppable. Commands divine shikigami from the darkness.",
+    color: "#A855F7",
+    glow: "rgba(168,85,247,0.42)",
+    glowSoft: "rgba(168,85,247,0.14)",
+    image: "/src/assets/character-megumi.svg",
+  },
+  {
+    id: "straw-doll" as const,
+    name: "Straw Doll",
+    tagline: "The Hammer",
+    description: "Fierce and fearless. Crushes every target with nails and raw cursed energy.",
+    color: "#EC4899",
+    glow: "rgba(236,72,153,0.42)",
+    glowSoft: "rgba(236,72,153,0.14)",
+    image: "/src/assets/character-nobara.svg",
+  },
+  {
+    id: "ratio-master" as const,
+    name: "Ratio Master",
+    tagline: "7:3 Ratio",
+    description: "Disciplined and methodical. Strikes the exact weak point every single day.",
+    color: "#D97706",
+    glow: "rgba(217,119,6,0.42)",
+    glowSoft: "rgba(217,119,6,0.14)",
+    image: "/src/assets/character-nanami.svg",
+  },
 ];
 
 export default function SignupPage() {
@@ -104,7 +134,7 @@ export default function SignupPage() {
         </motion.div>
 
         {/* Character grid */}
-        <div className="grid grid-cols-3 gap-2.5 mb-5">
+        <div className="grid grid-cols-2 gap-2.5 mb-5">
           {characters.map((char) => {
             const isSelected = selectedCharacter === char.id;
             return (

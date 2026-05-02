@@ -102,7 +102,7 @@ router.get("/auth/me", authMiddleware, async (req: AuthRequest, res) => {
 
 router.put("/auth/character", authMiddleware, async (req: AuthRequest, res) => {
   const { selectedCharacter } = req.body;
-  const valid = ["infinity-mentor", "dark-king", "energy-hero"];
+  const valid = ["infinity-mentor", "dark-king", "energy-hero", "shadow-bearer", "straw-doll", "ratio-master"];
   if (!valid.includes(selectedCharacter)) {
     res.status(400).json({ error: "bad_request", message: "Invalid character" });
     return;
