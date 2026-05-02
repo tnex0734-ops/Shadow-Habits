@@ -161,6 +161,15 @@ export default function DashboardPage() {
 
   /* Character image path helper */
   const charImgMap: Record<string, string> = {
+    "sukuna":   "/src/assets/character-dark.png",
+    "itadori":  "/src/assets/character-energy.png",
+    "megumi":   "/src/assets/character-megumi.svg",
+    "nobara":   "/src/assets/character-nobara.svg",
+    "toji":     "/src/assets/character-toji.svg",
+    "nanami":   "/src/assets/character-nanami.svg",
+    "maki":     "/src/assets/character-maki.svg",
+    "inumaki":  "/src/assets/character-inumaki.svg",
+    "yuta":     "/src/assets/character-yuta.svg",
     "infinity-mentor": "/src/assets/character-infinity.png",
     "dark-king":       "/src/assets/character-dark.png",
     "energy-hero":     "/src/assets/character-energy.png",
@@ -172,6 +181,15 @@ export default function DashboardPage() {
     "best-friend":     "/src/assets/character-todo.svg",
   };
   const charNameMap: Record<string, string> = {
+    "sukuna":   "Sukuna",
+    "itadori":  "Itadori",
+    "megumi":   "Megumi",
+    "nobara":   "Nobara",
+    "toji":     "Toji",
+    "nanami":   "Nanami",
+    "maki":     "Maki Zenin",
+    "inumaki":  "Toge Inumaki",
+    "yuta":     "Yuta",
     "infinity-mentor": "Infinity Mentor",
     "dark-king":       "Dark King",
     "energy-hero":     "Energy Hero",
@@ -210,106 +228,8 @@ export default function DashboardPage() {
       {/* ── MAIN 2-COLUMN GRID ── */}
       <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-5">
 
-        {/* LEFT: Progress + Stats + Habits */}
+        {/* LEFT: Habits + Stats + Chart */}
         <div className="flex flex-col gap-3 min-h-0 overflow-hidden">
-
-          {/* ── Glass progress card ── */}
-          {total > 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
-              className="flex-shrink-0 rounded-2xl p-4 relative overflow-hidden"
-              style={{
-                background: "rgba(255,255,255,0.04)",
-                backdropFilter: "blur(24px)",
-                border: `1px solid rgba(255,255,255,0.08)`,
-                boxShadow: `0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.07), 0 0 0 1px ${charColor}0a`,
-              }}
-            >
-              {/* Subtle color wash */}
-              <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse at 10% 50%, ${charColor}0a, transparent 60%)` }} />
-
-              <div className="relative flex items-center gap-5">
-                {/* Conic progress ring */}
-                <div className="flex-shrink-0 relative" style={{ width: 72, height: 72 }}>
-                  <div
-                    className="w-full h-full rounded-full"
-                    style={{
-                      background: `conic-gradient(${charColor} ${pct * 3.6}deg, rgba(255,255,255,0.06) 0deg)`,
-                      padding: 3,
-                    }}
-                  >
-                    <div
-                      className="w-full h-full rounded-full flex flex-col items-center justify-center"
-                      style={{ background: "#060d14" }}
-                    >
-                      <span className="text-base font-bold leading-none" style={{ color: charColor }}>{done.length}/{total}</span>
-                      <span className="text-[8px] uppercase tracking-widest mt-0.5" style={{ color: "rgba(255,255,255,0.3)" }}>done</span>
-                    </div>
-                  </div>
-                  {/* Glow under ring */}
-                  <div className="absolute inset-0 rounded-full pointer-events-none" style={{ boxShadow: `0 0 20px ${charColor}25` }} />
-                </div>
-
-                {/* Right side: label + bar */}
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.35)" }}>
-                      Today's Progress
-                    </span>
-                    <span className="text-xs font-bold" style={{ color: charColor }}>{pct}%</span>
-                  </div>
-                  <div className="h-1.5 rounded-full overflow-hidden" style={{ backgroundColor: "rgba(255,255,255,0.06)" }}>
-                    <motion.div
-                      className="h-full rounded-full"
-                      initial={{ width: 0 }}
-                      animate={{ width: `${pct}%` }}
-                      transition={{ duration: 1.2, ease: "easeOut" }}
-                      style={{ background: `linear-gradient(90deg, ${charColor}99, ${charColor})`, boxShadow: `0 0 10px ${charGlow}` }}
-                    />
-                  </div>
-                  <AnimatePresence>
-                    {pct === 100 && (
-                      <motion.p
-                        initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-                        className="text-xs mt-2 font-semibold"
-                        style={{ color: charColor }}
-                      >
-                        All done — great work! 🎉
-                      </motion.p>
-                    )}
-                  </AnimatePresence>
-                </div>
-              </div>
-            </motion.div>
-          )}
-
-          {/* ── Unified glass stat strip ── */}
-          {summary && (
-            <motion.div
-              initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.08 }}
-              className="flex-shrink-0 flex items-stretch rounded-2xl overflow-hidden"
-              style={{
-                background: "rgba(255,255,255,0.035)",
-                backdropFilter: "blur(20px)",
-                border: "1px solid rgba(255,255,255,0.07)",
-                boxShadow: "0 4px 20px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.06)",
-              }}
-            >
-              {[
-                { label: "Best Streak", value: `${summary.longestStreak ?? 0}d` },
-                { label: "Habits",      value: summary.totalHabits ?? 0 },
-                { label: "All-Time",    value: summary.totalCompletions ?? 0 },
-              ].map(({ label, value }, i) => (
-                <div key={label} className="flex-1 flex flex-col items-center justify-center py-3 relative">
-                  {i > 0 && (
-                    <div className="absolute left-0 top-2 bottom-2 w-px" style={{ background: "rgba(255,255,255,0.07)" }} />
-                  )}
-                  <span className="text-base font-bold leading-none" style={{ color: charColor }}>{value}</span>
-                  <span className="text-[9px] uppercase tracking-widest mt-1" style={{ color: "rgba(255,255,255,0.25)" }}>{label}</span>
-                </div>
-              ))}
-            </motion.div>
-          )}
 
           {/* ── Habit list ── */}
           <div className="flex-1 min-h-0 overflow-y-auto no-scrollbar space-y-1.5 pr-0.5">
@@ -364,42 +284,53 @@ export default function DashboardPage() {
               </div>
             )}
           </div>
-        </div>
 
-        {/* RIGHT: Unified Companion Card */}
-        <div className="flex flex-col min-h-0 rounded-3xl overflow-hidden relative"
-          style={{
-            background: "rgba(6,10,20,0.82)",
-            backdropFilter: "blur(32px)",
-            border: `1px solid rgba(255,255,255,0.07)`,
-            boxShadow: `0 20px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06), 0 0 0 1px ${charColor}0a`,
-          }}
-        >
+          {/* ── Unified glass stat strip ── */}
+          {summary && (
+            <motion.div
+              initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.08 }}
+              className="flex-shrink-0 flex items-stretch rounded-2xl overflow-hidden"
+              style={{
+                background: "rgba(255,255,255,0.035)",
+                backdropFilter: "blur(20px)",
+                border: "1px solid rgba(255,255,255,0.07)",
+                boxShadow: "0 4px 20px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.06)",
+              }}
+            >
+              {[
+                { label: "Best Streak", value: `${summary.longestStreak ?? 0}d` },
+                { label: "Habits",      value: summary.totalHabits ?? 0 },
+                { label: "All-Time",    value: summary.totalCompletions ?? 0 },
+              ].map(({ label, value }, i) => (
+                <div key={label} className="flex-1 flex flex-col items-center justify-center py-3 relative">
+                  {i > 0 && (
+                    <div className="absolute left-0 top-2 bottom-2 w-px" style={{ background: "rgba(255,255,255,0.07)" }} />
+                  )}
+                  <span className="text-base font-bold leading-none" style={{ color: charColor }}>{value}</span>
+                  <span className="text-[9px] uppercase tracking-widest mt-1" style={{ color: "rgba(255,255,255,0.25)" }}>{label}</span>
+                </div>
+              ))}
+            </motion.div>
+          )}
 
-          <CharacterHeroPanel
-            character={user?.selectedCharacter ?? "infinity-mentor"}
-            charColor={charColor}
-            charGlow={charGlow}
-            charGlowSoft={charGlowSoft}
-            companionImg={companionImg}
-            companionName={companionName}
-            companionMessage={companion?.message}
-          />
-
-          {/* ── Divider ── */}
-          <div className="flex-shrink-0 h-px mx-0" style={{
-            background: `linear-gradient(90deg, ${charColor}00, ${charColor}28 30%, ${charColor}28 70%, ${charColor}00)`,
-          }} />
-
-          {/* ══ BOTTOM: 7-day chart ══ */}
-          <div className="flex flex-col min-h-0 px-4 pt-3 pb-3" style={{ flex: "0 0 42%" }}>
-            <p className="text-[9px] font-semibold uppercase tracking-[0.18em] flex-shrink-0 mb-2"
-              style={{ color: "rgba(255,255,255,0.25)" }}>
-              Last 7 Days
-            </p>
-            <div className="flex-1 min-h-0">
+          {/* ── 7-day chart ── */}
+          <div className="flex-shrink-0 rounded-2xl overflow-hidden"
+            style={{
+              height: 140,
+              background: "rgba(255,255,255,0.025)",
+              backdropFilter: "blur(20px)",
+              border: "1px solid rgba(255,255,255,0.06)",
+            }}
+          >
+            <div className="px-4 pt-3 pb-1">
+              <p className="text-[9px] font-semibold uppercase tracking-[0.18em]"
+                style={{ color: "rgba(255,255,255,0.25)" }}>
+                Last 7 Days
+              </p>
+            </div>
+            <div style={{ height: 104 }}>
               <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={chart7} margin={{ top: 12, right: 4, bottom: 0, left: -24 }}>
+                <AreaChart data={chart7} margin={{ top: 4, right: 12, bottom: 0, left: -20 }}>
                   <defs>
                     <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0%" stopColor={charColor} stopOpacity={0.45} />
@@ -436,6 +367,106 @@ export default function DashboardPage() {
                 </AreaChart>
               </ResponsiveContainer>
             </div>
+          </div>
+
+        </div>
+
+        {/* RIGHT: Unified Companion Card */}
+        <div className="flex flex-col min-h-0 rounded-3xl overflow-hidden relative"
+          style={{
+            background: "rgba(6,10,20,0.82)",
+            backdropFilter: "blur(32px)",
+            border: `1px solid rgba(255,255,255,0.07)`,
+            boxShadow: `0 20px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06), 0 0 0 1px ${charColor}0a`,
+          }}
+        >
+
+          <CharacterHeroPanel
+            character={user?.selectedCharacter ?? "itadori"}
+            charColor={charColor}
+            charGlow={charGlow}
+            charGlowSoft={charGlowSoft}
+            companionImg={companionImg}
+            companionName={companionName}
+            companionMessage={companion?.message}
+          />
+
+          {/* ── Divider ── */}
+          <div className="flex-shrink-0 h-px mx-0" style={{
+            background: `linear-gradient(90deg, ${charColor}00, ${charColor}28 30%, ${charColor}28 70%, ${charColor}00)`,
+          }} />
+
+          {/* ══ BOTTOM: Today's Progress ══ */}
+          <div className="flex flex-col justify-center px-5 py-4 relative" style={{ flex: "0 0 42%" }}>
+            {/* Color wash */}
+            <div className="absolute inset-0 pointer-events-none"
+              style={{ background: `radial-gradient(ellipse at 50% 100%, ${charColor}0d, transparent 60%)` }} />
+
+            <p className="text-[9px] font-semibold uppercase tracking-[0.18em] mb-4 relative z-10"
+              style={{ color: "rgba(255,255,255,0.25)" }}>
+              Today's Progress
+            </p>
+
+            {total > 0 ? (
+              <div className="relative z-10 flex items-center gap-4">
+                {/* Large conic ring */}
+                <div className="flex-shrink-0 relative" style={{ width: 80, height: 80 }}>
+                  <div
+                    className="w-full h-full rounded-full"
+                    style={{
+                      background: `conic-gradient(${charColor} ${pct * 3.6}deg, rgba(255,255,255,0.06) 0deg)`,
+                      padding: 4,
+                    }}
+                  >
+                    <div
+                      className="w-full h-full rounded-full flex flex-col items-center justify-center"
+                      style={{ background: "#060d14" }}
+                    >
+                      <span className="text-lg font-bold leading-none" style={{ color: charColor }}>{pct}%</span>
+                      <span className="text-[8px] uppercase tracking-widest mt-0.5" style={{ color: "rgba(255,255,255,0.3)" }}>
+                        {done.length}/{total}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="absolute inset-0 rounded-full pointer-events-none"
+                    style={{ boxShadow: `0 0 24px ${charColor}30` }} />
+                </div>
+
+                {/* Progress bar + status */}
+                <div className="flex-1 min-w-0">
+                  <div className="h-2 rounded-full overflow-hidden mb-2" style={{ backgroundColor: "rgba(255,255,255,0.06)" }}>
+                    <motion.div
+                      className="h-full rounded-full"
+                      initial={{ width: 0 }}
+                      animate={{ width: `${pct}%` }}
+                      transition={{ duration: 1.2, ease: "easeOut" }}
+                      style={{
+                        background: `linear-gradient(90deg, ${charColor}88, ${charColor})`,
+                        boxShadow: `0 0 10px ${charGlow}`,
+                      }}
+                    />
+                  </div>
+                  <p className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
+                    {done.length} completed · {remaining.length} remaining
+                  </p>
+                  <AnimatePresence>
+                    {pct === 100 && (
+                      <motion.p
+                        initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                        className="text-xs mt-1.5 font-bold"
+                        style={{ color: charColor }}
+                      >
+                        Domain cleared — perfect day!
+                      </motion.p>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </div>
+            ) : (
+              <div className="relative z-10 text-center py-2">
+                <p className="text-xs" style={{ color: "rgba(255,255,255,0.25)" }}>No habits yet — add some to track progress</p>
+              </div>
+            )}
           </div>
 
         </div>

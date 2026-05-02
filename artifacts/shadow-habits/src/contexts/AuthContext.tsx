@@ -8,7 +8,7 @@ interface User {
   id: number;
   name: string;
   email: string;
-  selectedCharacter: "infinity-mentor" | "dark-king" | "energy-hero";
+  selectedCharacter: string;
   createdAt: string;
 }
 

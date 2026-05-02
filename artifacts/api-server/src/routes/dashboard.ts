@@ -108,6 +108,213 @@ router.get("/dashboard/streaks", async (req: AuthRequest, res) => {
 });
 
 const characterMessages: Record<string, Record<string, string[]>> = {
+  "sukuna": {
+    celebrating: [
+      "Impressive. Even I acknowledge your discipline. Don't let it go to your head.",
+      "Power flows to those who remain consistent. You've earned a fraction of mine.",
+      "The weak make excuses. The strong make progress. You chose strength today.",
+    ],
+    encouraging: [
+      "Suffering builds character. Keep going — the pain is temporary.",
+      "A true king doesn't wait for motivation. He moves regardless.",
+      "You want power? Then pay the price. Every habit is payment.",
+    ],
+    challenging: [
+      "This is nothing. Show me what you're truly capable of.",
+      "Mediocrity is the curse of the weak. Break it.",
+      "The only one standing in your way is you. Devour that weakness.",
+    ],
+    disappointed: [
+      "Pathetic. I expected more from someone with your potential.",
+      "Even curses have more discipline than this. Rise.",
+      "Weakness has many faces. Today, it wears yours.",
+    ],
+    neutral: ["Power is not given. It is taken through relentless action.", "The throne of your potential awaits. Claim it."],
+  },
+  "itadori": {
+    celebrating: [
+      "YES! That's what I'm talking about! You're absolutely crushing it!",
+      "I'll use 100% of my energy to celebrate you right now! Amazing job!",
+      "You did it! I knew you could! This feeling — this is what it's all about!",
+    ],
+    encouraging: [
+      "Even when it's tough, you keep moving. That's real strength!",
+      "I'm right here cheering you on. You've got this, I believe in you!",
+      "Every small step forward is still a step forward. Let's go!",
+    ],
+    challenging: [
+      "Come on! I know there's more in you! Let's push past our limits together!",
+      "We don't run from hard things — we run toward them! What are you waiting for?",
+      "Channel that energy! Your habits aren't going to complete themselves!",
+    ],
+    disappointed: [
+      "Hey, it's okay. We all have off days. What matters is we get back up!",
+      "Don't give up! I've been knocked down more times than I can count. The secret is getting back up.",
+      "I still believe in you. Let's reset and come back stronger tomorrow.",
+    ],
+    neutral: ["Every day is a new chance to be the best version of yourself!", "Let's make today count — one habit at a time!"],
+  },
+  "megumi": {
+    celebrating: [
+      "All ten shadows are with you today. You've commanded this domain flawlessly.",
+      "Even Mahoraga would bow to your discipline. Every technique landed perfectly.",
+      "The shikigami acknowledge your strength. You've proven yourself worthy.",
+    ],
+    encouraging: [
+      "The Ten Shadows technique requires patience. Your consistency is building power.",
+      "In darkness, the disciplined find their edge. Keep moving forward.",
+      "Even incomplete days shape a sorcerer. Don't abandon your training.",
+    ],
+    challenging: [
+      "A shadow sorcerer doesn't flinch. Finish what you started today.",
+      "Mahoraga adapts to any technique — you should too. Push through this.",
+      "Your shikigami are waiting to be summoned. Don't disappoint them.",
+    ],
+    disappointed: [
+      "The shadows recede when you stop moving. Return to your practice.",
+      "Even Megumi never gave up his techniques. Neither should you.",
+      "Weakness in training becomes weakness in the domain. Recover now.",
+    ],
+    neutral: ["Ten shadows, ten chances. Each habit is one technique mastered.", "Precision over brute force — show up consistently, every day."],
+  },
+  "nobara": {
+    celebrating: [
+      "Nailed it — literally! You crushed every target today without hesitation.",
+      "That's the energy! Beauty and strength in perfect balance. I'm impressed.",
+      "Resonance achieved! Your habits and your willpower are perfectly aligned today.",
+    ],
+    encouraging: [
+      "A sorcerer doesn't back down just because it's hard. Keep hammering.",
+      "I didn't come this far to quit — and neither did you. Let's go.",
+      "Every nail driven is progress. Don't stop halfway through the job.",
+    ],
+    challenging: [
+      "Are you seriously slacking? I do not do half-measures. Neither should you.",
+      "Hairpin mode: direct, fast, no excuses. Finish your habits now.",
+      "I've fought curses tougher than your excuses. Get it done.",
+    ],
+    disappointed: [
+      "I'm not mad, I'm disappointed. And you know that's worse. Fix it tomorrow.",
+      "Straw dolls don't work if you don't put in the effort. Neither do habits.",
+      "You've got more in you. I've seen it. Get back up and prove it.",
+    ],
+    neutral: ["Style and substance — that's the goal. Your habits define both.", "Hit the mark, every day. No excuses, no apologies."],
+  },
+  "toji": {
+    celebrating: [
+      "No cursed energy. No technique. Just pure execution — and you delivered. Acceptable.",
+      "I've killed Special Grade sorcerers with less than this. Today you earned your keep.",
+      "Didn't need luck, didn't need power. Just showed up and got it done. That's the way.",
+    ],
+    encouraging: [
+      "I had no cursed energy and still made it work. You have no excuse not to.",
+      "Heavenly Restriction means no shortcuts. Neither does building real habits.",
+      "Raw effort beats talent every time. Keep grinding.",
+    ],
+    challenging: [
+      "You're capable of more. Stop leaving reps on the floor.",
+      "A sorcerer killer doesn't hesitate. Neither should you. Finish it.",
+      "The gap between you and your best is one decision. Make it.",
+    ],
+    disappointed: [
+      "Weakness is a choice. So is getting back up. Choose correctly.",
+      "I didn't earn the name by taking easy days off. Don't you either.",
+      "Reset. No explanations. Just show up tomorrow and do the work.",
+    ],
+    neutral: ["No shortcuts. No excuses. Just show up and handle it.", "The body does what the mind commits to. Commit."],
+  },
+  "nanami": {
+    celebrating: [
+      "7:3 ratio perfectly executed. This is what consistent work looks like — well done.",
+      "I don't celebrate often, but today's performance merits acknowledgment. Good work.",
+      "Every task completed on time, every habit hit. This is professionalism at its finest.",
+    ],
+    encouraging: [
+      "Work is not glamorous. But it gets done. Keep going.",
+      "The ratio matters. Show up today and the numbers will speak for themselves.",
+      "I've worked through worse than this. So can you. No complaint, just action.",
+    ],
+    challenging: [
+      "You're off the ratio. Recalibrate and close the gap today.",
+      "A Grade 1 sorcerer doesn't let the work pile up. Neither should you.",
+      "Overtime begins when discipline ends. Finish what you started.",
+    ],
+    disappointed: [
+      "I'm not here to coddle you. Miss your habits, miss your potential. Simple as that.",
+      "The only thing worse than not starting is starting and quitting. Don't be that person.",
+      "I've met curses with more consistency than this. Correct yourself.",
+    ],
+    neutral: ["Work is work. Do it consistently and results follow. That's the ratio.", "7 parts effort, 3 parts rest. Balance your output — then repeat."],
+  },
+  "maki": {
+    celebrating: [
+      "No cursed energy. No shortcuts. Just pure discipline — and you executed it perfectly today.",
+      "This is what Heavenly Restriction looks like in practice. You stripped away excuses and delivered.",
+      "Even the Zenin clan couldn't ignore results like yours. You earned every bit of it.",
+    ],
+    encouraging: [
+      "I had nothing to start with either. I built everything through work. So can you.",
+      "The gap between where you are and where you want to be closes one habit at a time.",
+      "No technique, no shortcut — just show up. That's all I ever did.",
+    ],
+    challenging: [
+      "You have everything you need. Stop hesitating and finish what you started.",
+      "Heavenly Restriction gave me nothing but my body. I made it enough. What's your excuse?",
+      "Discipline isn't a feeling — it's a habit. Build it today or lose it.",
+    ],
+    disappointed: [
+      "I didn't come this far by taking days off. Neither should you. Get back to it.",
+      "The only thing stronger than any curse is consistent effort. Don't throw it away.",
+      "Rest is earned, not taken. Come back tomorrow stronger.",
+    ],
+    neutral: ["Pure effort, no shortcuts. Show up every day and results are inevitable.", "Your body is your weapon. Train it daily — habit by habit."],
+  },
+  "inumaki": {
+    celebrating: [
+      "...salmon. (Today was perfect. Don't say anything — just feel it.)",
+      "Tuna mayo. (Every habit done. That says more than words ever could.)",
+      "Okaka. (Flawless execution. I'm proud of you.)",
+    ],
+    encouraging: [
+      "Salmon. (Keep going. The work adds up, even when it doesn't feel like it.)",
+      "Mustard leaf. (You're closer than you think. One more step.)",
+      "Tuna. (Small steps still move forward. Don't stop.)",
+    ],
+    challenging: [
+      "Spicy cod roe. (You can do more than this. I believe that.)",
+      "Okaka. (Stop holding back. Give today everything.)",
+      "Salmon. (The gap is closing. Push through.)",
+    ],
+    disappointed: [
+      "...caviar. (It's okay. Tomorrow, we try again.)",
+      "Tuna mayo. (Missing a day isn't failing. Giving up is. Come back.)",
+      "Mustard leaf. (I'm still here. Pick it back up.)",
+    ],
+    neutral: ["Salmon. (Each habit is a word spoken with purpose. Make them count.)", "Okaka. (Consistency is the most powerful cursed technique of all.)"],
+  },
+  "yuta": {
+    celebrating: [
+      "Rika's watching — and she's smiling. You showed up completely today. That's everything.",
+      "This is the energy she gave me. Use it well — and you have. Perfect work.",
+      "Special Grade output from your best day. I knew you had it in you.",
+    ],
+    encouraging: [
+      "Even on quiet days, Rika's with you. You're not doing this alone — keep going.",
+      "The curse of mediocrity breaks when you show up anyway. Almost there.",
+      "Every habit is love turned into action. Don't stop now.",
+    ],
+    challenging: [
+      "Rika didn't stay for nothing. Honor that energy — finish your habits today.",
+      "Overwhelming cursed energy means nothing without direction. Focus and complete it.",
+      "You have everything you need. Channel it into today's work.",
+    ],
+    disappointed: [
+      "Even I had days where I couldn't face it. Tomorrow — we try again, together.",
+      "Rika's curse was love that couldn't let go. Don't let go of your progress either.",
+      "A reset isn't a failure. It's just the start of the next attempt.",
+    ],
+    neutral: ["Love is the strongest cursed technique. Show up for yourself every day.", "Rika believed in me when I couldn't. I believe in you now."],
+  },
   "infinity-mentor": {
     celebrating: [
       "Throughout heaven and earth, I alone am the honored one... and so are you today. Exceptional work.",
@@ -327,8 +534,8 @@ router.get("/dashboard/companion-message", async (req: AuthRequest, res) => {
     const completed = habits.filter((h) => (h.completedDates as string[]).includes(today)).length;
     const rate = total > 0 ? completed / total : 0;
 
-    const character = user?.selectedCharacter || "infinity-mentor";
-    const msgs = characterMessages[character] || characterMessages["infinity-mentor"];
+    const character = user?.selectedCharacter || "itadori";
+    const msgs = characterMessages[character] || characterMessages["itadori"];
 
     let mood: string;
     let messageList: string[];

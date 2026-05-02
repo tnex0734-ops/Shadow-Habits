@@ -9,18 +9,8 @@ import { Link } from "wouter";
 
 const characters = [
   {
-    id: "infinity-mentor" as const,
-    name: "Infinity Mentor",
-    tagline: "The Honored One",
-    description: "Calm, limitless, assured. He sees everything — including your potential.",
-    color: "#00C8FF",
-    glow: "rgba(0,200,255,0.38)",
-    glowSoft: "rgba(0,200,255,0.14)",
-    image: "/src/assets/character-infinity.png",
-  },
-  {
-    id: "dark-king" as const,
-    name: "Dark King",
+    id: "sukuna" as const,
+    name: "Sukuna",
     tagline: "King of Curses",
     description: "Ruthless. Powerful. Demands your absolute best — nothing less.",
     color: "#FF2020",
@@ -29,8 +19,8 @@ const characters = [
     image: "/src/assets/character-dark.png",
   },
   {
-    id: "energy-hero" as const,
-    name: "Energy Hero",
+    id: "itadori" as const,
+    name: "Itadori",
     tagline: "The Vessel",
     description: "Boundless energy and unbreakable heart. Cheers you on every single day.",
     color: "#FFA000",
@@ -39,8 +29,8 @@ const characters = [
     image: "/src/assets/character-energy.png",
   },
   {
-    id: "shadow-bearer" as const,
-    name: "Shadow Bearer",
+    id: "megumi" as const,
+    name: "Megumi",
     tagline: "Ten Shadows",
     description: "Cold, precise, unstoppable. Commands divine shikigami from the darkness.",
     color: "#A855F7",
@@ -49,8 +39,8 @@ const characters = [
     image: "/src/assets/character-megumi.svg",
   },
   {
-    id: "straw-doll" as const,
-    name: "Straw Doll",
+    id: "nobara" as const,
+    name: "Nobara",
     tagline: "The Hammer",
     description: "Fierce and fearless. Crushes every target with nails and raw cursed energy.",
     color: "#EC4899",
@@ -59,8 +49,18 @@ const characters = [
     image: "/src/assets/character-nobara.svg",
   },
   {
-    id: "ratio-master" as const,
-    name: "Ratio Master",
+    id: "toji" as const,
+    name: "Toji",
+    tagline: "Sorcerer Killer",
+    description: "Zero cursed energy, maximum lethality. Pure discipline and raw physical mastery.",
+    color: "#64748B",
+    glow: "rgba(100,116,139,0.42)",
+    glowSoft: "rgba(100,116,139,0.14)",
+    image: "/src/assets/character-toji.svg",
+  },
+  {
+    id: "nanami" as const,
+    name: "Nanami",
     tagline: "7:3 Ratio",
     description: "Disciplined and methodical. Strikes the exact weak point every single day.",
     color: "#D97706",
@@ -69,8 +69,8 @@ const characters = [
     image: "/src/assets/character-nanami.svg",
   },
   {
-    id: "iron-body" as const,
-    name: "Iron Body",
+    id: "maki" as const,
+    name: "Maki Zenin",
     tagline: "Heavenly Restriction",
     description: "Pure physical perfection. No shortcuts, no excuses — just relentless discipline.",
     color: "#CBD5E1",
@@ -79,8 +79,8 @@ const characters = [
     image: "/src/assets/character-maki.svg",
   },
   {
-    id: "cursed-voice" as const,
-    name: "Cursed Voice",
+    id: "inumaki" as const,
+    name: "Toge Inumaki",
     tagline: "Cursed Speech",
     description: "Says little, means everything. Quality over quantity — every word lands.",
     color: "#10B981",
@@ -89,14 +89,14 @@ const characters = [
     image: "/src/assets/character-inumaki.svg",
   },
   {
-    id: "best-friend" as const,
-    name: "Best Friend",
-    tagline: "Boogie Woogie",
-    description: "Loud, passionate, unstoppable. Treats every challenge like a best friend worth fighting for.",
-    color: "#818CF8",
-    glow: "rgba(129,140,248,0.42)",
-    glowSoft: "rgba(129,140,248,0.14)",
-    image: "/src/assets/character-todo.svg",
+    id: "yuta" as const,
+    name: "Yuta Okkotsu",
+    tagline: "Special Grade",
+    description: "The most overwhelming cursed energy in a generation. Quiet but unstoppable.",
+    color: "#7C3AED",
+    glow: "rgba(124,58,237,0.42)",
+    glowSoft: "rgba(124,58,237,0.14)",
+    image: "/src/assets/character-yuta.svg",
   },
 ];
 
@@ -106,225 +106,198 @@ export default function SignupPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [selectedCharacter, setSelectedCharacter] = useState<typeof characters[0]["id"]>("infinity-mentor");
+  const [selectedCharacter, setSelectedCharacter] = useState<typeof characters[0]["id"]>("itadori");
   const [error, setError] = useState("");
+  const [step, setStep] = useState<"info" | "character">("info");
 
   const signupMutation = useSignup({
     mutation: {
-      onSuccess: (data) => {
-        login(data.token, data.user);
-        setLocation("/dashboard");
-      },
+      onSuccess: (data) => { login(data.token, data.user); setLocation("/dashboard"); },
       onError: (err: unknown) => {
-        const e = err as { data?: { message?: string } };
-        setError(e?.data?.message || "Signup failed. Please try again.");
+        const e = err as { response?: { data?: { message?: string } } };
+        setError(e?.response?.data?.message ?? "Signup failed");
       },
     },
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const selectedChar = characters.find(c => c.id === selectedCharacter)!;
+
+  const handleSubmit = () => {
+    if (!name.trim() || !email.trim() || !password.trim()) {
+      setError("Please fill in all fields");
+      return;
+    }
     setError("");
-    signupMutation.mutate({ data: { name, email, password, selectedCharacter } });
+    signupMutation.mutate({ data: { name: name.trim(), email: email.trim(), password, selectedCharacter } });
   };
 
-  const selected = characters.find((c) => c.id === selectedCharacter)!;
-
   return (
-    <div
-      className="min-h-screen flex items-center justify-center relative overflow-hidden py-8"
-      style={{ background: "#040d04" }}
-    >
+    <div className="min-h-screen flex items-center justify-center px-4 py-8 relative overflow-hidden">
       <ParticleBackground />
+      <div className="relative z-10 w-full max-w-lg">
 
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: `radial-gradient(ellipse 60% 50% at 50% 40%, ${selected.glowSoft} 0%, transparent 65%)`,
-          transition: "background 0.5s ease",
-        }}
-      />
-
-      <div className="w-full max-w-sm px-5 z-10">
-        {/* Brand */}
-        <motion.div
-          initial={{ opacity: 0, y: -16 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-6"
-        >
-          <p
-            className="font-display text-4xl tracking-widest uppercase"
-            style={{ color: selected.color, textShadow: `0 0 24px ${selected.glow}` }}
-          >
-            Begin Your Journey
-          </p>
-          <p className="text-xs uppercase tracking-widest mt-2" style={{ color: "rgba(255,255,255,0.35)" }}>
-            Choose your cursed companion
-          </p>
-        </motion.div>
-
-        {/* Character grid */}
-        <div className="grid grid-cols-3 gap-2.5 mb-5">
-          {characters.map((char) => {
-            const isSelected = selectedCharacter === char.id;
-            return (
-              <motion.button
-                key={char.id}
-                type="button"
-                onClick={() => setSelectedCharacter(char.id)}
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.96 }}
-                className="relative flex flex-col items-center gap-2 p-3 rounded-2xl border transition-all"
-                style={
-                  isSelected
-                    ? {
-                        borderColor: char.color,
-                        backgroundColor: `${char.color}12`,
-                        boxShadow: `0 0 20px ${char.glow}, inset 0 0 12px ${char.glowSoft}`,
-                      }
-                    : {
-                        borderColor: "rgba(255,255,255,0.07)",
-                        backgroundColor: "rgba(255,255,255,0.03)",
-                      }
-                }
-                data-testid={`character-${char.id}`}
-              >
-                {isSelected && (
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    className="absolute top-2 right-2 w-4 h-4 rounded-full flex items-center justify-center"
-                    style={{ backgroundColor: char.color }}
-                  >
-                    <Check className="w-2.5 h-2.5 text-black" strokeWidth={3} />
-                  </motion.div>
-                )}
-                <div
-                  className="w-16 h-16 rounded-xl overflow-hidden border-2 transition-all"
-                  style={{
-                    borderColor: isSelected ? char.color : "rgba(255,255,255,0.08)",
-                    boxShadow: isSelected ? `0 0 16px ${char.glow}` : "none",
-                  }}
-                >
-                  <img src={char.image} alt={char.name} className="w-full h-full object-cover" />
-                </div>
-                <div className="text-center">
-                  <p className="text-xs font-bold uppercase tracking-wide leading-tight text-white">{char.name.split(" ")[0]}</p>
-                  <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.35)" }}>{char.tagline}</p>
-                </div>
-              </motion.button>
-            );
-          })}
+        {/* Logo */}
+        <div className="text-center mb-8">
+          <h1 className="font-display text-3xl uppercase tracking-widest" style={{ color: selectedChar.color }}>
+            Shadow<br />Habits
+          </h1>
+          <p className="text-sm mt-2 text-white/40">Choose your companion to begin</p>
         </div>
 
-        {/* Companion description */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={selectedCharacter}
-            initial={{ opacity: 0, y: 4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: 0.2 }}
-            className="mb-5 px-4 py-3 rounded-xl border text-xs text-center"
-            style={{
-              borderColor: `${selected.color}30`,
-              backgroundColor: `${selected.color}0a`,
-              color: selected.color,
-            }}
-          >
-            {selected.description}
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Form card */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15, duration: 0.45 }}
-          className="rounded-2xl p-5 border"
+          className="rounded-3xl p-6 border"
           style={{
-            background: "rgba(8, 20, 8, 0.8)",
-            backdropFilter: "blur(24px)",
-            borderColor: `${selected.color}20`,
-            boxShadow: `0 0 0 1px ${selected.color}08, 0 20px 40px rgba(0,0,0,0.5)`,
-            transition: "border-color 0.4s, box-shadow 0.4s",
+            background: "rgba(4,8,20,0.92)",
+            backdropFilter: "blur(32px)",
+            borderColor: `${selectedChar.color}22`,
+            boxShadow: `0 24px 64px rgba(0,0,0,0.6), 0 0 0 1px ${selectedChar.color}08`,
           }}
         >
-          {error && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="mb-4 px-4 py-3 rounded-xl text-sm border"
-              style={{ backgroundColor: "rgba(255,30,30,0.1)", borderColor: "rgba(255,30,30,0.3)", color: "#ff6b6b" }}
-              data-testid="error-signup"
-            >
-              {error}
-            </motion.div>
-          )}
+          <AnimatePresence mode="wait">
+            {step === "info" ? (
+              <motion.div key="info" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}>
+                <p className="text-xs font-bold uppercase tracking-widest mb-5" style={{ color: `${selectedChar.color}80` }}>
+                  Step 1 — Your Identity
+                </p>
 
-          <form onSubmit={handleSubmit} className="space-y-3">
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              placeholder="Operative name"
-              className="cyber-input"
-              data-testid="input-name"
-            />
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              placeholder="operative@domain.com"
-              className="cyber-input"
-              data-testid="input-email"
-            />
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              minLength={6}
-              placeholder="Password — min 6 chars"
-              className="cyber-input"
-              data-testid="input-password"
-            />
+                {error && (
+                  <p className="text-sm text-red-400 mb-4 px-3 py-2 rounded-xl bg-red-500/10 border border-red-500/20">{error}</p>
+                )}
 
-            <motion.button
-              type="submit"
-              disabled={signupMutation.isPending}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.97 }}
-              className="w-full py-3.5 rounded-xl font-bold text-sm uppercase tracking-widest mt-1 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-              style={{
-                backgroundColor: selected.color,
-                color: "#000",
-                boxShadow: `0 0 24px ${selected.glow}, 0 4px 16px rgba(0,0,0,0.4)`,
-                transition: "background-color 0.4s, box-shadow 0.4s",
-              }}
-              data-testid="button-submit"
-            >
-              {signupMutation.isPending ? (
-                <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
-              ) : (
-                <>Activate with {selected.name.split(" ")[0]} <ArrowRight className="w-4 h-4" /></>
-              )}
-            </motion.button>
-          </form>
+                {[
+                  { label: "Name", value: name, set: setName, placeholder: "Your name", type: "text" },
+                  { label: "Email", value: email, set: setEmail, placeholder: "operative@domain.com", type: "email" },
+                  { label: "Password", value: password, set: setPassword, placeholder: "••••••••", type: "password" },
+                ].map(({ label, value, set, placeholder, type }) => (
+                  <div key={label} className="mb-4">
+                    <label className="text-xs font-semibold uppercase tracking-widest block mb-1.5" style={{ color: `${selectedChar.color}70` }}>
+                      {label}
+                    </label>
+                    <input
+                      type={type}
+                      value={value}
+                      onChange={e => set(e.target.value)}
+                      placeholder={placeholder}
+                      className="w-full px-4 py-3 rounded-xl bg-white/4 border border-white/8 text-white placeholder-white/25 text-sm outline-none transition-all"
+                      style={{ caretColor: selectedChar.color }}
+                      onFocus={e => { e.currentTarget.style.borderColor = `${selectedChar.color}40`; e.currentTarget.style.boxShadow = `0 0 0 3px ${selectedChar.color}10`; }}
+                      onBlur={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; e.currentTarget.style.boxShadow = "none"; }}
+                    />
+                  </div>
+                ))}
 
-          <p className="text-center text-xs mt-4" style={{ color: "rgba(255,255,255,0.35)" }}>
-            Already chosen?{" "}
-            <Link
-              href="/login"
-              className="font-bold uppercase tracking-wider"
-              style={{ color: selected.color }}
-              data-testid="link-login"
-            >
-              Enter the domain
-            </Link>
-          </p>
+                <motion.button
+                  whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                  onClick={() => {
+                    if (!name.trim() || !email.trim() || !password.trim()) { setError("Please fill in all fields"); return; }
+                    setError(""); setStep("character");
+                  }}
+                  className="w-full py-3.5 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 mt-2"
+                  style={{
+                    background: `linear-gradient(135deg, ${selectedChar.color}dd, ${selectedChar.color})`,
+                    color: "#000",
+                    boxShadow: `0 0 24px ${selectedChar.glow}`,
+                  }}
+                >
+                  Next — Choose Companion <ArrowRight className="w-4 h-4" />
+                </motion.button>
+
+                <p className="text-center text-xs mt-4 text-white/30">
+                  Already enrolled?{" "}
+                  <Link href="/login" className="font-semibold" style={{ color: selectedChar.color }}>Sign in</Link>
+                </p>
+              </motion.div>
+            ) : (
+              <motion.div key="character" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
+                <div className="flex items-center justify-between mb-4">
+                  <p className="text-xs font-bold uppercase tracking-widest" style={{ color: `${selectedChar.color}80` }}>
+                    Step 2 — Choose Companion
+                  </p>
+                  <button onClick={() => setStep("info")} className="text-xs text-white/30 hover:text-white/60 transition-colors">
+                    ← Back
+                  </button>
+                </div>
+
+                {error && (
+                  <p className="text-sm text-red-400 mb-4 px-3 py-2 rounded-xl bg-red-500/10 border border-red-500/20">{error}</p>
+                )}
+
+                <div className="grid grid-cols-3 gap-2 mb-5">
+                  {characters.map((char) => {
+                    const isSelected = selectedCharacter === char.id;
+                    return (
+                      <motion.button
+                        key={char.id}
+                        whileHover={{ scale: 1.04 }}
+                        whileTap={{ scale: 0.96 }}
+                        onClick={() => setSelectedCharacter(char.id)}
+                        className="relative rounded-2xl p-3 flex flex-col items-center gap-2 border transition-all text-center"
+                        style={{
+                          background: isSelected ? `${char.color}12` : "rgba(255,255,255,0.03)",
+                          borderColor: isSelected ? `${char.color}50` : "rgba(255,255,255,0.07)",
+                          boxShadow: isSelected ? `0 0 20px ${char.color}20` : "none",
+                        }}
+                      >
+                        {isSelected && (
+                          <motion.div
+                            layoutId="char-check"
+                            className="absolute top-1.5 right-1.5 w-4 h-4 rounded-full flex items-center justify-center"
+                            style={{ background: char.color }}
+                          >
+                            <Check className="w-2.5 h-2.5 text-black" />
+                          </motion.div>
+                        )}
+                        <div
+                          className="w-12 h-12 rounded-xl overflow-hidden border-2"
+                          style={{ borderColor: isSelected ? char.color : "rgba(255,255,255,0.1)", boxShadow: isSelected ? `0 0 14px ${char.glow}` : "none" }}
+                        >
+                          <img src={char.image} alt={char.name} className="w-full h-full object-cover" />
+                        </div>
+                        <div>
+                          <p className="text-[11px] font-bold leading-tight" style={{ color: isSelected ? char.color : "rgba(255,255,255,0.75)" }}>
+                            {char.name}
+                          </p>
+                          <p className="text-[9px] leading-tight mt-0.5" style={{ color: "rgba(255,255,255,0.3)" }}>
+                            {char.tagline}
+                          </p>
+                        </div>
+                      </motion.button>
+                    );
+                  })}
+                </div>
+
+                {/* Selected character preview */}
+                <div className="rounded-2xl p-3 mb-4 border flex items-center gap-3"
+                  style={{ background: `${selectedChar.color}08`, borderColor: `${selectedChar.color}25` }}>
+                  <div className="w-10 h-10 rounded-xl overflow-hidden border flex-shrink-0"
+                    style={{ borderColor: selectedChar.color }}>
+                    <img src={selectedChar.image} alt={selectedChar.name} className="w-full h-full object-cover" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold" style={{ color: selectedChar.color }}>{selectedChar.name}</p>
+                    <p className="text-[11px] text-white/45">{selectedChar.description}</p>
+                  </div>
+                </div>
+
+                <motion.button
+                  whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                  onClick={handleSubmit}
+                  disabled={signupMutation.isPending}
+                  className="w-full py-3.5 rounded-2xl font-bold text-sm flex items-center justify-center gap-2"
+                  style={{
+                    background: `linear-gradient(135deg, ${selectedChar.color}dd, ${selectedChar.color})`,
+                    color: "#000",
+                    boxShadow: `0 0 24px ${selectedChar.glow}`,
+                    opacity: signupMutation.isPending ? 0.7 : 1,
+                  }}
+                >
+                  {signupMutation.isPending ? "Creating..." : "Enter the Domain →"}
+                </motion.button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
       </div>
     </div>

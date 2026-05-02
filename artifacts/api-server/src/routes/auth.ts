@@ -27,7 +27,7 @@ router.post("/auth/signup", async (req, res) => {
       name,
       email,
       passwordHash,
-      selectedCharacter: selectedCharacter || "infinity-mentor",
+      selectedCharacter: selectedCharacter || "itadori",
     }).returning();
     const token = signToken(user.id);
     res.status(201).json({
@@ -102,7 +102,10 @@ router.get("/auth/me", authMiddleware, async (req: AuthRequest, res) => {
 
 router.put("/auth/character", authMiddleware, async (req: AuthRequest, res) => {
   const { selectedCharacter } = req.body;
-  const valid = ["infinity-mentor", "dark-king", "energy-hero", "shadow-bearer", "straw-doll", "ratio-master", "iron-body", "cursed-voice", "best-friend"];
+  const valid = [
+    "sukuna","itadori","megumi","nobara","nanami","maki","inumaki","toji","yuta",
+    "infinity-mentor","dark-king","energy-hero","shadow-bearer","straw-doll","ratio-master","iron-body","cursed-voice","best-friend",
+  ];
   if (!valid.includes(selectedCharacter)) {
     res.status(400).json({ error: "bad_request", message: "Invalid character" });
     return;

@@ -11,15 +11,24 @@ interface Props {
 }
 
 const LORE: Record<string, { jp: string; technique: string; role: string }> = {
-  "infinity-mentor": { jp: "無限", technique: "Limitless",           role: "Special Grade Sorcerer" },
-  "dark-king":       { jp: "呪王", technique: "Malevolent Shrine",   role: "King of Curses" },
-  "energy-hero":     { jp: "力",   technique: "Divergent Fist",      role: "Vessel of Ryomen Sukuna" },
-  "shadow-bearer":   { jp: "影",   technique: "Ten Shadows",         role: "Grade 2 Sorcerer" },
-  "straw-doll":      { jp: "藁",   technique: "Straw Doll Technique",role: "Grade 3 Sorcerer" },
-  "ratio-master":    { jp: "比率", technique: "Ratio Technique",     role: "Grade 1 Sorcerer" },
+  "sukuna":          { jp: "呪王", technique: "Malevolent Shrine",    role: "King of Curses" },
+  "itadori":         { jp: "力",   technique: "Divergent Fist",       role: "Grade 1 Sorcerer" },
+  "megumi":          { jp: "影",   technique: "Ten Shadows",          role: "Grade 2 Sorcerer" },
+  "nobara":          { jp: "藁",   technique: "Straw Doll Technique", role: "Semi-Grade 1 Sorcerer" },
+  "toji":            { jp: "葬",   technique: "Heavenly Restriction", role: "Sorcerer Killer" },
+  "nanami":          { jp: "比率", technique: "Ratio Technique",      role: "Grade 1 Sorcerer" },
+  "maki":            { jp: "縛",   technique: "Heavenly Restriction", role: "Special Grade Sorcerer" },
+  "inumaki":         { jp: "呪言", technique: "Cursed Speech",        role: "Semi-Grade 1 Sorcerer" },
+  "yuta":            { jp: "愛",   technique: "Rika's Curse",         role: "Special Grade Sorcerer" },
+  "infinity-mentor": { jp: "無限", technique: "Limitless",            role: "Special Grade Sorcerer" },
+  "dark-king":       { jp: "呪王", technique: "Malevolent Shrine",    role: "King of Curses" },
+  "energy-hero":     { jp: "力",   technique: "Divergent Fist",       role: "Grade 1 Sorcerer" },
+  "shadow-bearer":   { jp: "影",   technique: "Ten Shadows",          role: "Grade 2 Sorcerer" },
+  "straw-doll":      { jp: "藁",   technique: "Straw Doll Technique", role: "Semi-Grade 1 Sorcerer" },
+  "ratio-master":    { jp: "比率", technique: "Ratio Technique",      role: "Grade 1 Sorcerer" },
   "iron-body":       { jp: "縛",   technique: "Heavenly Restriction", role: "Special Grade Sorcerer" },
-  "cursed-voice":    { jp: "呪言", technique: "Cursed Speech",       role: "Semi-Grade 1 Sorcerer" },
-  "best-friend":     { jp: "親友", technique: "Boogie Woogie",       role: "Grade 1 Sorcerer" },
+  "cursed-voice":    { jp: "呪言", technique: "Cursed Speech",        role: "Semi-Grade 1 Sorcerer" },
+  "best-friend":     { jp: "親友", technique: "Boogie Woogie",        role: "Grade 1 Sorcerer" },
 };
 
 /* ── per-character SVG technique patterns ── */
@@ -294,18 +303,104 @@ function TodoPattern({ c }: { c: string }) {
   );
 }
 
+function TojiPattern({ c }: { c: string }) {
+  return (
+    <svg className="absolute inset-0 w-full h-full" viewBox="0 0 280 340" preserveAspectRatio="xMidYMid slice">
+      {/* Scan lines — Heavenly Restriction grid */}
+      {Array.from({ length: 12 }, (_, i) => (
+        <line key={i} x1="0" y1={30 + i * 26} x2="280" y2={30 + i * 26}
+          stroke={c} strokeWidth="0.4" opacity="0.08">
+          <animate attributeName="opacity" values="0.08;0.16;0.08" dur={`${3 + i * 0.3}s`} repeatCount="indefinite" />
+        </line>
+      ))}
+      {/* Targeting crosshair */}
+      <line x1="140" y1="130" x2="140" y2="250" stroke={c} strokeWidth="1" opacity="0.22" strokeDasharray="4 4" />
+      <line x1="80"  y1="190" x2="200" y2="190" stroke={c} strokeWidth="1" opacity="0.22" strokeDasharray="4 4" />
+      {[20, 38, 56].map((r, i) => (
+        <circle key={r} cx="140" cy="190" r={r} fill="none" stroke={c} strokeWidth="0.7" opacity={0.18 - i * 0.04}>
+          <animate attributeName="opacity" values={`${0.18 - i * 0.04};${0.32 - i * 0.04};${0.18 - i * 0.04}`} dur={`${2.5 + i * 0.8}s`} repeatCount="indefinite" />
+        </circle>
+      ))}
+      {/* Corner brackets */}
+      {[[80,150],[200,150],[80,230],[200,230]].map(([x,y], i) => {
+        const d = i < 2 ? 1 : -1;
+        const h = i % 2 === 0 ? 1 : -1;
+        return (
+          <path key={i} d={`M${x} ${y+d*14} L${x} ${y} L${x+h*14} ${y}`}
+            fill="none" stroke={c} strokeWidth="1.2" opacity="0.28" strokeLinecap="round" />
+        );
+      })}
+      {/* Weapon arc — chain */}
+      <path d="M220 80 Q260 140 240 200 Q220 260 180 290"
+        fill="none" stroke={c} strokeWidth="1" strokeDasharray="3 5" opacity="0.2" strokeLinecap="round">
+        <animate attributeName="stroke-dashoffset" from="0" to="80" dur="4s" repeatCount="indefinite" />
+      </path>
+      {/* Diamond weapon tips */}
+      {[[50,100],[230,280]].map(([x,y],i) => (
+        <path key={i} d={`M${x} ${y-10} L${x+8} ${y} L${x} ${y+10} L${x-8} ${y} Z`}
+          fill="none" stroke={c} strokeWidth="1" opacity="0.22">
+          <animate attributeName="opacity" values="0.22;0.42;0.22" dur={`${2+i}s`} repeatCount="indefinite" />
+        </path>
+      ))}
+    </svg>
+  );
+}
+
+function YutaPattern({ c }: { c: string }) {
+  return (
+    <svg className="absolute inset-0 w-full h-full" viewBox="0 0 280 340" preserveAspectRatio="xMidYMid slice">
+      {/* Rika's ghostly large outline — looming from top */}
+      <path d="M80 0 Q60 40 55 80 Q50 120 65 140 Q80 160 100 150 Q115 145 120 130 Q135 155 140 150 Q145 155 160 130 Q165 145 180 150 Q200 160 215 140 Q230 120 225 80 Q220 40 200 0"
+        fill="none" stroke={c} strokeWidth="1" opacity="0.12">
+        <animate attributeName="opacity" values="0.12;0.22;0.12" dur="3.5s" repeatCount="indefinite" />
+      </path>
+      {/* Large spiral curse energy */}
+      {[70, 100, 130, 160].map((r, i) => (
+        <circle key={r} cx="140" cy="200" r={r} fill="none" stroke={c}
+          strokeWidth="0.8" strokeDasharray="8 14" opacity={0.14 - i * 0.02}>
+          <animateTransform attributeName="transform" type="rotate"
+            from={`${i % 2 === 0 ? 0 : 360} 140 200`} to={`${i % 2 === 0 ? 360 : 0} 140 200`}
+            dur={`${8 + i * 4}s`} repeatCount="indefinite" />
+          <animate attributeName="opacity" values={`${0.14 - i * 0.02};${0.26 - i * 0.02};${0.14 - i * 0.02}`} dur={`${3+i}s`} repeatCount="indefinite" />
+        </circle>
+      ))}
+      {/* Floating love/curse particles */}
+      {[[60,80],[200,100],[40,200],[240,180],[120,300],[180,320],[90,140],[190,250]].map(([x,y],i)=>(
+        <circle key={i} cx={x} cy={y} r="2.5" fill={c} opacity="0.18">
+          <animate attributeName="cy" values={`${y};${y-20};${y}`} dur={`${2.5+i*0.4}s`} repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0.18;0.38;0.18" dur={`${2.5+i*0.4}s`} repeatCount="indefinite" />
+        </circle>
+      ))}
+      {/* Heart cursed symbol */}
+      <path d="M130 185 C130 178 140 175 140 185 C140 175 150 178 150 185 C150 195 140 205 140 205 C140 205 130 195 130 185 Z"
+        fill="none" stroke={c} strokeWidth="1.2" opacity="0.2">
+        <animate attributeName="opacity" values="0.2;0.38;0.2" dur="3s" repeatCount="indefinite" />
+      </path>
+    </svg>
+  );
+}
+
 function PatternForCharacter({ character, c }: { character: string; c: string }) {
   switch (character) {
-    case "infinity-mentor": return <GojoPattern c={c} />;
+    case "sukuna":
     case "dark-king":       return <SukunaPattern c={c} />;
+    case "itadori":
     case "energy-hero":     return <YujiPattern c={c} />;
+    case "megumi":
     case "shadow-bearer":   return <MegumiPattern c={c} />;
+    case "nobara":
     case "straw-doll":      return <NobaraPattern c={c} />;
+    case "toji":            return <TojiPattern c={c} />;
+    case "nanami":
     case "ratio-master":    return <NanamiPattern c={c} />;
+    case "maki":
     case "iron-body":       return <MakiPattern c={c} />;
+    case "inumaki":
     case "cursed-voice":    return <InumakiPattern c={c} />;
+    case "yuta":            return <YutaPattern c={c} />;
     case "best-friend":     return <TodoPattern c={c} />;
-    default:                return <GojoPattern c={c} />;
+    case "infinity-mentor": return <GojoPattern c={c} />;
+    default:                return <SukunaPattern c={c} />;
   }
 }
 
@@ -313,7 +408,7 @@ export function CharacterHeroPanel({
   character, charColor, charGlow, charGlowSoft,
   companionImg, companionName, companionMessage,
 }: Props) {
-  const lore = LORE[character] ?? LORE["infinity-mentor"];
+  const lore = LORE[character] ?? LORE["itadori"];
 
   return (
     <div className="relative overflow-hidden" style={{ flex: "0 0 58%" }}>

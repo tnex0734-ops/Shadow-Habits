@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#1A0830"/>
+      <stop offset="100%" stop-color="#080214"/>
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="64" height="64" fill="url(#bg)"/>
+  <!-- Rika aura swirls -->
+  <path d="M8 20 Q14 10 20 18 Q26 26 18 30" fill="none" stroke="#7C3AED" stroke-width="1" opacity="0.3">
+    <animate attributeName="opacity" values="0.3;0.6;0.3" dur="2.5s" repeatCount="indefinite"/>
+  </path>
+  <path d="M56 18 Q50 8 44 16 Q38 24 46 28" fill="none" stroke="#7C3AED" stroke-width="1" opacity="0.3">
+    <animate attributeName="opacity" values="0.3;0.6;0.3" dur="3s" repeatCount="indefinite"/>
+  </path>
+  <!-- Body -->
+  <rect x="20" y="36" width="24" height="22" rx="4" fill="#100825"/>
+  <!-- Uniform collar detail -->
+  <path d="M24 36 L32 42 L40 36" fill="none" stroke="#7C3AED" stroke-width="0.8" opacity="0.6"/>
+  <!-- Head -->
+  <ellipse cx="32" cy="24" rx="10" ry="12" fill="#1C1035"/>
+  <!-- Dark hair, somewhat messy -->
+  <path d="M22 20 Q22 9 32 8 Q42 9 42 20" fill="#060410"/>
+  <path d="M24 11 Q26 7 32 7 Q38 7 40 11" fill="#060410"/>
+  <!-- Dark circles / tired eyes -->
+  <ellipse cx="27.5" cy="22" rx="1.5" ry="1" fill="#3B0764" opacity="0.5"/>
+  <ellipse cx="36.5" cy="22" rx="1.5" ry="1" fill="#3B0764" opacity="0.5"/>
+  <!-- Eyes — intense, slightly haunted -->
+  <ellipse cx="27.5" cy="24" rx="2.2" ry="2" fill="#7C3AED" filter="url(#glow)"/>
+  <ellipse cx="36.5" cy="24" rx="2.2" ry="2" fill="#7C3AED" filter="url(#glow)"/>
+  <!-- Rika's ghostly floating particles -->
+  <circle cx="12" cy="36" r="2" fill="#7C3AED" opacity="0.4" filter="url(#glow)">
+    <animate attributeName="cy" values="36;28;36" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.4;0.7;0.4" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="52" cy="30" r="1.5" fill="#7C3AED" opacity="0.3" filter="url(#glow)">
+    <animate attributeName="cy" values="30;22;30" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+</svg>

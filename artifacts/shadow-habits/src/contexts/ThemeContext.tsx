@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect } from "react";
 import { useAuth } from "./AuthContext";
 
-type Character = "infinity-mentor" | "dark-king" | "energy-hero" | "shadow-bearer" | "straw-doll" | "ratio-master" | "iron-body" | "cursed-voice" | "best-friend";
+type Character = "sukuna" | "itadori" | "megumi" | "nobara" | "nanami" | "maki" | "inumaki" | "toji" | "yuta";
 
 interface ThemeContextType {
   character: Character;
@@ -12,84 +12,90 @@ interface ThemeContextType {
   charImage: string;
 }
 
-const ThemeContext = createContext<ThemeContextType>({
-  character: "infinity-mentor",
-  charName: "Infinity Mentor",
-  charColor: "#00C8FF",
-  charGlow: "rgba(0,200,255,0.38)",
-  charGlowSoft: "rgba(0,200,255,0.14)",
-  charImage: "/src/assets/character-infinity.png",
-});
+const idAlias: Record<string, Character> = {
+  "infinity-mentor": "toji",
+  "dark-king":       "sukuna",
+  "energy-hero":     "itadori",
+  "shadow-bearer":   "megumi",
+  "straw-doll":      "nobara",
+  "ratio-master":    "nanami",
+  "iron-body":       "maki",
+  "cursed-voice":    "inumaki",
+  "best-friend":     "yuta",
+};
 
 const charData: Record<Character, Omit<ThemeContextType, "character">> = {
-  "infinity-mentor": {
-    charName: "Infinity Mentor",
-    charColor: "#00C8FF",
-    charGlow: "rgba(0,200,255,0.38)",
-    charGlowSoft: "rgba(0,200,255,0.14)",
-    charImage: "/src/assets/character-infinity.png",
-  },
-  "dark-king": {
-    charName: "Dark King",
+  "sukuna": {
+    charName: "Sukuna",
     charColor: "#FF2020",
     charGlow: "rgba(255,32,32,0.42)",
     charGlowSoft: "rgba(255,32,32,0.14)",
     charImage: "/src/assets/character-dark.png",
   },
-  "energy-hero": {
-    charName: "Energy Hero",
+  "itadori": {
+    charName: "Itadori",
     charColor: "#FFA000",
     charGlow: "rgba(255,160,0,0.4)",
     charGlowSoft: "rgba(255,160,0,0.14)",
     charImage: "/src/assets/character-energy.png",
   },
-  "shadow-bearer": {
-    charName: "Shadow Bearer",
+  "megumi": {
+    charName: "Megumi",
     charColor: "#A855F7",
     charGlow: "rgba(168,85,247,0.42)",
     charGlowSoft: "rgba(168,85,247,0.14)",
     charImage: "/src/assets/character-megumi.svg",
   },
-  "straw-doll": {
-    charName: "Straw Doll",
+  "nobara": {
+    charName: "Nobara",
     charColor: "#EC4899",
     charGlow: "rgba(236,72,153,0.42)",
     charGlowSoft: "rgba(236,72,153,0.14)",
     charImage: "/src/assets/character-nobara.svg",
   },
-  "ratio-master": {
-    charName: "Ratio Master",
+  "nanami": {
+    charName: "Nanami",
     charColor: "#D97706",
     charGlow: "rgba(217,119,6,0.42)",
     charGlowSoft: "rgba(217,119,6,0.14)",
     charImage: "/src/assets/character-nanami.svg",
   },
-  "iron-body": {
-    charName: "Iron Body",
+  "maki": {
+    charName: "Maki Zenin",
     charColor: "#CBD5E1",
     charGlow: "rgba(203,213,225,0.38)",
     charGlowSoft: "rgba(203,213,225,0.12)",
     charImage: "/src/assets/character-maki.svg",
   },
-  "cursed-voice": {
-    charName: "Cursed Voice",
+  "inumaki": {
+    charName: "Toge Inumaki",
     charColor: "#10B981",
     charGlow: "rgba(16,185,129,0.42)",
     charGlowSoft: "rgba(16,185,129,0.14)",
     charImage: "/src/assets/character-inumaki.svg",
   },
-  "best-friend": {
-    charName: "Best Friend",
-    charColor: "#818CF8",
-    charGlow: "rgba(129,140,248,0.42)",
-    charGlowSoft: "rgba(129,140,248,0.14)",
-    charImage: "/src/assets/character-todo.svg",
+  "toji": {
+    charName: "Toji",
+    charColor: "#64748B",
+    charGlow: "rgba(100,116,139,0.42)",
+    charGlowSoft: "rgba(100,116,139,0.14)",
+    charImage: "/src/assets/character-toji.svg",
+  },
+  "yuta": {
+    charName: "Yuta",
+    charColor: "#7C3AED",
+    charGlow: "rgba(124,58,237,0.42)",
+    charGlowSoft: "rgba(124,58,237,0.14)",
+    charImage: "/src/assets/character-yuta.svg",
   },
 };
 
+const defaultChar: Character = "itadori";
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
-  const character: Character = (user?.selectedCharacter as Character) || "infinity-mentor";
+  const raw = user?.selectedCharacter ?? defaultChar;
+  const character: Character = (idAlias[raw] ?? (charData[raw as Character] ? raw : defaultChar)) as Character;
 
   useEffect(() => {
     document.body.setAttribute("data-character", character);
@@ -99,6 +105,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const value: ThemeContextType = { character, ...charData[character] };
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 }
+
+const ThemeContext = createContext<ThemeContextType>({
+  character: defaultChar,
+  ...charData[defaultChar],
+});
 
 export function useTheme() {
   return useContext(ThemeContext);
