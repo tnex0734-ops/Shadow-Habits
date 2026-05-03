@@ -48,7 +48,7 @@ function JpSymbolsBg() {
 }
 
 export default function DashboardPage() {
-  const { charColor, charGlow } = useTheme();
+  const { charColor, charGlow, charGlowSoft } = useTheme();
   const { user } = useAuth();
   const { data: habits = [] } = useGetHabits();
   const { data: summary } = useGetDashboardSummary();
