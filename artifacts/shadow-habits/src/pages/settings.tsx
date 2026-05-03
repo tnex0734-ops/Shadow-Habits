@@ -39,7 +39,7 @@ const characters = [
     description: "Cold and calculated. Commands ten divine shikigami from shadows — precision over raw power.",
     color: "#A855F7",
     glow: "rgba(168,85,247,0.42)",
-    image: "/src/assets/character-megumi.svg",
+    image: "/src/assets/character-megumi.png",
     abilities: ["Ten Shadows", "Divine Dogs", "Max Elephant"],
     bindingVow: "I will move with precision and let no distraction enter my domain.",
   },
@@ -51,7 +51,7 @@ const characters = [
     description: "Fierce, fearless, and unyielding. Channels cursed energy through nails and straw dolls to crush her targets.",
     color: "#EC4899",
     glow: "rgba(236,72,153,0.42)",
-    image: "/src/assets/character-nobara.svg",
+    image: "/src/assets/character-nobara.png",
     abilities: ["Straw Doll Technique", "Resonance", "Hairpin"],
     bindingVow: "I will face every challenge head-on — no retreat, no excuses.",
   },
@@ -63,7 +63,7 @@ const characters = [
     description: "Zero cursed energy, maximum lethality. He dismantled entire clans on pure physical capability alone.",
     color: "#64748B",
     glow: "rgba(100,116,139,0.42)",
-    image: "/src/assets/character-toji.svg",
+    image: "/src/assets/character-toji.png",
     abilities: ["Heavenly Restriction", "Inventory Curse", "Chain Weapon"],
     bindingVow: "I will outwork everyone through raw discipline — no technique required.",
   },
@@ -75,7 +75,7 @@ const characters = [
     description: "Disciplined and relentless. Strikes at the exact 7:3 weak point of any obstacle — work is not glamorous, but it gets done.",
     color: "#D97706",
     glow: "rgba(217,119,6,0.42)",
-    image: "/src/assets/character-nanami.svg",
+    image: "/src/assets/character-nanami.png",
     abilities: ["Ratio Technique", "Overtime", "Collapse"],
     bindingVow: "I will work methodically every day, because overtime yields results.",
   },
@@ -87,7 +87,7 @@ const characters = [
     description: "No cursed energy, no shortcuts. Pure physical perfection and iron will — she outworks everyone through discipline alone.",
     color: "#CBD5E1",
     glow: "rgba(203,213,225,0.38)",
-    image: "/src/assets/character-maki.svg",
+    image: "/src/assets/character-maki.png",
     abilities: ["Heavenly Restriction", "Panda Staff", "Dragon Bone"],
     bindingVow: "I will prove myself through effort alone — no excuses, no shortcuts.",
   },
@@ -99,7 +99,7 @@ const characters = [
     description: "Every word carries weight. He says little, but when he speaks — the world listens. Quality over quantity, always.",
     color: "#10B981",
     glow: "rgba(16,185,129,0.42)",
-    image: "/src/assets/character-inumaki.svg",
+    image: "/src/assets/character-inumaki.png",
     abilities: ["Cursed Speech", "Blast Away", "Twist"],
     bindingVow: "I will choose quality over quantity and let my results speak for themselves.",
   },
@@ -111,7 +111,7 @@ const characters = [
     description: "Quiet and reserved, but carries the most overwhelming cursed energy in a generation. Rika's love fuels everything.",
     color: "#7C3AED",
     glow: "rgba(124,58,237,0.42)",
-    image: "/src/assets/character-yuta.svg",
+    image: "/src/assets/character-yuta.png",
     abilities: ["Rika's Curse", "Mimicry", "Tenfold Amplification"],
     bindingVow: "I will carry every habit forward — for myself and for those I love.",
   },
@@ -190,13 +190,13 @@ export default function SettingsPage() {
           <div className="space-y-3">
             {characters.map((char) => {
               const isSelected = user?.selectedCharacter === char.id;
-              const isPending = updateCharMutation.isPending && updateCharMutation.variables?.data?.selectedCharacter === char.id;
+              const isPending = updateCharMutation.isPending && (updateCharMutation.variables?.data?.selectedCharacter as string) === char.id;
 
               return (
                 <motion.button
                   key={char.id}
                   type="button"
-                  onClick={() => !isSelected && updateCharMutation.mutate({ data: { selectedCharacter: char.id } })}
+                  onClick={() => !isSelected && updateCharMutation.mutate({ data: { selectedCharacter: char.id as any } })}
                   whileHover={!isSelected ? { scale: 1.01 } : {}}
                   whileTap={!isSelected ? { scale: 0.99 } : {}}
                   className="w-full rounded-2xl border text-left overflow-hidden transition-all"
