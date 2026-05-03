@@ -18,6 +18,54 @@ uri = "file://artifacts/shadow-habits/src/assets/character-energy.png"
 type = "image"
 title = "Energy Hero portrait"
 
+[[generated]]
+id = "ElGc40rFj1CS5KgYOQqqy"
+uri = "file://artifacts/shadow-habits/src/assets/character-megumi.png"
+type = "image"
+title = "megumi fushiguro anime portrait"
+
+[[generated]]
+id = "xG2zpivNbdvp5ISvdZu7F"
+uri = "file://artifacts/shadow-habits/src/assets/character-nobara.png"
+type = "image"
+title = "nobara kugisaki anime portrait"
+
+[[generated]]
+id = "VOzAgSjZ38XIf5-rMAZPZ"
+uri = "file://artifacts/shadow-habits/src/assets/character-toji.png"
+type = "image"
+title = "toji fushiguro anime portrait"
+
+[[generated]]
+id = "zXOUWEOq6SsqJnCNWJ4Nw"
+uri = "file://artifacts/shadow-habits/src/assets/character-nanami.png"
+type = "image"
+title = "nanami kento anime portrait"
+
+[[generated]]
+id = "CYk4UppKLWOSEH8ktLXO7"
+uri = "file://artifacts/shadow-habits/src/assets/character-maki.png"
+type = "image"
+title = "maki zenin anime portrait"
+
+[[generated]]
+id = "GYhD_9orivJPXZuTQ6A75"
+uri = "file://artifacts/shadow-habits/src/assets/character-inumaki.png"
+type = "image"
+title = "toge inumaki anime portrait"
+
+[[generated]]
+id = "Iy-y5UClrd5WpE_mIVOs0"
+uri = "file://artifacts/shadow-habits/src/assets/character-yuta.png"
+type = "image"
+title = "yuta okkotsu anime portrait"
+
+[[generated]]
+id = "ZAtLGwIouLbopwf3p3Xef"
+uri = "file://artifacts/shadow-habits/src/assets/character-gojo.png"
+type = "image"
+title = "gojo satoru anime portrait"
+
 [[outputs]]
 id = "0UAsr7-ijvmHnk0O18sia"
 uri = "file://artifacts/shadow-habits/src/assets/character-megumi.png"
