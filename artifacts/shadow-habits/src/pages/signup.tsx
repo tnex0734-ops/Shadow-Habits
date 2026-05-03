@@ -9,20 +9,19 @@ import { Link } from "wouter";
 import { LogoMark } from "@/components/LogoMark";
 
 const characters = [
-  { id: "sukuna" as const, name: "Sukuna", tagline: "King of Curses", description: "Ruthless. Powerful. Demands your absolute best — nothing less.", color: "#FF2020", glow: "rgba(255,32,32,0.42)", glowSoft: "rgba(255,32,32,0.14)", image: "/src/assets/character-dark.png" },
-  { id: "itadori" as const, name: "Itadori", tagline: "The Vessel", description: "Boundless energy and unbreakable heart. Cheers you on every single day.", color: "#FFA000", glow: "rgba(255,160,0,0.4)", glowSoft: "rgba(255,160,0,0.14)", image: "/src/assets/character-energy.png" },
-  { id: "megumi" as const, name: "Megumi", tagline: "Ten Shadows", description: "Cold, precise, unstoppable. Commands divine shikigami from the darkness.", color: "#8B5CF6", glow: "rgba(139,92,246,0.42)", glowSoft: "rgba(139,92,246,0.14)", image: "/src/assets/character-megumi.svg" },
-  { id: "nobara" as const, name: "Nobara", tagline: "The Hammer", description: "Fierce and fearless. Crushes every target with nails and raw cursed energy.", color: "#F472B6", glow: "rgba(244,114,182,0.42)", glowSoft: "rgba(244,114,182,0.14)", image: "/src/assets/character-nobara.svg" },
-  { id: "toji" as const, name: "Toji Fushiguro", tagline: "Sorcerer Killer", description: "Zero cursed energy, maximum lethality. Pure discipline and raw physical mastery.", color: "#64748B", glow: "rgba(100,116,139,0.42)", glowSoft: "rgba(100,116,139,0.14)", image: "/src/assets/character-toji.svg" },
-  { id: "nanami" as const, name: "Nanami", tagline: "7:3 Ratio", description: "Disciplined and methodical. Strikes the exact weak point every single day.", color: "#D97706", glow: "rgba(217,119,6,0.42)", glowSoft: "rgba(217,119,6,0.14)", image: "/src/assets/character-nanami.svg" },
-  { id: "maki" as const, name: "Maki Zenin", tagline: "Heavenly Restriction", description: "Pure physical perfection. No shortcuts, no excuses — just relentless discipline.", color: "#CBD5E1", glow: "rgba(203,213,225,0.38)", glowSoft: "rgba(203,213,225,0.12)", image: "/src/assets/character-maki.svg" },
-  { id: "inumaki" as const, name: "Toge Inumaki", tagline: "Cursed Speech", description: "Says little, means everything. Quality over quantity — every word lands.", color: "#10B981", glow: "rgba(16,185,129,0.42)", glowSoft: "rgba(16,185,129,0.14)", image: "/src/assets/character-inumaki.svg" },
-  { id: "yuta" as const, name: "Yuta Okkotsu", tagline: "Special Grade", description: "The most overwhelming cursed energy in a generation. Quiet but unstoppable.", color: "#7C3AED", glow: "rgba(124,58,237,0.42)", glowSoft: "rgba(124,58,237,0.14)", image: "/src/assets/character-yuta.svg" },
-  { id: "gojo" as const, name: "Gojo Satoru", tagline: "Six Eyes", description: "Limitless confidence, impossible speed, and overwhelming presence.", color: "#22D3EE", glow: "rgba(34,211,238,0.42)", glowSoft: "rgba(34,211,238,0.14)", image: "/src/assets/character-gojo.svg" },
+  { id: "sukuna" as const, name: "Sukuna", tagline: "King of Curses", description: "Ruthless. Powerful. Demands your absolute best — nothing less.", color: "#FF2020", glow: "rgba(255,32,32,0.42)", image: "/src/assets/character-dark.png" },
+  { id: "itadori" as const, name: "Itadori", tagline: "The Vessel", description: "Boundless energy and unbreakable heart. Cheers you on every single day.", color: "#FFA000", glow: "rgba(255,160,0,0.4)", image: "/src/assets/character-energy.png" },
+  { id: "megumi" as const, name: "Megumi Fushiguro", tagline: "Ten Shadows", description: "Cold, precise, unstoppable. Commands divine shikigami from the darkness.", color: "#8B5CF6", glow: "rgba(139,92,246,0.42)", image: "/src/assets/character-megumi.png" },
+  { id: "nobara" as const, name: "Nobara Kugisaki", tagline: "The Hammer", description: "Fierce and fearless. Crushes every target with nails and raw cursed energy.", color: "#F472B6", glow: "rgba(244,114,182,0.42)", image: "/src/assets/character-nobara.png" },
+  { id: "toji" as const, name: "Toji Fushiguro", tagline: "Sorcerer Killer", description: "Zero cursed energy, maximum lethality. Pure discipline and raw physical mastery.", color: "#64748B", glow: "rgba(100,116,139,0.42)", image: "/src/assets/character-toji.png" },
+  { id: "nanami" as const, name: "Nanami Kento", tagline: "7:3 Ratio", description: "Disciplined and methodical. Strikes the exact weak point every single day.", color: "#D97706", glow: "rgba(217,119,6,0.42)", image: "/src/assets/character-nanami.png" },
+  { id: "maki" as const, name: "Maki Zenin", tagline: "Heavenly Restriction", description: "Pure physical perfection. No shortcuts, no excuses — just relentless discipline.", color: "#CBD5E1", glow: "rgba(203,213,225,0.38)", image: "/src/assets/character-maki.png" },
+  { id: "inumaki" as const, name: "Toge Inumaki", tagline: "Cursed Speech", description: "Says little, means everything. Quality over quantity — every word lands.", color: "#10B981", glow: "rgba(16,185,129,0.42)", image: "/src/assets/character-inumaki.png" },
+  { id: "yuta" as const, name: "Yuta Okkotsu", tagline: "Special Grade", description: "The most overwhelming cursed energy in a generation. Quiet but unstoppable.", color: "#7C3AED", glow: "rgba(124,58,237,0.42)", image: "/src/assets/character-yuta.png" },
+  { id: "gojo" as const, name: "Gojo Satoru", tagline: "Six Eyes", description: "Limitless confidence, impossible speed, and overwhelming presence.", color: "#22D3EE", glow: "rgba(34,211,238,0.42)", image: "/src/assets/character-gojo.png" },
 ];
 
 type CharacterId = typeof characters[number]["id"];
-
 type SignupCharacter = CharacterId | "infinity-mentor" | "dark-king" | "energy-hero" | "shadow-bearer" | "straw-doll" | "ratio-master" | "iron-body" | "cursed-voice" | "best-friend";
 
 export default function SignupPage() {
